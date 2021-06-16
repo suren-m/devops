@@ -40,3 +40,4 @@ vnet_subnets = [
     default_nsg = true
   }
 ]
+ #test
