@@ -17,3 +17,10 @@ variable "default_pool" {
 variable "user_pool" {
 
 }
+
+variable "aks_basicpool_vm_size" {
+
+}
+variable "aks_premiumpool_vm_size" {
+
+}
