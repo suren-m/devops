@@ -53,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "basicuserpool" {
-  name                  = "userpool"
+  name                  = "basicpool"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   vnet_subnet_id        = var.vnet_subnet_id
   availability_zones    = ["1", "2"]
@@ -77,7 +77,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "basicuserpool" {
   }
 
 resource "azurerm_kubernetes_cluster_node_pool" "premiumuserpool" {
-  name                  = "userpool"
+  name                  = "premiumpool"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   vnet_subnet_id        = var.vnet_subnet_id
   availability_zones    = ["1", "2"]
