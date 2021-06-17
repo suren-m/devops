@@ -4,21 +4,18 @@ data "azurerm_subnet" "private-aks" {
   resource_group_name  = local.vnet_rg
 }
 
-resource "azurerm_user_assigned_identity" "controlplane_identity" {
+data "azurerm_user_assigned_identity" "controlplane_identity" {
   resource_group_name = "identities"
-  location            = "uk south"
-
-  name = "aks-controlplane-ua-mi"
+  name                = "aks-controlplane-ua-mi"
 }
 
 data "azurerm_user_assigned_identity" "kubelet_identity" {
   resource_group_name = "identities"
-  location            = "uk south"
-
-  name = "aks-kubelet-ua-mi"
+  name                = "aks-kubelet-ua-mi"
 }
 
-data "azurerm_resource_group" "pvt-aks" {
+# New resources
+resource "azurerm_resource_group" "pvt-aks" {
   name     = "private-aks"
   location = "uk south"
 }
@@ -42,13 +39,19 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
+  # https://docs.microsoft.com/en-us/azure/aks/use-managed-identity#bring-your-own-control-plane-mi
   identity {
     type                      = "UserAssigned"
     user_assigned_identity_id = data.azurerm_user_assigned_identity.controlplane_identity.id
   }
-  kubelet_identity {
-    user_assigned_identity_id = data.azurerm_user_assigned_identity.kubelet_identity.id
-  }
+
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster (see identity)
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/user_assigned_identity
+  #   kubelet_identity {
+  #     user_assigned_identity_id = data.azurerm_user_assigned_identity.kubelet_identity.id
+  #     client_id = data.azurerm_user_assigned_identity.kubelet_identity.client_id
+  #     object_id = data.azurerm_user_assigned_identity.kubelet_identity.principal_id
+  #   }
 
   default_node_pool {
     name                 = "default"
@@ -124,7 +127,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "redis_zone1" {
   node_taints                  = ["app=redis:NoSchedule"]
   vnet_subnet_id               = data.azurerm_subnet.private-aks.id
 
-  tags = local.global_tags
 }
 
 //
@@ -151,7 +153,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "zone2" {
   proximity_placement_group_id = azurerm_proximity_placement_group.zone2.id
   node_labels                  = { "pool" = "zone2" }
   vnet_subnet_id               = data.azurerm_subnet.private-aks.id
-  tags                         = local.global_tags
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "redis_zone2" {
