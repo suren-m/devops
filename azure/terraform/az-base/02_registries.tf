@@ -1,7 +1,7 @@
 module "acr_docker" {
-  source     = "./modules/acr/"
+  source     = "../modules/acr/"
   res_prefix = local.alphanumeric_only_res_prefix
-  rg_name    = azurerm_resource_group.scaffolding.name
+  rg_name    = azurerm_resource_group.base.name
   loc        = var.loc
 
   name_suffix = "reg"
@@ -9,9 +9,9 @@ module "acr_docker" {
 }
 
 module "acr_helm" {
-  source     = "./modules/acr/"
+  source     = "../modules/acr/"
   res_prefix = local.alphanumeric_only_res_prefix  
-  rg_name    = azurerm_resource_group.scaffolding.name
+  rg_name    = azurerm_resource_group.base.name
   loc        = var.loc
 
   name_suffix = "helmreg"

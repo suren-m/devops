@@ -5,8 +5,8 @@ data "azurerm_subnet" "default" {
   resource_group_name  = local.base_rg
 }
 
-data "azurerm_subnet" "vms" {
-  name                 = "vms"
+data "azurerm_subnet" "vm" {
+  name                 = "vm"
   virtual_network_name = local.base_prefix
   resource_group_name  = local.base_rg
 }

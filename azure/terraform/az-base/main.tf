@@ -8,12 +8,12 @@ locals {
     res_prefix = "${local.res_prefix}"  
     tf_workspace = "${terraform.workspace}"
     environment = "base"
-    pipeline = "tf-scaffolding"
+    pipeline = "tf-base"
   }
 }
 
-resource "azurerm_resource_group" "scaffolding" {
-  name     = "${local.res_prefix}-scaffolding"
+resource "azurerm_resource_group" "base" {
+  name     = "${local.res_prefix}"
   location = var.loc.long
 
   tags = local.tags

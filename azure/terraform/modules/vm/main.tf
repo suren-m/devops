@@ -36,6 +36,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     caching              = var.os_disk.caching
     storage_account_type = var.os_disk.storage_account_type
+    disk_size_gb = var.os_disk.size_gb
   }
 
   source_image_reference {

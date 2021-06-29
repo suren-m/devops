@@ -14,7 +14,7 @@ vnet_subnets = [
     default_nsg = true
   },
   {
-    name        = "vms"
+    name        = "vm"
     cidr        = ["10.0.1.0/24"]
     default_nsg = true
   },

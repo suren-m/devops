@@ -19,7 +19,8 @@ variable "pub_key" {}
 variable "os_disk" {
   default = {
     caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    storage_account_type = "StandardSSD_LRS"
+    size_gb = "30"
   }
 }
 
