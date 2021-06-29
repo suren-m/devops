@@ -1,6 +1,6 @@
 // common
 base_prefix = "azbase"
-base_rg = "azbase-uks-scaffolding"
+base_rg = "azbase-uks"
 prefix = "azenv"
 loc = {
   short = "uks"
