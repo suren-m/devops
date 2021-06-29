@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "aks_rg" {
 }
 
 module "aks" {
-  source     = "./modules/aks/"
+  source     = "../modules/aks/"
   res_prefix = local.res_prefix
 
   aks_cluster_name = local.res_prefix
@@ -19,6 +19,12 @@ module "aks" {
   user_pool    = var.user_pool
 
   vnet_subnet_id = data.azurerm_subnet.aks.id
+   
+  linux_profile = {
+    username = "suren"
+    pub_key = file("../files/id_rsa.pub") 
+  }
+  
 
   network_profile = {
     network_plugin     = "azure"
@@ -29,5 +35,6 @@ module "aks" {
     pod_cidr           = null
   }
 
-  log_analytics_workspace_id = module.monitoring.law.id
+  log_analytics_workspace_id = data.azurerm_log_analytics_workspace.law.id
+  tags = local.tags
 }

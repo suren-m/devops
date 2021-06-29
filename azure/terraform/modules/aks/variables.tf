@@ -51,3 +51,7 @@ variable "network_profile" {
 variable "log_analytics_workspace_id" {
   type = string
 }
+
+variable "linux_profile" {}
+
+variable "tags" {}

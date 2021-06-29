@@ -1,12 +1,8 @@
-variable "prefix" {}
-
 variable "res_prefix" {}
 
 variable "loc" {}
 
 variable "rg_name" {}
-
-variable "env" {}
 
 variable "vm_prefix" {}
 
@@ -18,7 +14,7 @@ variable "vm_size" {}
 
 variable "vm_admin" {}
 
-variable "pub_key_loc" {}
+variable "pub_key" {}
 
 variable "os_disk" {
   default = {
@@ -36,4 +32,4 @@ variable "image" {
   }
 }
 
-
+variable "tags" {}

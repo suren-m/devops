@@ -26,7 +26,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_username = var.vm_admin
   admin_ssh_key {
     username   = var.vm_admin
-    public_key = file(var.pub_key_loc)
+    public_key = var.pub_key
   }
 
   network_interface_ids = [
@@ -44,4 +44,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = var.image.sku
     version   = var.image.version
   }
+
+  tags = var.tags
 }
