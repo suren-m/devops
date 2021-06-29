@@ -1,6 +1,6 @@
 // Networking 
 module "networking" {
-  source          = "../modules/vnet/"
+  source          = "./modules/vnet/"
   res_prefix      = local.res_prefix
   rg_name         = azurerm_resource_group.scaffolding.name
   loc             = var.loc
@@ -23,7 +23,7 @@ module "gateways" {
   
   rg_name         = azurerm_resource_group.scaffolding.name
   loc             = var.loc
-  gw_p2s_pub_cert = file("../files/p2s_pub_cert")
+  gw_p2s_pub_cert = file("./files/p2s_pub_cert")
 
   gw_subnet_id  = data.azurerm_subnet.vnet_gw_subnet.id
   gw_addr_space = ["10.100.100.0/24"]
