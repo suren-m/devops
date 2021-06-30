@@ -9,26 +9,7 @@ module "networking" {
   tags    = local.tags
 }
 
-data "azurerm_subnet" "vnet_gw_subnet" {
-  name                 = "GatewaySubnet"
-  virtual_network_name = module.networking.vnet.name
-  resource_group_name  = azurerm_resource_group.base.name
-  
-}
 
-module "gateways" {
-  source = "../modules/gateways/"
-
-  res_prefix = module.networking.vnet.name
-  
-  rg_name         = azurerm_resource_group.base.name
-  loc             = var.loc
-  gw_p2s_pub_cert = file("../files/p2s_pub_cert")
-
-  gw_subnet_id  = data.azurerm_subnet.vnet_gw_subnet.id
-  gw_addr_space = ["10.100.100.0/24"]
-  tags = local.tags
-}
 
 resource "azurerm_private_dns_zone" "pvt_dns" {
   name                = "${var.prefix}.io"
