@@ -1,16 +1,11 @@
 // AKS
-resource "azurerm_resource_group" "aks_rg" {
-  name     = "${local.res_prefix}-aks"
-  location = var.loc.long
-}
-
 module "aks" {
   source     = "../modules/aks/"
   res_prefix = local.res_prefix
 
   aks_cluster_name = local.res_prefix
   loc              = var.loc
-  rg_name          = azurerm_resource_group.aks_rg.name
+  rg_name          = azurerm_resource_group.rg.name
 
   kubernetes_version = var.kubernetes_version
 

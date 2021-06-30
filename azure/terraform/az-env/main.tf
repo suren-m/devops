@@ -17,7 +17,10 @@ locals {
   }
 }
 
-
+resource "azurerm_resource_group" "rg" {
+  name     = "${local.res_prefix}"
+  location = var.loc.long
+}
 
 # utils
 data "http" "tf_check" {
