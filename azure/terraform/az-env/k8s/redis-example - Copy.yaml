@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: redis-pool1
+spec: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-pool1-svc
+  namespace: redis-pool1
+spec:
+  selector:
+    app: redis-pool1
+  ports:
+    - port: 6379
+      targetPort: 6379
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis-pool1
+  name: redis-pool1
+  namespace: redis-pool1
+spec:
+  replicas: 3
+  serviceName: "redis-pool1-svc"
+  selector:
+    matchLabels:
+      app: redis-pool1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis-pool1
+    spec:
+      containers:
+        - image: redis
+          name: redis
+          resources:
+            requests:
+              cpu: "3"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - redis
+                  - key: pool
+                    operator: In
+                    values:
+                      - zone1
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "redis"
+          effect: "NoSchedule"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: redis-pool2
+spec: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-pool2-svc
+  namespace: redis-pool2
+spec:
+  selector:
+    app: redis-pool2
+  ports:
+    - port: 6379
+      targetPort: 6379
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis-pool2
+  name: redis-pool2
+  namespace: redis-pool2
+spec:
+  replicas: 3
+  serviceName: "redis-pool2-svc"
+  selector:
+    matchLabels:
+      app: redis-pool2
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis-pool2
+    spec:
+      containers:
+        - image: redis
+          name: redis
+          resources:
+            requests:
+              cpu: "3"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - redis
+                  - key: pool
+                    operator: In
+                    values:
+                      - zone2
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "redis"
+          effect: "NoSchedule"

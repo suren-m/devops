@@ -1,0 +1,132 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: webapp-pool1
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-pool1-svc
+  namespace: webapp-pool1
+spec:
+  selector:
+    app: webapp-pool1
+  ports:
+    - port: 80
+      targetPort: 80
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapp-pool1
+  name: webapp-pool1
+  namespace: webapp-pool1
+spec:
+  selector:
+    matchLabels:
+      app: webapp-pool1
+  serviceName: "webapp-pool1-svc"
+  replicas: 3
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp-pool1
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            requests:
+              cpu: "4"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - webapp
+                  - key: pool
+                    operator: In
+                    values:
+                      - zone1
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "webapp"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: webapp-pool2
+spec: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-pool2-svc
+  namespace: webapp-pool2
+spec:
+  selector:
+    app: webapp-pool2
+  ports:
+    - port: 80
+      targetPort: 80
+  clusterIP: None
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapp-pool2
+  name: webapp-pool2
+  namespace: webapp-pool2
+spec:
+  selector:
+    matchLabels:
+      app: webapp-pool2
+  serviceName: "webapp-pool2-svc"
+  replicas: 3
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp-pool2
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            requests:
+              cpu: "4"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - webapp
+                  - key: pool
+                    operator: In
+                    values:
+                      - zone2
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "webapp"

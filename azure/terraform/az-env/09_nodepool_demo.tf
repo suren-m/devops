@@ -1,29 +1,39 @@
-# data "azurerm_subnet" "private-aks" {
-#   name                 = "private-aks"
+# data "azurerm_subnet" "pub-aks" {
+#   name                 = "aks-128-2"
 #   virtual_network_name = local.vnet
 #   resource_group_name  = local.vnet_rg
 # }
 
+# # data "azurerm_user_assigned_identity" "controlplane_identity" {
+# #   resource_group_name = "identities"
+# #   name                = "aks-controlplane-ua-mi"
+# # }
+
+# # data "azurerm_user_assigned_identity" "kubelet_identity" {
+# #   resource_group_name = "identities"
+# #   name                = "aks-kubelet-ua-mi"
+# # }
+
 # # New resources
-# resource "azurerm_resource_group" "pvt-aks" {
-#   name     = "private-aks"
+# resource "azurerm_resource_group" "pub-aks" {
+#   name     = "pub-aks"
 #   location = "uk south"
 # }
 
-# resource "azurerm_kubernetes_cluster" "aks" {
-#   name                    = "private-aks"
-#   location                = azurerm_resource_group.pvt-aks.location
-#   resource_group_name     = azurerm_resource_group.pvt-aks.name
+# resource "azurerm_kubernetes_cluster" "pub-aks" {
+#   name                    = "pub-aks"
+#   location                = azurerm_resource_group.pub-aks.location
+#   resource_group_name     = azurerm_resource_group.pub-aks.name
 #   sku_tier                = "Free"
 #   # Check this again..
-#   # dns_prefix              = "pvt"
+#   # dns_prefix              = "pub"
 #   # what about private dns zone id
-#   dns_prefix = "private-aks-dns"
+#   dns_prefix = "pub-aks-dns"
 
 #   kubernetes_version      = "1.19.11"
 #   private_cluster_enabled = true
 
-#   node_resource_group = "private-aks-node-rg"
+#   node_resource_group = "pub-aks-node-rg"
 
 #   # used for Active Directory integration on private clusters...
 #   role_based_access_control {
@@ -50,14 +60,14 @@
 #   default_node_pool {
 #     name                 = "default"
 #     type                 = "VirtualMachineScaleSets"
-#     vm_size              = "Standard_F8s_v2"
+#     vm_size              = "Standard_F16s_v2"
 #     availability_zones   = ["1", "2", "3"]
 #     enable_auto_scaling  = true
 #     node_count           = 1
-#     max_count            = 1
+#     max_count            = 3
 #     min_count            = 1
 #     orchestrator_version = "1.19.11"
-#     vnet_subnet_id       = data.azurerm_subnet.private-aks.id
+#     vnet_subnet_id       = data.azurerm_subnet.pub-aks.id
 #   }
 
 #   linux_profile {
@@ -74,10 +84,6 @@
 #     service_cidr       = "10.2.0.0/24"
 #   }
 
-#   auto_scaler_profile {
-#     balance_similar_node_groups = true
-#   }
-
 #   addon_profile {
 #     oms_agent {
 #       enabled                    = true
@@ -92,17 +98,17 @@
 # //
 # // ZONE 1 NODEPOOLS
 # //
-# resource "azurerm_proximity_placement_group" "zone1" {
-#   name                = "private-aks-redis-zone1-ppg"
-#   location            = azurerm_resource_group.pvt-aks.location
-#   resource_group_name = azurerm_resource_group.pvt-aks.name
+# resource "azurerm_proximity_placement_group" "pub-zone1" {
+#   name                = "pub-aks-redis-zone1-ppg"
+#   location            = azurerm_resource_group.pub-aks.location
+#   resource_group_name = azurerm_resource_group.pub-aks.name
 # }
 
-# resource "azurerm_kubernetes_cluster_node_pool" "zone1" {
+# resource "azurerm_kubernetes_cluster_node_pool" "pub-zone1" {
 #   name                         = "appzone1"
-#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.aks.id
+#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.pub-aks.id
 #   enable_auto_scaling          = true
-#   vm_size                      = "Standard_F4s_v2"
+#   vm_size                      = "Standard_F16s_v2"
 #   node_count                   = 1
 #   max_count                    = 3
 #   min_count                    = 1
@@ -110,45 +116,44 @@
 #   orchestrator_version         = "1.19.11"
 #   availability_zones           = [1]
 #   mode                         = "User"
-#   proximity_placement_group_id = azurerm_proximity_placement_group.zone1.id
-#   node_labels                  = {  "pool" = "zone1",  "workload" = "webapp" }
-#   node_taints                  = ["app=webapp:NoSchedule"]
-#   vnet_subnet_id               = data.azurerm_subnet.private-aks.id
+#   proximity_placement_group_id = azurerm_proximity_placement_group.pub-zone1.id
+#   node_labels                  = { "pool" = "zone1" }
+#   vnet_subnet_id               = data.azurerm_subnet.pub-aks.id
 # }
 
-# resource "azurerm_kubernetes_cluster_node_pool" "redis_zone1" {
+# resource "azurerm_kubernetes_cluster_node_pool" "pub_redis_zone1" {
 #   name                         = "rediszone1"
-#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.aks.id
+#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.pub-aks.id
 #   enable_auto_scaling          = true
-#   vm_size                      = "Standard_F4s_v2"
+#   vm_size                      = "Standard_F8s_v2"
 #   node_count                   = 1
-#   max_count                    = 3
+#   max_count                    = 2
 #   min_count                    = 1
 #   max_pods                     = 10
 #   orchestrator_version         = "1.19.11"
 #   availability_zones           = [1]
 #   mode                         = "User"
-#   proximity_placement_group_id = azurerm_proximity_placement_group.zone1.id
-#   node_labels                  = {  "pool" = "zone1",  "workload" = "redis" }
+#   proximity_placement_group_id = azurerm_proximity_placement_group.pub-zone1.id
+#   node_labels                  = { "pool" = "zone1", "type" : "redis" }
 #   node_taints                  = ["app=redis:NoSchedule"]
-#   vnet_subnet_id               = data.azurerm_subnet.private-aks.id
+#   vnet_subnet_id               = data.azurerm_subnet.pub-aks.id
 
 # }
 
 # //
 # // ZONE 2 NODEPOOLS
 # //
-# resource "azurerm_proximity_placement_group" "zone2" {
-#   name                = "private-aks-redis-zone2-ppg"
-#   location            = azurerm_resource_group.pvt-aks.location
-#   resource_group_name = azurerm_resource_group.pvt-aks.name
+# resource "azurerm_proximity_placement_group" "pub-zone2" {
+#   name                = "pub-aks-redis-zone2-ppg"
+#   location            = azurerm_resource_group.pub-aks.location
+#   resource_group_name = azurerm_resource_group.pub-aks.name
 # }
 
-# resource "azurerm_kubernetes_cluster_node_pool" "zone2" {
+# resource "azurerm_kubernetes_cluster_node_pool" "pub-zone2" {
 #   name                         = "appzone2"
-#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.aks.id
+#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.pub-aks.id
 #   enable_auto_scaling          = true
-#   vm_size                      = "Standard_F4s_v2"
+#   vm_size                      = "Standard_F16s_v2"
 #   node_count                   = 1
 #   max_count                    = 3
 #   min_count                    = 1
@@ -156,27 +161,26 @@
 #   orchestrator_version         = "1.19.11"
 #   availability_zones           = [2]
 #   mode                         = "User"
-#   proximity_placement_group_id = azurerm_proximity_placement_group.zone2.id
-#   node_labels                  = { "pool" = "zone2",  "workload" = "webapp" }
-#   node_taints                  = ["app=webapp:NoSchedule"]
-#   vnet_subnet_id               = data.azurerm_subnet.private-aks.id
+#   proximity_placement_group_id = azurerm_proximity_placement_group.pub-zone2.id
+#   node_labels                  = { "pool" = "zone2" }
+#   vnet_subnet_id               = data.azurerm_subnet.pub-aks.id
 # }
 
-# resource "azurerm_kubernetes_cluster_node_pool" "redis_zone2" {
+# resource "azurerm_kubernetes_cluster_node_pool" "pub_redis_zone2" {
 #   name                         = "rediszone2"
-#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.aks.id
+#   kubernetes_cluster_id        = azurerm_kubernetes_cluster.pub-aks.id
 #   enable_auto_scaling          = true
-#   vm_size                      = "Standard_F4s_v2"
+#   vm_size                      = "Standard_F8s_v2"
 #   node_count                   = 1
-#   max_count                    = 3
+#   max_count                    = 2
 #   min_count                    = 1
 #   max_pods                     = 10
 #   orchestrator_version         = "1.19.11"
 #   availability_zones           = [2]
 #   mode                         = "User"
-#   proximity_placement_group_id = azurerm_proximity_placement_group.zone2.id
-#   node_labels                  = { "pool" = "zone2", "workload" = "redis" }
+#   proximity_placement_group_id = azurerm_proximity_placement_group.pub-zone2.id
+#   node_labels                  = { "pool" = "zone2", "type" : "redis" }
 #   node_taints                  = ["app=redis:NoSchedule"]
-#   vnet_subnet_id               = data.azurerm_subnet.private-aks.id
+#   vnet_subnet_id               = data.azurerm_subnet.pub-aks.id
 # }
 

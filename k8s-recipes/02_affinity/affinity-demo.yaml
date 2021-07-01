@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: affinity-demo
+  name: affinity-demo
+  namespace: affinity-demo
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: affinity-demo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: affinity-demo
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: purpose
+                operator: In
+                values:
+                - user_workloads            
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: purpose
+                operator: In
+                values:
+                - user_workloads     
+      containers:
+      - name: pod-with-node-affinity
+        image: surenmcode/mynextwebapp:1.0
+status: {}
