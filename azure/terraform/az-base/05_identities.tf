@@ -5,6 +5,27 @@
 # Azure Built-in Roles
 # https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#all
 
+# # https://docs.microsoft.com/en-us/azure/aks/concepts-identity#identity-creating-and-operating-the-cluster-permissions
+# data "azurerm_subscription" "current" {
+# }
+
+# resource "azurerm_role_definition" "aks_controlplane_ua_mi_role_definition" {
+#   role_definition_id = "00000000-0000-0000-0000-000000000000"
+#   name               = "${local.res_prefix}-aks_controlplane_ua_mi_role_definition"
+#   scope              = data.azurerm_subscription.current.id
+
+#   permissions {
+#     actions     = ["Microsoft.Resources/subscriptions/resourceGroups/read",
+#     ]
+#     not_actions = []
+#   }
+
+#   assignable_scopes = [
+#     data.azurerm_subscription.primary.id,
+#   ]
+# }
+
+
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#identity
 resource "azurerm_user_assigned_identity" "aks_controlplane_ua_mi" {
   resource_group_name = azurerm_resource_group.base.name

@@ -2,23 +2,23 @@
 // locals will only be visible to root module, so using variables here
 
 locals {
-  base_prefix  = terraform.workspace == "default" ? "${var.base_prefix}-${var.loc.short}" : "${terraform.workspace}-${var.base_prefix}-${var.loc.short}"
-  alphanumeric_only_base_prefix = terraform.workspace == "default" ? "${var.base_prefix}${var.loc.short}" : "${terraform.workspace}${var.base_prefix}${var.loc.short}" 
-  base_rg = "${var.base_rg}"
+  base_prefix                   = terraform.workspace == "default" ? "${var.base_prefix}-${var.loc.short}" : "${terraform.workspace}-${var.base_prefix}-${var.loc.short}"
+  alphanumeric_only_base_prefix = terraform.workspace == "default" ? "${var.base_prefix}${var.loc.short}" : "${terraform.workspace}${var.base_prefix}${var.loc.short}"
+  base_rg                       = var.base_rg
 
   res_prefix                   = terraform.workspace == "default" ? "${var.prefix}-${var.loc.short}" : "${terraform.workspace}-${var.prefix}-${var.loc.short}"
   alphanumeric_only_res_prefix = terraform.workspace == "default" ? "${var.prefix}${var.loc.short}" : "${terraform.workspace}${var.prefix}${var.loc.short}"
 
   tags = {
-    res_prefix = "${local.res_prefix}"  
+    res_prefix   = "${local.res_prefix}"
     tf_workspace = "${terraform.workspace}"
-    environment = "az-env"
-    pipeline = "tf-az-env"
+    environment  = "az-env"
+    pipeline     = "tf-az-env"
   }
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${local.res_prefix}"
+  name     = local.res_prefix
   location = var.loc.long
 }
 

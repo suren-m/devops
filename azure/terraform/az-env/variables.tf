@@ -3,7 +3,7 @@ variable "base_prefix" {
 }
 
 variable "base_rg" {
-	
+
 }
 
 variable "prefix" {

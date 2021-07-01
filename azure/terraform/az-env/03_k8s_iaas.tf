@@ -7,7 +7,7 @@
 # module "k8s-iaas" {
 #   source     = "../modules/k8s-iaas/"
 #   res_prefix = local.res_prefix
-  
+
 #   loc     = var.loc
 #   rg_name = azurerm_resource_group.k8s_rg.name  
 
