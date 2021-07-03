@@ -47,27 +47,3 @@
         msg: "~/.local/bin doesn't exist. Make sure to run init.yml"
       when: not localbin.stat.isdir 
 
-- name: "prereq"
-  hosts: all
-  tags: prereq
-  become: true
-  
-  tasks:
-    - package:
-        upgrade: yes
-        update_cache: yes
-    - package:
-        name: "{{ item }}"
-      loop:
-        - git
-        - wget
-        - curl
-        - python-apt # needed for ansible --check
-
-- name: "setup"
-  hosts: all
-  tags: tools
-  become: true
-  roles:
-    - shell
-    - dotfiles
