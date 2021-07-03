@@ -1,0 +1,24 @@
+{
+    "unit-test-gen": {
+        "prefix": "test",
+        "body": [
+            "#[cfg(test)]",
+            "mod tests {",
+            "   use super::*;",
+            "   #[test]",
+            "   fn test() {",
+            "       ${1://write test here}",
+            "       assert_eq!(true, false);",
+            "   }",
+            "}"
+        ],
+        "description": "create template for an unit test"
+    },
+    "derive-debug": {
+        "prefix": "derive",
+        "body": [
+            "#[derive(Debug$0)]"
+        ],
+        "description": "create template for derive trait"
+    }
+}

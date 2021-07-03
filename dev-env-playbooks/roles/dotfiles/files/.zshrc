@@ -39,5 +39,17 @@ if ! zplug check --verbose; then
 fi
 zplug load 
 
-# setup starship
+# Additional setup
+if [ -f ~/.config/shell/common_config ]; then
+    . ~/.config/shell/common_config
+fi
+
+if [ -f ~/.config/shell/zsh_config ]; then
+    . ~/.config/shell/zsh_config
+fi
+
+# setup starship - Keep this at the end
 eval "$(starship init zsh)"
+
+
+

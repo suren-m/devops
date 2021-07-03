@@ -112,4 +112,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Additional setup
+if [ -f ~/.config/shell/common_config ]; then
+    . ~/.config/shell/common_config
+fi
+
+if [ -f ~/.config/shell/bash_config ]; then
+    . ~/.config/shell/bash_config
+fi
+
+# Keep this at the end
 eval "$(starship init bash)"

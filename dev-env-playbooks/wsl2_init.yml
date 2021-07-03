@@ -48,10 +48,11 @@
         - curl
         - python-apt # needed for ansible --check
 
-- name: "setup"
+- name: "config"
   hosts: all
-  tags: tools
+  tags: config
   become: true
   roles:
     - shell
     - dotfiles
+

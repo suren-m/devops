@@ -4,7 +4,3 @@
     upgrade: yes
     update_cache: yes
 
-- name: zsh 
-  package:
-    name: zsh
-
