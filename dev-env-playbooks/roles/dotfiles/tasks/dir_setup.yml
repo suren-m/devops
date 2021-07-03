@@ -7,11 +7,6 @@
     path: "{{ lookup('env', 'HOME') }}/.config/shell"
     state: directory
 
-- name: setup src dir for go tools
-  file:
-    path: "{{ lookup('env', 'HOME') }}/go/src"
-    state: directory
-
 - name: setup local bin for user
   file:
     path: "{{ lookup('env', 'HOME') }}/.local/bin"

@@ -1,26 +1,15 @@
 # -----------------------------------------------------------
-# Make sure to run init.sh inside wsl2_debian folder prior to this 
+# Make sure to run init.sh from prereq/<target-env> directory prior to this 
 
-# Test Run: ansible-playbook wsl2.yml --check
-# Specific Tags: ansible-playbook wsl2.yml --tags precheck 
+# Test Run: ansible-playbook init.yml --check
+# Specific Tags: ansible-playbook init.yml --tags precheck 
 
-# All: ansible-playbook wsl2.yml 
+# All: ansible-playbook init.yml 
 # -----------------------------------------------------------
 
-# only targetting debian amd4 for now
-
-# -----------------------------------------------------------
-# Make sure to run init.sh inside prereq/wsl2_debian dir prior to this 
-
-# Test Run: ansible-playbook wsl2_debian_playbook.yml --check
-# Specific Tags: ansible-playbook wsl2_debian_playbook.yml --tags precheck 
-
-# All: ansible-playbook wsl2_debian_playbook.yml 
-# -----------------------------------------------------------
-
-- name: "Distro Check"
+- name: "prelaunch"
   hosts: all
-  tags: precheck
+  tags: prelaunch
   gather_facts: yes # needed for distro vars such as below   
 
   pre_tasks:
@@ -48,10 +37,11 @@
         - curl
         - python-apt # needed for ansible --check
 
-- name: "setup"
+- name: "config"
   hosts: all
-  tags: tools
+  tags: config
   become: true
   roles:
     - shell
     - dotfiles
+

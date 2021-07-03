@@ -1,0 +1,73 @@
+# -----------------------------------------------------------
+# Make sure to run init.yml playbook prior to this 
+
+# Test Run: ansible-playbook wsl2_debian.yml --check
+# Specific Tags: ansible-playbook wsl2_debian.yml --tags prelaunch
+
+# All: ansible-playbook wsl2.yml 
+# -----------------------------------------------------------
+
+# only targetting debian amd4 for now
+# -----------------------------------------------------------
+
+- name: "prelaunch"
+  hosts: all
+  tags: prelaunch
+  gather_facts: yes # needed for distro vars such as below   
+
+  pre_tasks:
+    - debug: 
+        msg: "{{ ansible_distribution }}"
+    - command: lsb_release -cs
+      register: distro_version
+    - debug: 
+        msg: "{{ ansible_os_family }}" 
+    - command: echo $SHELL
+      register: current_shell
+    - name: 'check shell' 
+      fail: 
+        msg: "zsh not set. Make sure to run init.yml. current shell is{{ current_shell.stdout }}"
+      when: current_shell.stdout != "/bin/zsh"
+    - stat: path="{{ lookup('env', 'HOME') }}/.zshrc"
+      register: zshrc
+    - name: 'check zshrc'
+      fail:
+        msg: "zshrc doesn't exist. Make sure to run init.yml"
+      when: not zshrc.stat.exists
+    - stat: path="{{ lookup('env', 'HOME') }}/.config/shell"
+      register: shell_config
+    - name: 'check shell config dir'
+      fail:
+        msg: "~/.config/shell doesn't exist. Make sure to run init.yml"
+      when: not shell_config.stat.isdir 
+    - stat: path="{{ lookup('env', 'HOME') }}/.local/bin"
+      register: localbin
+    - name: 'check local bin'
+      fail:
+        msg: "~/.local/bin doesn't exist. Make sure to run init.yml"
+      when: not localbin.stat.isdir 
+
+- name: "prereq"
+  hosts: all
+  tags: prereq
+  become: true
+  
+  tasks:
+    - package:
+        upgrade: yes
+        update_cache: yes
+    - package:
+        name: "{{ item }}"
+      loop:
+        - git
+        - wget
+        - curl
+        - python-apt # needed for ansible --check
+
+- name: "setup"
+  hosts: all
+  tags: tools
+  become: true
+  roles:
+    - shell
+    - dotfiles
