@@ -48,6 +48,8 @@
     - name: starship prompt (skip confirmation)
       shell: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
+# Not using become:true for dotfiles roles
+# To avoid permission issues when other tools need to create config files
 - name: "dotfiles"
   hosts: all
   tags: dotfiles  
