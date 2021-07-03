@@ -1,0 +1,39 @@
+# -----------------------------------------------------------
+# Make sure to run init.sh inside wsl2_debian folder prior to this 
+
+# Test Run: ansible-playbook wsl2.yml --check
+# Specific Tags: ansible-playbook wsl2.yml --tags precheck 
+
+# All: ansible-playbook wsl2.yml 
+# -----------------------------------------------------------
+
+# only targetting debian amd4 for now
+
+# -----------------------------------------------------------
+# Make sure to run init.sh inside prereq/wsl2_debian dir prior to this 
+
+# Test Run: ansible-playbook wsl2_debian_playbook.yml --check
+# Specific Tags: ansible-playbook wsl2_debian_playbook.yml --tags precheck 
+
+# All: ansible-playbook wsl2_debian_playbook.yml 
+# -----------------------------------------------------------
+
+- name: "Distro Check"
+  hosts: all
+  tags: precheck
+  gather_facts: yes # needed for distro vars such as below   
+
+  pre_tasks:
+    - debug: 
+        msg: "{{ ansible_distribution }}"
+    - command: lsb_release -cs
+      register: distro_version
+    - debug: 
+        msg: "{{ ansible_os_family }}" 
+
+- name: "common"
+  hosts: all
+  tags: tools
+  become: true
+  roles:
+    - common 
