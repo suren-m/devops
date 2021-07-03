@@ -34,14 +34,23 @@
       loop:
         - git
         - wget
-        - curl
+        - curl        
         - python-apt # needed for ansible --check
+        - vim
+        - neovim
+        - zsh
+        - zplug
 
-- name: "config"
+- name: "starship prompt"
   hosts: all
-  tags: config
-  become: true
+  tags: starship
+  tasks:
+    - name: starship prompt (skip confirmation)
+      shell: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+
+- name: "dotfiles"
+  hosts: all
+  tags: dotfiles  
   roles:
-    - shell
-    - dotfiles
+    - dotfiles 
 
