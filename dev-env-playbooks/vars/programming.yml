@@ -8,3 +8,8 @@ go:
 rust:
   remove_existing: false
   rustup_init: https://sh.rustup.rs 
+
+dotnet:
+  purge_existing_msft_pkg: false
+  sdk_version: 5.0
+  

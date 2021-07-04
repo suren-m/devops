@@ -1,0 +1,48 @@
+---
+
+- debug: 
+    msg:
+      "{{ansible_os_family}}
+       {{ansible_distribution}}
+       {{ansible_distribution_major_version}} 
+       {{ansible_distribution_version}}"
+
+- name: Dotnet Install Check
+  debug:
+    msg: "Dotnet install Conditional check passed. Dotnet-sdk-{{ dotnet.sdk_version }} will be installed"
+  when: ansible_os_family == 'Debian' 
+
+# Same as sudo dpkg --purge packages-microsoft-prod
+- name: Dotnet - Purge existing Microsoft package
+  become: true
+  apt:
+    name: packages-microsoft-prod
+    state: absent
+    purge: yes
+  when: ansible_os_family == 'Debian' and dotnet.purge_existing_msft_pkg == true
+
+# same as wget and dpkg -i
+- name: Microsoft deb package for Debian
+  become: true
+  apt:
+    deb: "https://packages.microsoft.com/config/{{ansible_distribution|lower}}/{{ansible_distribution_major_version}}/packages-microsoft-prod.deb"
+  when: ansible_distribution == 'Debian'
+  register: pkg_msft_debian
+
+# Note that ubuntu uses full distro version
+- name: Microsoft deb package for Ubuntu
+  become: true
+  apt:
+    deb: "https://packages.microsoft.com/config/{{ansible_distribution|lower}}/{{ansible_distribution_version}}/packages-microsoft-prod.deb"
+  when: ansible_distribution == 'Ubuntu'
+  register: pkg_msft_ubuntu
+
+# - debug: var=pkg_msft_debian
+# - debug: var=pkg_msft_ubuntu
+
+- name: "Dotnet sdk {{ dotnet.sdk_version }} install for Debian based Distros"
+  become: true
+  apt:
+    name: "dotnet-sdk-{{ dotnet.sdk_version }}"
+    update_cache: yes
+  when: ansible_os_family == 'Debian' 

@@ -5,6 +5,11 @@
 # Specific Tags: ansible-playbook init.yml --tags precheck 
 
 # All: ansible-playbook init.yml 
+
+# For Special variables on a given host run
+# ansible -m setup localhost
+# https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#special-variables
+
 # -----------------------------------------------------------
 
 - name: "prelaunch"
@@ -12,15 +17,16 @@
   tags: prelaunch
   gather_facts: yes # needed for distro vars such as below   
 
+  
   pre_tasks:
     - debug: 
-        msg: "{{ ansible_distribution }}"
-    - command: lsb_release -cs
-      register: distro_version
-    - debug: 
-        msg: "{{ ansible_os_family }}" 
-    - debug:
-        msg: "{{ ansible_architecture }}" 
+        msg: 
+          "OS Family: {{ ansible_os_family }},
+           Distro: {{ ansible_distribution }},
+           release: {{ ansible_distribution_release }},                      
+           Distro Major Ver: {{ ansible_distribution_major_version }},          
+           Distro Ver: {{ ansible_distribution_version }},             
+           Arch: {{ ansible_architecture }}"     
 
 - name: "prereq"
   hosts: all
@@ -36,12 +42,13 @@
       loop:
         - git
         - wget
-        - curl        
+        - curl 
+        - apt-transport-https       
         - python-apt # needed for ansible --check
         - vim
         - neovim
         - zsh
-        - zplug
+        - zplug        
 
 - name: "starship prompt"
   hosts: all

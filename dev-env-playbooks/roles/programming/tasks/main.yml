@@ -5,7 +5,7 @@
 
 - include_tasks: rust.yml
 
-# - include_tasks: dotnet
+- include_tasks: dotnet.yml
 
 # - include_tasks: python.yml
 
