@@ -10,13 +10,20 @@ lfcd () {
     fi
 }
 
+
 # -----Aliases----- #
 alias k=kubectl
 alias v=vim
 
+
 # -----Environments----- #
 # should only be added after rust installation (adds to path)
 source "$HOME/.cargo/env" 
+
+
+# -----Env vars----- #
+export DENO_INSTALL="$HOME/.deno"
+
 
 # -----Path vars exports----- #
 # local bin
@@ -26,4 +33,5 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
-# -----Env vars----- #
+# deno
+export PATH="$PATH:$DENO_INSTALL/bin"

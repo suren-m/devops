@@ -1,0 +1,11 @@
+---
+
+- name: Java / Openjdk- Development Tools
+  become: true
+  package: 
+    update_cache: yes
+    state: "{{ openjdk.state }}"
+    name: "{{ item }}"
+  loop:
+    - "openjdk-{{openjdk.version}}-jdk"
+    

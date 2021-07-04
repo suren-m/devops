@@ -1,15 +1,37 @@
 ---
 
-# Needs become: true for accessing /usr/local/bin
-- include_tasks: go.yml
+# build-essential includes gcc and is used by rust as well (for linking)
+- name: Systems Development - Common tools (includes c and cpp)
+  become: true
+  package:  
+    name: "{{ item }}"
+    state: present
+  loop:
+    - man
+    - man-db    
+    - build-essential
+    - gdb
+    - make    
+    - clang
+    - llvm
+    - lldb
+    - cmake
+    - ninja-build    
+    - pkg-config
+    - libssl-dev              
 
+# Doesn't require become: true 
+# Installed to user dir ~/.cargo/
 - include_tasks: rust.yml
+- include_tasks: deno.yml
 
+# go and dotnet also require become:true to access /usr/bin
+- include_tasks: go.yml
 - include_tasks: dotnet.yml
 
-# - include_tasks: python.yml
+- include_tasks: python.yml
+- include_tasks: java.yml
 
-# - include_tasks: node.yml
 
 
 

@@ -1,0 +1,27 @@
+---
+
+- name: Deno - Remove exisiting version
+  become: true
+  file:
+    state: absent
+    path: "{{ lookup('env', 'HOME') }}/.deno"
+  when:
+    deno.remove_existing == true
+
+- stat: path="{{ lookup('env', 'HOME') }}/.deno"
+  register: deno_dir
+
+- when: not deno_dir.stat.exists
+  block:
+    - name: Deno - Download install script
+      get_url:
+        url: '{{ deno.install }}'
+        dest: /tmp/deno_install.sh
+        mode: 0755    
+    - name: Deno - Install 
+      command: /tmp/deno_install.sh 
+  always:
+    - name: Deno - Cleanup /tmp/deno_install.sh
+      file:
+        state: absent
+        path: /tmp/deno_install.sh
