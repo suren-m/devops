@@ -29,8 +29,10 @@
 - include_tasks: go.yml
 - include_tasks: dotnet.yml
 
+# installed via pkg manager (requires become: true)
 - include_tasks: python.yml
 - include_tasks: java.yml
+- include_tasks: nodejs.yml
 
 
 

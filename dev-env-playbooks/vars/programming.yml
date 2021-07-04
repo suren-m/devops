@@ -9,13 +9,6 @@ deno:
   remove_existing: false
   install: https://deno.land/x/install/install.sh
 
-openjdk:
-  version: 11
-  state: present
-
-python:
-  state: present
-
 go:
   remove_existing: false 
   fallback_ver: go1.16.5
@@ -24,3 +17,14 @@ dotnet:
   purge_existing_msft_pkg: false
   sdk_version: 5.0
 
+# Installed via Package managers
+python:
+  state: present
+
+openjdk:
+  version: 11
+  state: present
+
+nodejs:  
+  version: 16
+  state: present

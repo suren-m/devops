@@ -21,7 +21,8 @@
   pre_tasks:
     - debug: 
         msg: 
-          "OS Family: {{ ansible_os_family }},
+          "Env Home: {{ ansible_env.HOME }}
+           OS Family: {{ ansible_os_family }},
            Distro: {{ ansible_distribution }},
            release: {{ ansible_distribution_release }},                      
            Distro Major Ver: {{ ansible_distribution_major_version }},          

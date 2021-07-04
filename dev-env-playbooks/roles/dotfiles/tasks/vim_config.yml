@@ -2,27 +2,27 @@
 # vim
 - name: vim autoload directory
   file:
-    path: "{{ lookup('env', 'HOME') }}/.vim/autoload"
+    path: "{{ ansible_env.HOME }}/.vim/autoload"
     state: directory
 
 - name: vim plug for vim
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    dest: "{{ lookup('env', 'HOME') }}/.vim/autoload"
+    dest: "{{ ansible_env.HOME }}/.vim/autoload"
 
 - name: vimrc 
   copy:
     src: .vim/vimrc
-    dest: "{{ lookup('env', 'HOME') }}/.vim/vimrc"
+    dest: "{{ ansible_env.HOME }}/.vim/vimrc"
 
 # nvim
 - name: nvim config directory
   file:
-    path: "{{ lookup('env', 'HOME') }}/.config/nvim"
+    path: "{{ ansible_env.HOME }}/.config/nvim"
     state: directory
 
 - name: 
   copy:
     src: .config/nvim/init.vim    
-    dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"
+    dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
 
