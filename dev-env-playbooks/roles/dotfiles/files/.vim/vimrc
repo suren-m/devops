@@ -30,7 +30,7 @@ map <C-l> <C-w>l
 " vimplug
 " :PlugInstall :PlugUpgrade
 " ------------------------ "
-call plug#begin('~/.config/vim/plugged')
+call plug#begin('~/.vim/plugged')
 
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'

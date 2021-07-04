@@ -5,16 +5,15 @@
     path: "{{ lookup('env', 'HOME') }}/.vim/autoload"
     state: directory
 
-- name: vimrc 
-  copy:
-    src: .vimrc
-    dest: "{{ lookup('env', 'HOME') }}/.vimrc"
-
 - name: vim plug for vim
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: "{{ lookup('env', 'HOME') }}/.vim/autoload"
 
+- name: vimrc 
+  copy:
+    src: .vim/vimrc
+    dest: "{{ lookup('env', 'HOME') }}/.vim/vimrc"
 
 # nvim
 - name: nvim config directory
