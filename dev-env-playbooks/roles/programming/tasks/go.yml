@@ -1,20 +1,20 @@
 ---
 # "https://dl.google.com/go/$(curl https://golang.org/VERSION?m=text).linux-amd64.tar.gz"
 
-- name: Get latest go version
+- name: Go - Check latest version 
   uri: 
     url: https://golang.org/VERSION?m=text     
     return_content: yes
   register: latest_version
 
-- name: target go version  
+- name: Go - Set target version  
   set_fact: 
     target_version: "{{ latest_version.content | default(go.fallback_ver) }}"
 
 - debug: var=target_version
 - debug: var=go.remove_existing
 
-- name: Remove any previous versions 
+- name: Go - Remove exisiting version
   become: true
   file:
     state: absent
@@ -29,7 +29,7 @@
 # - debug: var=os
 # - debug: var=arch
 
-- name: Download and unarchive Go
+- name: Go - Install (Download and unarchive to /usr/local/go)
   become: true
   unarchive:
     src: "https://dl.google.com/go/{{ target_version }}.{{os}}-{{arch}}.tar.gz"      

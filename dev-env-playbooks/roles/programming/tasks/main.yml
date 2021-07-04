@@ -1,8 +1,9 @@
 ---
 
+# Needs become: true for accessing /usr/local/bin
 - include_tasks: go.yml
 
-# - include_tasks: rust.yml
+- include_tasks: rust.yml
 
 # - include_tasks: dotnet
 

@@ -15,11 +15,10 @@ alias k=kubectl
 alias v=vim
 
 # -----Environments----- #
-# added after rust installation
-# source "$HOME/.cargo/env"
+# should only be added after rust installation (adds to path)
+source "$HOME/.cargo/env" 
 
-# -----Path Vars----- #
-# Path Variable 
+# -----Path vars exports----- #
 # local bin
 export PATH=$PATH:$HOME/.local/bin
 

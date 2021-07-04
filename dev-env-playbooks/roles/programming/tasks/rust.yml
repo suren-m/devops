@@ -1,0 +1,37 @@
+---
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# To uninstall: rustup self uninstall
+
+# stat to see if rustup already exists
+- stat:
+    path: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup"
+  register: rustup_bin
+
+# Uninstall existing only if rustup exists and also remove_existing var is true
+- name: Rust - Remove existing version (using rustup)
+  command: rustup self uninstall -y
+  when:
+    rustup_bin.stat.exists and rust.remove_existing == true
+  register:
+    rustup_uninstall
+
+# - debug: var=rust.remove_existing
+# - debug: var=rustup_bin
+# - debug: var=rustup_uninstall
+
+- when: not rustup_bin.stat.exists or rustup_uninstall.changed 
+  block:
+    - name: Rust - Download rustup-init script
+      get_url:
+        url: '{{ rust.rustup_init }}'
+        dest: /tmp/rustup-init.sh
+        mode: 0755    
+    - name: Rust - Install using Rustup-init to ~/.cargo/bin (without modifying path)
+      command: /tmp/rustup-init.sh -y --no-modify-path 
+  always:
+    - name: Rust - Cleanup /tmp/rustup-init.sh
+      file:
+        state: absent
+        path: /tmp/rustup-init.sh
+  
+  

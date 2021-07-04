@@ -2,6 +2,9 @@
 # remove_existing checks per lang / framework
 
 go:
-  remove_existing: true 
+  remove_existing: false 
   fallback_ver: go1.16.5
   
+rust:
+  remove_existing: false
+  rustup_init: https://sh.rustup.rs 
