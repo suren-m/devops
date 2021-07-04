@@ -19,6 +19,8 @@
       register: distro_version
     - debug: 
         msg: "{{ ansible_os_family }}" 
+    - debug:
+        msg: "{{ ansible_architecture }}" 
 
 - name: "prereq"
   hosts: all
@@ -48,6 +50,14 @@
     - name: starship prompt (skip confirmation)
       shell: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
+- name: "programming languages and frameworks"
+  hosts: all
+  tags: programming
+  vars_files: 
+    - "./vars/programming.yml"    
+  roles: 
+    - programming
+
 # Not using become:true for dotfiles roles
 # To avoid permission issues when other tools need to create config files
 - name: "dotfiles"
@@ -55,4 +65,5 @@
   tags: dotfiles  
   roles:
     - dotfiles 
+
 

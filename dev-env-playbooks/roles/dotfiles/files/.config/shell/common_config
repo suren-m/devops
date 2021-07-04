@@ -1,8 +1,4 @@
-# aliases
-alias k=kubectl
-alias v=vim
-
-
+# -----Functions----- #
 # Use lf to switch directories and bind it to ctrl-o
 lfcd () {
     tmp="$(mktemp)"
@@ -13,3 +9,22 @@ lfcd () {
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
 }
+
+# -----Aliases----- #
+alias k=kubectl
+alias v=vim
+
+# -----Environments----- #
+# added after rust installation
+# source "$HOME/.cargo/env"
+
+# -----Path Vars----- #
+# Path Variable 
+# local bin
+export PATH=$PATH:$HOME/.local/bin
+
+# Go and Go based tools compiled from source
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
+
+# -----Env vars----- #

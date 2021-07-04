@@ -1,0 +1,7 @@
+# fallback ver = if latest version check fails
+# remove_existing checks per lang / framework
+
+go:
+  remove_existing: true 
+  fallback_ver: go1.16.5
+  
