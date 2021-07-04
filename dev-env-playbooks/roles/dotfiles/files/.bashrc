@@ -113,6 +113,7 @@ if ! shopt -oq posix; then
 fi
 
 # Additional setup
+
 if [ -f ~/.config/shell/common_config ]; then
     . ~/.config/shell/common_config
 fi

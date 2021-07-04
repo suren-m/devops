@@ -1,3 +1,8 @@
+# unbind ctrl+s from terminal to enable save on vim with ctrl+s
+bind -r '\C-s'
+stty -ixon
 
+# bind ctrl+o to lfcd
+bind '"\C-o":"lfcd \n"'
 
 

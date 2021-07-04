@@ -16,7 +16,8 @@ filetype plugin indent on
 " ------------------------- "
 set pastetoggle=<f2>
 
-" ctrl + s for save
+" ctrl + s for save. 
+" Make sure to unbind from .bashrc too (zsh should be ok)
 :nmap <c-s> :w<CR>
 :imap <c-s> <Esc>:w<CR>a
 
@@ -26,6 +27,8 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" ------------------------ "
+" Plugins"
 " ------------------------ "
 " vimplug
 " :PlugInstall :PlugUpgrade
