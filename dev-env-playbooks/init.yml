@@ -16,7 +16,6 @@
   hosts: all
   tags: prelaunch
   gather_facts: yes # needed for distro vars such as below   
-
   
   pre_tasks:
     - debug: 
@@ -47,7 +46,17 @@
         - python-apt # needed for ansible --check
         - unzip # needed for deno
         - apt-transport-https # needed for dotnet
- 
+
+- name: "shell"
+  hosts: all
+  tags: shell
+  become: true
+  vars_files: 
+    - "./vars/shell.yml"    
+
+  roles: 
+    - shell
+  
 - name: "common"
   hosts: all
   tags: common
@@ -65,22 +74,14 @@
         - openssh-client        
         - gnupg # needed for docker        
         - vim
-        - neovim        
-        - zsh
-        - zplug        
+        - neovim                
         
-- name: "starship prompt"
-  hosts: all
-  tags: starship
-  tasks:
-    - name: starship prompt (skip confirmation)
-      shell: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
-
 - name: "programming languages and frameworks"
   hosts: all
   tags: programming
   vars_files: 
     - "./vars/programming.yml"    
+
   roles: 
     - programming
 

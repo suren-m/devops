@@ -1,0 +1,6 @@
+
+zsh:
+  state: present
+
+starship:
+  reinstall: false

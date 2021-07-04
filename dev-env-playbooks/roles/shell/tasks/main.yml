@@ -1,0 +1,12 @@
+---
+
+- name: zsh and zplug
+  become: true
+  package:
+    name: "{{ item }}"
+    state: "{{ zsh.state }}"
+  loop:
+    - zsh
+    - zplug
+
+- include_tasks: starship.yml

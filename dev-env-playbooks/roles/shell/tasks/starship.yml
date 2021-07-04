@@ -1,0 +1,14 @@
+---
+
+- name: Starship - check if it already exists
+  stat: 
+    path: /usr/local/bin/starship
+  register: starship_bin    
+
+# - debug: var=starship_bin
+# - debug: var=starship.reinstall
+
+- name: starship prompt (skip confirmation)
+  shell: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+  when: not starship_bin.stat.exists or starship.reinstall == true
+  
