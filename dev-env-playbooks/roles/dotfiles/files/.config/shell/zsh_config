@@ -1,0 +1,2 @@
+# bind ctrl+o to lfcd
+bindkey -s '^o' 'lfcd\n'
