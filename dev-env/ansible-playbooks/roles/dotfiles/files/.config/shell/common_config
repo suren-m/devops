@@ -1,6 +1,7 @@
 # -----Aliases----- #
 alias k=kubectl
 alias v=vim
+alias kus=kustomize
 
 # -----Path vars exports----- #
 # local bin
