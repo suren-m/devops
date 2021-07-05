@@ -16,13 +16,16 @@ alias k=kubectl
 alias v=vim
 
 
+# -----Env vars----- #
+export DENO_INSTALL="$HOME/.deno"
+export NVM_DIR="$HOME/.nvm" # bash autocomplete in bash_config
+
+
 # -----Environments----- #
 # should only be added after rust installation (adds to path)
 source "$HOME/.cargo/env" 
-
-
-# -----Env vars----- #
-export DENO_INSTALL="$HOME/.deno"
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 
 
 # -----Path vars exports----- #

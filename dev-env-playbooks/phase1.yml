@@ -1,10 +1,10 @@
 # -----------------------------------------------------------
 # Make sure to run init.sh from prereq/<target-env> directory prior to this 
 
-# Test Run: ansible-playbook init.yml --check
-# Specific Tags: ansible-playbook init.yml --tags precheck 
+# Test Run: ansible-playbook phase1.yml --check
+# Specific Tags: ansible-playbook phase1.yml --tags precheck 
 
-# All: ansible-playbook init.yml 
+# All: ansible-playbook phase1.yml 
 
 # For Special variables on a given host run
 # ansible -m setup localhost

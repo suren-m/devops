@@ -5,4 +5,5 @@ stty -ixon
 # bind ctrl+o to lfcd
 bind '"\C-o":"lfcd \n"'
 
-
+# This loads nvm bash_completion (see common_config for $NVM_DIR)
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 

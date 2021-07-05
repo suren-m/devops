@@ -1,0 +1,66 @@
+---
+# Nvm based approach to install multiple versions of NodeJS
+# See: https://github.com/nvm-sh/nvm#ansible
+
+- name: NodeJS - NVM - Remove exisiting version
+  become: true
+  file:
+    state: absent
+    path: "{{ ansible_env.HOME }}/.nvm"
+  when:
+    nvm.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME }}/.nvm"
+  register: nvm_dir
+
+- when: not nvm_dir.stat.exists
+  block:
+    - name: NodeJS - NVM - Download nvm install script
+      get_url:
+        url: '{{ nvm.install }}'
+        dest: /tmp/nvm_install.sh
+        mode: 0755    
+
+    - name: NodeJS - NVM - Install using nvm-install to ~/.nvim
+      command: /tmp/nvm_install.sh 
+
+      # source nvm.sh and install stable version of node
+      # nvm install stable or nvm install --lts
+    - name: NodeJS - NVM - Install latest stable nodejs version 
+      shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install stable'
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
+        chdir: "{{ ansible_env.HOME }}"
+        executable: /bin/bash        
+  always:
+    - name: NodeJS - NVM - Cleanup /tmp/nvm_install.sh
+      file:
+        state: absent
+        path: /tmp/nvm_install.sh
+
+
+# ----
+# Alternate Option: using nodesource repo
+# ----
+
+# To check: see apt-key list | grep 'node' -C 3
+# To remove: apt-key del <pub-key-id>
+# - name: NodeJS - Install nodesource gpg key for nodejs LTS
+#   become: true
+#   apt_key:
+#     url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"    
+#   when: ansible_os_family == 'Debian' 
+
+# To check: see apt-cache policy
+# - name: NodeJS - Setup nodesource repo via apt_repository
+#   become: true
+#   apt_repository:
+#     update_cache: yes
+#     repo: "deb https://deb.nodesource.com/node_{{ nodejs.version }}.x {{ ansible_distribution_release }} main"
+#   when: ansible_os_family == 'Debian'
+
+# - name: NodeJS - Install
+#   become: true
+#   apt:
+#     name: nodejs
+#   when: ansible_os_family == 'Debian'

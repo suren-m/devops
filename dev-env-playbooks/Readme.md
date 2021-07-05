@@ -13,7 +13,7 @@
     * zsh
     * chsh -s /bin/zsh
     * Reload shell with `source ~/.zshrc`
-4. Run `ansible-playbook wsl.yml`
+4. Run `ansible-playbook post_source.yml`
 5. For `vs code` and `windows_terminal` configs, see `config_files` directory
 
 ---

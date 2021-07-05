@@ -25,6 +25,8 @@ openjdk:
   version: 11
   state: present
 
-nodejs:  
-  version: 16
-  state: present
+# NodeJS via NVM - This will also install latest nodejs stable by default
+nvm:    
+  remove_existing: false 
+  install: https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh
+  

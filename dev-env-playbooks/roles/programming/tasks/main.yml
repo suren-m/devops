@@ -32,7 +32,7 @@
 # installed via pkg manager (requires become: true)
 - include_tasks: python.yml
 - include_tasks: java.yml
-- include_tasks: nodejs.yml
+- include_tasks: nvm.yml
 
 
 

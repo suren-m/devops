@@ -6,6 +6,7 @@
     name: "{{ item }}"
     state: "{{ zsh.state }}"
   loop:
+    - bash-completion
     - zsh
     - zplug
 

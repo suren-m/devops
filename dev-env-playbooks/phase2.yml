@@ -1,0 +1,63 @@
+# -----------------------------------------------------------
+# Make sure to run phase1.yml playbook prior to this 
+
+# Test Run: ansible-playbook post_source.yml --check
+# Specific Tags: ansible-playbook post_source.yml --tags prelaunch
+
+# All: ansible-playbook post_source.yml 
+# -----------------------------------------------------------
+
+# only targetting debian based OS for now
+# -----------------------------------------------------------
+
+- name: "prelaunch"
+  hosts: all
+  tags: prelaunch
+  gather_facts: yes # needed for distro vars such as below   
+  
+  pre_tasks:
+    - debug: 
+        msg: 
+          "Env Home: {{ ansible_env.HOME }}
+           OS Family: {{ ansible_os_family }},
+           Distro: {{ ansible_distribution }},
+           release: {{ ansible_distribution_release }},                      
+           Distro Major Ver: {{ ansible_distribution_major_version }},          
+           Distro Ver: {{ ansible_distribution_version }},             
+           Arch: {{ ansible_architecture }}"   
+
+- name: "validate"
+  hosts: all
+  tags: validate
+  gather_facts: yes # needed for distro vars such as below   
+
+  pre_tasks:      
+    - stat: path="{{ ansible_env.HOME }}/.zshrc"
+      register: zshrc
+    - name: 'check zshrc'
+      fail:
+        msg: "zshrc doesn't exist. Make sure to run phase1.yml"
+      when: not zshrc.stat.exists
+
+    - stat: path="{{ ansible_env.HOME }}/.config/shell"
+      register: shell_config
+    - name: 'check shell config dir'
+      fail:
+        msg: "~/.config/shell doesn't exist. Make sure to run phase1.yml"
+      when: not shell_config.stat.isdir 
+
+    - stat: path="{{ ansible_env.HOME }}/.local/bin"
+      register: localbin
+    - name: 'check local bin'
+      fail:
+        msg: "~/.local/bin doesn't exist. Make sure to run phase1.yml"
+      when: not localbin.stat.isdir 
+
+- name: "Phase2 Items (those that need `source ~/.zshrc`)"
+  hosts: all
+  tags: phase2
+  vars_files: 
+    - "./vars/phase2.yml"    
+
+  roles: 
+    - phase2

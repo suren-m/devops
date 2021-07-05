@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Additional setup
+# Additional setup (path, env vars and aliases)
 
 if [ -f ~/.config/shell/common_config ]; then
     . ~/.config/shell/common_config
