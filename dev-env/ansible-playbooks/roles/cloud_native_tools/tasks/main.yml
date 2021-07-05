@@ -2,6 +2,8 @@
 
 - include_tasks: kubectl.yml
 
+- include_tasks: kustomize.yml
+
 - include_tasks: helm.yml
 
 - include_tasks: istioctl.yml

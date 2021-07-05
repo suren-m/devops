@@ -1,1 +1,15 @@
 
+go_based_tools:
+  - lazygit
+  - lf
+
+cargo_based_tools:
+  - bat
+  - tokei --features all
+  - pastel
+  - watchexec
+  - broot
+  - mdbook
+  - cargo-edit
+  - evcxr_repl
+  

@@ -1,4 +1,9 @@
 ---
+- name: setup shell config dir
+  file:
+    path: "{{ ansible_env.HOME }}/.config/shell"
+    state: directory
+    
 - name: copy bashrc
   copy:
     src: .bashrc

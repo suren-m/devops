@@ -13,7 +13,8 @@
     * zsh
     * chsh -s /bin/zsh
     * Reload shell with `source ~/.zshrc`
-4. Run `ansible-playbook phase2.yml`
+4. Run `ansible-playbook phase2.yml` 
+    * Tools in phase2 require tools from phase1 such as `cargo` and `go` available in shell.
 5. For `vs code` and `windows_terminal` configs, see `config_files` directory
 
 ---

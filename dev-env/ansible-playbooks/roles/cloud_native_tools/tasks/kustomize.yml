@@ -1,0 +1,32 @@
+
+# https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.2.0/kustomize_v4.2.0_linux_amd64.tar.gz
+
+- name: Kustomize - Remove exisiting version  
+  file:
+    state: absent
+    path: "{{ ansible_env.HOME}}/.local/bin/kustomize"
+  when:
+    kustomize.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME}}/.local/bin/kustomize"
+  register: kustomize_bin
+
+- debug: msg="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F{{ kustomize.ver }}/kustomize_{{ kustomize.ver }}_{{ target.platform }}_{{ target.arch }}.tar.gz"
+
+- when: not kustomize_bin.stat.exists 
+  block:
+    - name: "Kustomize - Download and Unarchive to /tmp/"  
+      unarchive:
+        src: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F{{ kustomize.ver }}/kustomize_{{ kustomize.ver }}_{{ target.platform }}_{{ target.arch }}.tar.gz"      
+        dest: /tmp
+        remote_src: yes               
+    - name: "Kustomize - cp binary to ~/.local/bin"
+      copy: 
+        src: "/tmp/kustomize"
+        dest: "{{ ansible_env.HOME }}/.local/bin"
+        mode: 0755      
+  always:
+    - name: "Kustomize - Cleanup tmp/kustomize"
+      file:
+        state: absent
+        path: /tmp/kustomize

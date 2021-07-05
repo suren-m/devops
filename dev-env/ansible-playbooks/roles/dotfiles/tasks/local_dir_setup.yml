@@ -2,11 +2,6 @@
   debug:
     msg: "{{ ansible_env.HOME }}"
 
-- name: setup shell config dir
-  file:
-    path: "{{ ansible_env.HOME }}/.config/shell"
-    state: directory
-
 - name: setup local bin for user
   file:
     path: "{{ ansible_env.HOME }}/.local/bin"
