@@ -1,0 +1,30 @@
+---
+#  curl -sL https://run.linkerd.io/install | sh
+#  export PATH=$PATH:$HOME/.linkerd2/bin
+
+- name: "Linkerd - Remove exisiting version"  
+  file:
+    state: absent
+    path: "{{ ansible_env.HOME }}/.linkerd2"
+  when:
+    linkerd.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME}}/.linkerd2/bin"
+  register: linkerd_bin
+
+- when: not linkerd_bin.stat.exists
+  block:
+    - name: "Linkerd - Download install script"
+      get_url:
+        url: '{{ linkerd.install }}'
+        dest: /tmp/linkerd_install.sh
+        mode: 0755    
+    - name: "Linkerd - Install" 
+      command: /tmp/linkerd_install.sh     
+  always:
+    - name: "Linkerd - Cleanup /tmp/linkerd_install.sh"
+      file:
+        state: absent
+        path: /tmp/linkerd_install.sh
+
+    

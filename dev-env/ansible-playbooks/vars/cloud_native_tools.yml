@@ -9,4 +9,7 @@ helm:
 istioctl:
   remove_existing: false
   install: https://istio.io/downloadIstioctl
-  
+
+linkerd:
+  remove_existing: false
+  install: https://run.linkerd.io/install

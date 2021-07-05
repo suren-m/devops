@@ -5,3 +5,5 @@
 - include_tasks: helm.yml
 
 - include_tasks: istioctl.yml
+
+- include_tasks: linkerd.yml
