@@ -12,22 +12,24 @@
 - stat: path="{{ ansible_env.HOME}}/.local/bin/helm"
   register: helm_dir
 
+- debug: msg="https://get.helm.sh/helm-{{ helm.ver }}-{{ target.platform }}-{{ target.arch }}.tar.gz"
+
 - when: not helm_dir.stat.exists 
   block:
     - name: "Helm - Download and Unarchive to /tmp/helm-install"  
       unarchive:
-        src: "https://get.helm.sh/helm-{{ helm.ver }}-{{ os }}-{{ arch }}.tar.gz"      
+        src: "https://get.helm.sh/helm-{{ helm.ver }}-{{ target.platform }}-{{ target.arch }}.tar.gz"      
         dest: /tmp
         remote_src: yes               
     - name: "Helm - cp binary to ~/.local/bin"
       copy: 
-        src: "/tmp/{{ os }}-{{ arch }}/helm"
+        src: "/tmp/{{ target.platform }}-{{ target.arch }}/helm"
         dest: "{{ ansible_env.HOME }}/.local/bin"
         mode: 0755      
     - name: "Helm - Cleanup tmp/helm-install"
       file:
         state: absent
-        path: /tmp/{{ os }}-{{ arch }}
+        path: /tmp/{{ target.platform }}-{{ target.arch }}
          
 
 

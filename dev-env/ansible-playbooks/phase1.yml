@@ -99,6 +99,8 @@
 - name: "dotfiles"
   hosts: all
   tags: dotfiles  
+  vars_files: 
+    - "./vars/dotfiles.yml"  
   roles:
     - dotfiles 
 

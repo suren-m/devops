@@ -5,10 +5,21 @@
     path: "{{ ansible_env.HOME }}/.vim/autoload"
     state: directory
 
+- name: vim - vim plug - remove existing
+  file:
+    path: "{{ ansible_env.HOME }}/.vim/autoload/plug.vim"
+    state: absent
+  when: vim.plug.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME }}/.vim/autoload/plug.vim"
+  register: vim_plug
+
 - name: vim plug for vim
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: "{{ ansible_env.HOME }}/.vim/autoload"
+  when:
+    not vim_plug.stat.exists
 
 - name: vimrc 
   copy:

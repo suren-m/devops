@@ -8,7 +8,7 @@
 2. Run `ansible-playbook phase1.yml`
     * Variables are located in `./vars` directory
         * For e.g: `remove_existing` for `go` task is in `programming.yml`
-    * Global vars such as `os` and `arch` are located in `inventory/group_vars/`
+    * Global vars such as `target.platform` and `target.arch` are located in `inventory/group_vars/`
 3. Set `zsh` as default shell (see: https://wiki.debian.org/Zsh)
     * zsh
     * chsh -s /bin/zsh

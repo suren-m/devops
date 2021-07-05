@@ -3,5 +3,6 @@
 # variables here will be overwritten if `vars_files` are used in plays or `include_vars` in tasks
 
 # used when downloading binaries (e.g: go)
-os: linux
-arch: amd64
+target:
+  platform: linux
+  arch: amd64

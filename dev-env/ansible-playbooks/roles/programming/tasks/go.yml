@@ -26,13 +26,13 @@
   register: go_dir
 
 # - debug: var=go_dir
-# - debug: var=os
-# - debug: var=arch
+# - debug: var=target.platform
+# - debug: var=target.arch
 
 - name: Go - Install (Download and unarchive to /usr/local/go)
   become: true
   unarchive:
-    src: "https://dl.google.com/go/{{ target_version }}.{{os}}-{{arch}}.tar.gz"      
+    src: "https://dl.google.com/go/{{ target_version }}.{{ target.platform }}-{{ target.arch }}.tar.gz"      
     dest: /usr/local
     remote_src: yes
   when:

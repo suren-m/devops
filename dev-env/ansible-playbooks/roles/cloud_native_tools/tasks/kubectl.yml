@@ -24,14 +24,14 @@
 
 # os and arch comes from inventory/group_vars/all.yml
 # - debug: var=target_version
-# - debug: var=os
-# - debug: var=arch
+# - debug: var=target.platform
+# - debug: var=target.arch
 
-- debug: msg="https://dl.k8s.io/{{ target_version }}/bin/{{os}}/{{arch}}/kubectl"
+- debug: msg="https://dl.k8s.io/{{ target_version }}/bin/{{ target.platform }}/{{ target.arch}}/kubectl"
 
 - name: "Kubectl - Install (download to ~/.local/bin/)"  
   get_url:
-    url: "https://dl.k8s.io/{{ target_version }}/bin/{{os}}/{{arch}}/kubectl"
+    url: "https://dl.k8s.io/{{ target_version }}/bin/{{ target.platform }}/{{ target.arch }}/kubectl"
     dest: "{{ ansible_env.HOME}}/.local/bin/kubectl"   
     mode: 0755   
   when:
