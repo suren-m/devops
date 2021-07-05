@@ -1,0 +1,41 @@
+---
+# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+# Note that in WSL2 with Docker-Desktop, there will be a kubectl symlink in /usr/local/bin
+
+- name: Kubectl - Check latest version 
+  uri: 
+    url: https://dl.k8s.io/release/stable.txt     
+    return_content: yes
+  register: latest_version
+
+- name: Kubectl - Set target version  
+  set_fact: 
+    target_version: "{{ latest_version.content | default(kubectl.fallback_ver) }}"
+
+- name: Kubectl - Remove exisiting version
+  become: true
+  file:
+    state: absent
+    path: "{{ ansible_env.HOME}}/.local/bin/kubectl"
+  when:
+    kubectl.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME}}/.local/bin/kubectl"
+  register: kubectl_dir
+
+# os and arch comes from inventory/group_vars/all.yml
+# - debug: var=target_version
+# - debug: var=os
+# - debug: var=arch
+
+- debug: msg="https://dl.k8s.io/{{ target_version }}/bin/{{os}}/{{arch}}/kubectl"
+
+- name: "Kubectl - Install (download to ~/.local/bin/)"
+  become: true
+  get_url:
+    url: "https://dl.k8s.io/{{ target_version }}/bin/{{os}}/{{arch}}/kubectl"
+    dest: "{{ ansible_env.HOME}}/.local/bin/kubectl"  
+    mode: 0755    
+  when:
+    not kubectl_dir.stat.exists 
+    

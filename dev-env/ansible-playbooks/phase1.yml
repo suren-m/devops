@@ -85,6 +85,15 @@
   roles: 
     - programming
 
+- name: "cloud native tools"
+  hosts: all
+  tags: cntools
+  vars_files: 
+    - "./vars/cloud_native_tools.yml"    
+
+  roles: 
+    - cloud_native_tools
+
 # Not using become:true for dotfiles roles
 # To avoid permission issues when other tools need to create config files
 - name: "dotfiles"

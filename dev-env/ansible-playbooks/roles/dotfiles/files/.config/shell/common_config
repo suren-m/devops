@@ -35,6 +35,6 @@ export PATH=$PATH:$HOME/.local/bin
 # Go and Go based tools compiled from source
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
-
+ 
 # deno
 export PATH="$PATH:$DENO_INSTALL/bin"
