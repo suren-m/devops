@@ -53,6 +53,27 @@
         msg: "~/.local/bin doesn't exist. Make sure to run phase1.yml"
       when: not localbin.stat.isdir 
 
+    - stat: path="/home/linuxbrew/.linuxbrew/bin/brew"
+      register: brew_bin
+    - name: 'check brew_bin'
+      fail:
+        msg: "Unable to find brew. Make sure Homebrew is installed from phase1"
+      when: not localbin.stat.exists and ansible_os_family == 'Debian'
+
+    - stat: path="{{ lookup('env', 'HOME') }}/.cargo/bin"
+      register: cargo_bin
+    - name: 'check cargo_bin'
+      fail:
+        msg: "~/.cargo/bin doesn't exist. Make sure Rust is intalled from phase1"
+      when: not cargo_bin.stat.exists
+
+    - stat: path="{{ lookup('env', 'HOME') }}/go/bin"
+      register: go_bin
+    - name: 'check go bin (local)'
+      fail:
+        msg: "~/go/bin doesn't exist. Make sure Go and its bin dirs are configured from phase1"
+      when: not go_bin.stat.exists
+
 - name: "Phase2 Items (those that need `source ~/.zshrc`)"
   hosts: all
   tags: phase2
@@ -60,4 +81,6 @@
     - "./vars/phase2.yml"    
 
   roles: 
-    - phase2
+    - brew_based_tools
+    - cargo_based_tools
+    - go_based_tools

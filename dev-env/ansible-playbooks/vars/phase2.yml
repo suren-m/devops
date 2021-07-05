@@ -1,16 +1,25 @@
 
-go_tools:
+brew:  
+  operation: install # or uninstall, upgrade, etc  
+  replace_existing: false # has no effect if it's upgrade or uninstall operation
+  tools:
+    - gh
+    - bat
+
+cargo:
+  operation: install # or uninstall
+  replace_existing: false
+  tools:
+    - bat
+    - tokei --features all
+    - pastel
+    - watchexec
+    - broot
+    - mdbook
+    - cargo-edit
+    - evcxr_repl
+  
+go_tools:  
   lazygit: 
     remove_existing: false
     install: github.com/jesseduffield/lazygit
-
-cargo_based_tools:
-  - bat
-  - tokei --features all
-  - pastel
-  - watchexec
-  - broot
-  - mdbook
-  - cargo-edit
-  - evcxr_repl
-  

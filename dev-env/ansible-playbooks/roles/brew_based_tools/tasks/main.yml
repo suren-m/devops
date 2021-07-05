@@ -1,0 +1,28 @@
+---
+# IMPORTANT: Make sure brew is installed and available in the shell
+
+- name: "Brew - stat - check currently installed"
+  stat: path="/home/linuxbrew/.linuxbrew/bin/{{item}}"  
+  loop: "{{ brew.tools }}"
+  register: currently_installed
+  when:
+    ansible_os_family == 'Debian'
+
+# - debug: var=currently_installed
+
+- name: "Brew - Install or upgrade tools"
+  shell: "brew {{ brew.operation }} {{ item.item }}"  
+  with_items: "{{ currently_installed.results }}" 
+  when: 
+    - ansible_os_family == 'Debian'
+    - brew.operation != 'uninstall'
+    - item.stat.exists == false or brew.replace_existing == true or brew.operation == 'upgrade'
+
+- name: "Brew - Uninstall tools"
+  shell: "brew {{ brew.operation }} {{ item.item }}"
+  # no_log: true
+  with_items: "{{ currently_installed.results }}" 
+  when: 
+    - ansible_os_family == 'Debian'
+    - brew.operation == 'uninstall' 
+    - item.stat.exists == true # don't attempt to uninstall if it doesn't exist
