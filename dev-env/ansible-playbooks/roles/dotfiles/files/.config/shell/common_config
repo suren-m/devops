@@ -36,5 +36,8 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
  
-# deno
+# Istioctl
+export PATH=$PATH:$HOME/.istioctl/bin
+
+# Deno
 export PATH="$PATH:$DENO_INSTALL/bin"

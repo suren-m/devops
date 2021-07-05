@@ -1,0 +1,30 @@
+---
+#  curl -sL https://istio.io/downloadIstioctl | sh -
+#  export PATH=$PATH:$HOME/.istioctl/bin
+
+- name: "Istioctl - Remove exisiting version"  
+  file:
+    state: absent
+    path: "{{ ansible_env.HOME }}/.istioctl"
+  when:
+    istioctl.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME}}/.istioctl/bin"
+  register: istioctl_bin
+
+- when: not istioctl_bin.stat.exists
+  block:
+    - name: "Istioctl - Download install script"
+      get_url:
+        url: '{{ istioctl.install }}'
+        dest: /tmp/istioctl_install.sh
+        mode: 0755    
+    - name: "Istioctl - Install" 
+      command: /tmp/istioctl_install.sh     
+  always:
+    - name: "Istioctl - Cleanup /tmp/istioctl_install.sh"
+      file:
+        state: absent
+        path: /tmp/istioctl_install.sh
+
+    
