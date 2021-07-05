@@ -2,18 +2,17 @@
 brew:  
   operation: install # or uninstall, upgrade, etc  
   replace_existing: false # has no effect if it's upgrade or uninstall operation
-  tools:
-    - gh
+  tools:    
     - bat
+    - gh
+    - pastel
+    - tokei
+    - watchexec
 
 cargo:
   operation: install # or uninstall
   replace_existing: false
-  tools:
-    - bat
-    - tokei --features all
-    - pastel
-    - watchexec
+  tools:    
     - broot
     - mdbook
     - cargo-edit
