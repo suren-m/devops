@@ -11,3 +11,5 @@
     - zplug
 
 - include_tasks: starship.yml
+
+- include_tasks: utils.yml

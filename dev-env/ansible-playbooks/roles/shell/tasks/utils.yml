@@ -1,0 +1,16 @@
+---
+# https://github.com/chubin/cheat.sh
+
+- name: Cht.sh - check if it already exists
+  stat: 
+    path: "{{ ansible_env.HOME }}/.local/bin/cht.sh"
+  register: chtsh_bin  
+
+- debug: var=chtsh_bin
+
+- name: Cht.sh - Download
+  get_url:
+    url:  https://cht.sh/:cht.sh
+    dest: "{{ lookup('env', 'HOME') }}/.local/bin/cht.sh"
+    mode: a+x
+  when: not chtsh_bin.stat.exists or chtsh.reinstall == true

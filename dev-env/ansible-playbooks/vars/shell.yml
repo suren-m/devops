@@ -4,3 +4,6 @@ zsh:
 
 starship:
   reinstall: false
+
+chtsh:
+  reinstall: false

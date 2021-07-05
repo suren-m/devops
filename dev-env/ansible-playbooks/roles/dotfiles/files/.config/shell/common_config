@@ -1,7 +1,9 @@
 # -----Aliases----- #
+alias c=cht.sh
 alias k=kubectl
-alias v=vim
 alias kus=kustomize
+alias v=vim
+
 
 # -----Path vars exports----- #
 # local bin
