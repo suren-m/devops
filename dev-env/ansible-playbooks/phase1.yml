@@ -85,6 +85,16 @@
   roles: 
     - cloud_native_tools
 
+- name: "devops tools"
+  hosts: all
+  become: true
+  tags: devops
+  vars_files: 
+    - "./vars/devops.yml"    
+
+  roles: 
+    - devops
+
 # Not using become:true for dotfiles roles
 # To avoid permission issues when other tools need to create config files
 - name: "dotfiles"

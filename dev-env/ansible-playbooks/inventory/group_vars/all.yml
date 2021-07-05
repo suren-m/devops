@@ -5,4 +5,7 @@
 # used when downloading binaries (e.g: go)
 target:
   platform: linux
-  arch: amd64
+  arch: amd64 # dpkg --print-architecture  
+
+# ansible -m setup localhost
+# lsb_release -cs == ansible_distribution_release

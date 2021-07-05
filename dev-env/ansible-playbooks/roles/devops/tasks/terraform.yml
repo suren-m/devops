@@ -1,0 +1,30 @@
+---
+# https://www.terraform.io/docs/cli/install/apt.html#repository-configuration
+
+- name: Terraform - apt-key add gpg for hashicorp
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg     
+  register: hashicorp_apt_key
+  when: ansible_os_family == 'Debian'
+
+# to delete key: apt-key del <pub_key_id>
+- debug: var=hashicorp_apt_key
+
+# To remove: 
+#  ls /etc/apt/sources.list.d
+#  apt-add-repository -r apt_releases_hashicorp_com.list
+# make sure to also clean up the key above
+- name: Terraform - apt-add-repository for hashicorp
+  apt_repository:
+    repo: "deb [arch={{ target.arch }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+  register: hashicorp_repo
+  when: hashicorp_apt_key.changed and ansible_os_family == 'Debian' 
+
+- debug: var=hashicorp_repo
+
+- name: Terraform - apt update and install
+  apt:
+    update_cache: yes
+    name: terraform
+    state: "{{ terraform.state }}"
+  when: hashicorp_repo.changed and ansible_os_family == 'Debian' 
