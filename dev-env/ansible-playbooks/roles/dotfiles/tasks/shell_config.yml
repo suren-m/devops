@@ -1,35 +1,51 @@
 ---
-- name: setup shell config dir
-  file:
-    path: "{{ lookup('env', 'HOME') }}/.config/shell"
-    state: directory
-    
-- name: copy bashrc
+# .rc and .profile files
+
+- name: Bash - copy .profile
+  copy:
+    src: .profile
+    dest: "{{ lookup('env', 'HOME') }}/.profile"    
+
+- name: Bash - copy .bashrc
   copy:
     src: .bashrc
     dest: "{{ lookup('env', 'HOME') }}/.bashrc"
 
-- name: copy zshrc
+- name: Zsh - copy .zprofile
+  copy:
+    src: .zprofile
+    dest: "{{ lookup('env', 'HOME') }}/.zprofile"
+
+- name: Zsh - copy .zshrc
   copy:
     src: .zshrc
     dest: "{{ lookup('env', 'HOME') }}/.zshrc"
 
-- name: copy common_config
+#----------------#
+
+# ~/.config/shell/*
+
+- name: ~/.config/shell/ - setup shell config dir
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.config/shell"
+    state: directory
+
+- name: ~/.config/shell/ - copy common_config
   copy:
     src: .config/shell/common_config
     dest: "{{ lookup('env', 'HOME') }}/.config/shell/common_config"
 
-- name: copy bash_config
+- name: ~/.config/shell/ - copy bash_config
   copy:
     src: .config/shell/bash_config
     dest: "{{ lookup('env', 'HOME') }}/.config/shell/bash_config"
 
-- name: copy zsh_config
+- name: ~/.config/shell/ - copy zsh_config
   copy:
     src: .config/shell/zsh_config
     dest: "{{ lookup('env', 'HOME') }}/.config/shell/zsh_config"
 
-- name: copy starship config
+- name: ~/.config/ - copy starship.toml
   copy:
     src: .config/starship.toml
-    dest: "{{ lookup('env', 'HOME') }}/.config/starship.toml"
+    dest: "{{ lookup('env', 'HOME') }}/.config/starship.toml"    

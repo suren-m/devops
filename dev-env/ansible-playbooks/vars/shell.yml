@@ -11,3 +11,8 @@ chtsh:
 lf:
   remove_existing: false
   ver: r24 # https://github.com/gokcehan/lf/releases
+
+homebrew:
+  remove_existing: false
+  install: https://raw.githubusercontent.com/Homebrew/install/master/install.sh
+  
