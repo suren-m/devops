@@ -1,7 +1,6 @@
 ---
 
-- name: Deno - Remove exisiting version
-  become: true
+- name: Deno - Remove exisiting version  
   file:
     state: absent
     path: "{{ lookup('env', 'HOME') }}/.deno"
