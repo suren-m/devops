@@ -1,4 +1,7 @@
 ---
+# If the play uses become:true then
+# ansible_env.HOME will point to /root whereas lookup('env', 'HOME') will be $HOME
+- debug: msg="ansible_env.home => {{ ansible_env.HOME }} and lookup('env', 'HOME') -> {{ lookup('env', 'HOME') }}"
 
 - name: zsh and zplug
   become: true

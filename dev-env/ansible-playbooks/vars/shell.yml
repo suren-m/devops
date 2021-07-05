@@ -7,3 +7,7 @@ starship:
 
 chtsh:
   reinstall: false
+
+lf:
+  remove_existing: false
+  ver: r24 # https://github.com/gokcehan/lf/releases

@@ -49,8 +49,7 @@
 
 - name: "shell"
   hosts: all
-  tags: shell
-  become: true
+  tags: shell  
   vars_files: 
     - "./vars/shell.yml"    
 
