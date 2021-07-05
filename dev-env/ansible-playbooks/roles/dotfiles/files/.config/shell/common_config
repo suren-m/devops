@@ -6,6 +6,9 @@ alias v=vim
 # local bin
 export PATH=$PATH:$HOME/.local/bin
 
+# Deno
+export PATH="$PATH:$DENO_INSTALL/bin"
+
 # Go and Go based tools compiled from source
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
@@ -13,8 +16,6 @@ export PATH=$PATH:$HOME/go/bin
 # Istioctl
 export PATH=$PATH:$HOME/.istioctl/bin
 
-# Deno
-export PATH="$PATH:$DENO_INSTALL/bin"
 
 # -----Env vars----- #
 export DENO_INSTALL="$HOME/.deno"
