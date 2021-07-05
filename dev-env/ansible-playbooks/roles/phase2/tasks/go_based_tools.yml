@@ -1,11 +1,14 @@
 ---
-- name: setup src dir for go tools
-  file:
-    path: "{{ lookup('env', 'HOME') }}/go/src"
-    state: directory
 
-- name: setup bin dir for go tools
+- name: Lazygit - Remove exisiting version  
   file:
-    path: "{{ lookup('env', 'HOME') }}/go/bin"
-    state: directory
+    state: absent
+    path: "{{ lookup('env', 'HOME') }}/go/bin/lazygit"
+  when: go_tools.lazygit.remove_existing == true
 
+- stat: path="{{ lookup('env', 'HOME') }}/go/bin/lazygit"
+  register: lazygit_bin
+    
+- name: Lazygit - Install using go get {{ go_tools.lazygit.install }}
+  shell: "go get {{ go_tools.lazygit.install }}"
+  when: not lazygit_bin.stat.exists 

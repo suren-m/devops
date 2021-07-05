@@ -2,6 +2,7 @@
 alias c=cht.sh
 alias k=kubectl
 alias kus=kustomize
+alias lg=lazygit
 alias v=vim
 
 
