@@ -1,15 +1,50 @@
+# Tools usually pre-installed on Debian
+# - whereis      
+# - which
+# - ldd
+# - diff
+# - cat
+# - tac      
+# - free
+# - sed
+# - awk
+# - hostname
 
 common:
-  state: present
-  tools:
-    - dpkg
-    - lsb-release
-    - software-properties-common # apt-add-repo        
-    - ca-certificates            
-    - openssh-client        
-    - gnupg # needed for docker      
-    - jq
-    - tmux
-    - ripgrep     
-    - vim
-    - neovim                    
+  dev:
+    state: present
+    tools:
+      - ca-certificates
+      - dpkg
+      - file
+      - gnupg # needed for docker
+      - htop
+      - httpie
+      - jq
+      - lsb-release
+      - neovim
+      - openssh-client
+      - ripgrep
+      - rsync
+      - software-properties-common # apt-add-repo
+      - spell
+      - tmux
+      - tree
+      - unzip
+      - vim
+      - wamerican
+      - wbritish
+      - xclip
+      - zip
+  net:
+    state: present
+    tools:    
+      - dnsutils # dig, nslookup, nsupdate
+      - whois
+      - traceroute  
+  fun:
+    state: present
+    tools:
+      - figlet
+      - cowsay # also used in ansible output 
+      - cmatrix

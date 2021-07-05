@@ -4,9 +4,20 @@
     upgrade: yes
     update_cache: yes
 
-- name: Common - Install Common Tools
+- name: Common - Install Dev Tools
   package:
     name: "{{ item }}"
-    state: "{{ common.state }}"
-  loop: "{{ common.tools }}"
+    state: "{{ common.dev.state }}"
+  loop: "{{ common.dev.tools }}"
 
+- name: Common - Install Networking Tools
+  package:
+    name: "{{ item }}"
+    state: "{{ common.net.state }}"
+  loop: "{{ common.net.tools }}"
+
+- name: Common - Install other / fun Tools
+  package:
+    name: "{{ item }}"
+    state: "{{ common.fun.state }}"
+  loop: "{{ common.fun.tools }}"
