@@ -1,32 +1,6 @@
-# -----Functions----- #
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-
-
 # -----Aliases----- #
 alias k=kubectl
 alias v=vim
-
-
-# -----Env vars----- #
-export DENO_INSTALL="$HOME/.deno"
-export NVM_DIR="$HOME/.nvm" # bash autocomplete in bash_config
-
-
-# -----Environments----- #
-# should only be added after rust installation (adds to path)
-source "$HOME/.cargo/env" 
-# This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-
 
 # -----Path vars exports----- #
 # local bin
@@ -41,3 +15,34 @@ export PATH=$PATH:$HOME/.istioctl/bin
 
 # Deno
 export PATH="$PATH:$DENO_INSTALL/bin"
+
+# -----Env vars----- #
+export DENO_INSTALL="$HOME/.deno"
+export NVM_DIR="$HOME/.nvm" # bash autocomplete in bash_config
+
+# ------------------- #
+
+
+# -----Functions----- #
+# Use lf to switch directories and bind it to ctrl-o
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+
+
+# -------------------- #
+# --- Below should be added after the required tooling is installed --- #
+
+# -----Environments----- #
+
+# should only be added after rust installation (adds to path)
+source "$HOME/.cargo/env" 
+
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
