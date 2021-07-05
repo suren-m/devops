@@ -24,6 +24,7 @@ common:
       - lsb-release
       - neovim
       - openssh-client
+      - procps
       - ripgrep
       - rsync
       - software-properties-common # apt-add-repo
