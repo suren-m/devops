@@ -1,2 +1,11 @@
 # ~/.config/starship.toml
 
+[directory]
+truncation_length = 5
+truncate_to_repo = true
+
+[memory_usage]
+disabled = false
+threshold = -1
+symbol = " "
+style = "bold dimmed green"
