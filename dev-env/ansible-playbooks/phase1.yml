@@ -20,7 +20,7 @@
   pre_tasks:
     - debug: 
         msg: 
-          "Env Home: {{ ansible_env.HOME }}
+          "Env Home: {{ lookup('env', 'HOME') }}
            OS Family: {{ ansible_os_family }},
            Distro: {{ ansible_distribution }},
            release: {{ ansible_distribution_release }},                      

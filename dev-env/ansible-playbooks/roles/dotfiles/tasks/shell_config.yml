@@ -1,35 +1,35 @@
 ---
 - name: setup shell config dir
   file:
-    path: "{{ ansible_env.HOME }}/.config/shell"
+    path: "{{ lookup('env', 'HOME') }}/.config/shell"
     state: directory
     
 - name: copy bashrc
   copy:
     src: .bashrc
-    dest: "{{ ansible_env.HOME }}/.bashrc"
+    dest: "{{ lookup('env', 'HOME') }}/.bashrc"
 
 - name: copy zshrc
   copy:
     src: .zshrc
-    dest: "{{ ansible_env.HOME }}/.zshrc"
+    dest: "{{ lookup('env', 'HOME') }}/.zshrc"
 
 - name: copy common_config
   copy:
     src: .config/shell/common_config
-    dest: "{{ ansible_env.HOME }}/.config/shell/common_config"
+    dest: "{{ lookup('env', 'HOME') }}/.config/shell/common_config"
 
 - name: copy bash_config
   copy:
     src: .config/shell/bash_config
-    dest: "{{ ansible_env.HOME }}/.config/shell/bash_config"
+    dest: "{{ lookup('env', 'HOME') }}/.config/shell/bash_config"
 
 - name: copy zsh_config
   copy:
     src: .config/shell/zsh_config
-    dest: "{{ ansible_env.HOME }}/.config/shell/zsh_config"
+    dest: "{{ lookup('env', 'HOME') }}/.config/shell/zsh_config"
 
 - name: copy starship config
   copy:
     src: .config/starship.toml
-    dest: "{{ ansible_env.HOME }}/.config/starship.toml"
+    dest: "{{ lookup('env', 'HOME') }}/.config/starship.toml"

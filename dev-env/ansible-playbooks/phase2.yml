@@ -18,7 +18,7 @@
   pre_tasks:
     - debug: 
         msg: 
-          "Env Home: {{ ansible_env.HOME }}
+          "Env Home: {{ lookup('env', 'HOME') }}
            OS Family: {{ ansible_os_family }},
            Distro: {{ ansible_distribution }},
            release: {{ ansible_distribution_release }},                      
@@ -32,21 +32,21 @@
   gather_facts: yes # needed for distro vars such as below   
 
   pre_tasks:      
-    - stat: path="{{ ansible_env.HOME }}/.zshrc"
+    - stat: path="{{ lookup('env', 'HOME') }}/.zshrc"
       register: zshrc
     - name: 'check zshrc'
       fail:
         msg: "zshrc doesn't exist. Make sure to run phase1.yml"
       when: not zshrc.stat.exists
 
-    - stat: path="{{ ansible_env.HOME }}/.config/shell"
+    - stat: path="{{ lookup('env', 'HOME') }}/.config/shell"
       register: shell_config
     - name: 'check shell config dir'
       fail:
         msg: "~/.config/shell doesn't exist. Make sure to run phase1.yml"
       when: not shell_config.stat.isdir 
 
-    - stat: path="{{ ansible_env.HOME }}/.local/bin"
+    - stat: path="{{ lookup('env', 'HOME') }}/.local/bin"
       register: localbin
     - name: 'check local bin'
       fail:

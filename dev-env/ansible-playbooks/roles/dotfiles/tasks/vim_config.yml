@@ -2,38 +2,38 @@
 # vim
 - name: vim autoload directory
   file:
-    path: "{{ ansible_env.HOME }}/.vim/autoload"
+    path: "{{ lookup('env', 'HOME') }}/.vim/autoload"
     state: directory
 
 - name: vim - vim plug - remove existing
   file:
-    path: "{{ ansible_env.HOME }}/.vim/autoload/plug.vim"
+    path: "{{ lookup('env', 'HOME') }}/.vim/autoload/plug.vim"
     state: absent
   when: vim.plug.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME }}/.vim/autoload/plug.vim"
+- stat: path="{{ lookup('env', 'HOME') }}/.vim/autoload/plug.vim"
   register: vim_plug
 
 - name: vim plug for vim
   get_url:
     url: "{{ vim.plug.install }}"
-    dest: "{{ ansible_env.HOME }}/.vim/autoload"
+    dest: "{{ lookup('env', 'HOME') }}/.vim/autoload"
   when:
     not vim_plug.stat.exists
 
 - name: vimrc 
   copy:
     src: .vim/vimrc
-    dest: "{{ ansible_env.HOME }}/.vim/vimrc"
+    dest: "{{ lookup('env', 'HOME') }}/.vim/vimrc"
 
 # nvim
 - name: nvim config directory
   file:
-    path: "{{ ansible_env.HOME }}/.config/nvim"
+    path: "{{ lookup('env', 'HOME') }}/.config/nvim"
     state: directory
 
 - name: 
   copy:
     src: .config/nvim/init.vim    
-    dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"
 

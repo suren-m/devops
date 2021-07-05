@@ -6,11 +6,11 @@
   become: true
   file:
     state: absent
-    path: "{{ ansible_env.HOME }}/.nvm"
+    path: "{{ lookup('env', 'HOME') }}/.nvm"
   when:
     nvm.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME }}/.nvm"
+- stat: path="{{ lookup('env', 'HOME') }}/.nvm"
   register: nvm_dir
 
 - when: not nvm_dir.stat.exists
@@ -27,10 +27,10 @@
       # source nvm.sh and install stable version of node
       # nvm install stable or nvm install --lts
     - name: NodeJS - NVM - Install latest stable nodejs version 
-      shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install stable'
+      shell: ". {{ lookup('env', 'HOME') }}/.nvm/nvm.sh && nvm install stable"
       args:
-        creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
-        chdir: "{{ ansible_env.HOME }}"
+        creates: "{{ lookup('env', 'HOME') }}/.nvm/versions/node"
+        chdir: "{{ lookup('env', 'HOME') }}"
         executable: /bin/bash        
   always:
     - name: NodeJS - NVM - Cleanup /tmp/nvm_install.sh

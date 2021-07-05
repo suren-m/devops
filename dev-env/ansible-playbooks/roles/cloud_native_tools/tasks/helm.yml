@@ -5,11 +5,11 @@
 - name: Helm - Remove exisiting version  
   file:
     state: absent
-    path: "{{ ansible_env.HOME}}/.local/bin/helm"
+    path: "{{ lookup('env', 'HOME')}}/.local/bin/helm"
   when:
     helm.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME}}/.local/bin/helm"
+- stat: path="{{ lookup('env', 'HOME')}}/.local/bin/helm"
   register: helm_dir
 
 - debug: msg="https://get.helm.sh/helm-{{ helm.ver }}-{{ target.platform }}-{{ target.arch }}.tar.gz"
@@ -24,7 +24,7 @@
     - name: "Helm - cp binary to ~/.local/bin"
       copy: 
         src: "/tmp/{{ target.platform }}-{{ target.arch }}/helm"
-        dest: "{{ ansible_env.HOME }}/.local/bin"
+        dest: "{{ lookup('env', 'HOME') }}/.local/bin"
         mode: 0755      
     - name: "Helm - Cleanup tmp/helm-install"
       file:

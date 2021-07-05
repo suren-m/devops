@@ -1,11 +1,11 @@
 ---
 - name: setup src dir for go tools
   file:
-    path: "{{ ansible_env.HOME }}/go/src"
+    path: "{{ lookup('env', 'HOME') }}/go/src"
     state: directory
 
 - name: setup bin dir for go tools
   file:
-    path: "{{ ansible_env.HOME }}/go/bin"
+    path: "{{ lookup('env', 'HOME') }}/go/bin"
     state: directory
 

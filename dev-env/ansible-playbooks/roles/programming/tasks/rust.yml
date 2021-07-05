@@ -4,7 +4,7 @@
 
 # stat to see if rustup already exists
 - stat:
-    path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+    path: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup"
   register: rustup_bin
 
 # Uninstall existing only if rustup exists and also remove_existing var is true

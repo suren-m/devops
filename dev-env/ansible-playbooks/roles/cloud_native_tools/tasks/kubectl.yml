@@ -15,11 +15,11 @@
 - name: Kubectl - Remove exisiting version  
   file:
     state: absent
-    path: "{{ ansible_env.HOME}}/.local/bin/kubectl"
+    path: "{{ lookup('env', 'HOME')}}/.local/bin/kubectl"
   when:
     kubectl.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME}}/.local/bin/kubectl"
+- stat: path="{{ lookup('env', 'HOME')}}/.local/bin/kubectl"
   register: kubectl_dir
 
 # os and arch comes from inventory/group_vars/all.yml
@@ -32,7 +32,7 @@
 - name: "Kubectl - Install (download to ~/.local/bin/)"  
   get_url:
     url: "https://dl.k8s.io/{{ target_version }}/bin/{{ target.platform }}/{{ target.arch }}/kubectl"
-    dest: "{{ ansible_env.HOME}}/.local/bin/kubectl"   
+    dest: "{{ lookup('env', 'HOME')}}/.local/bin/kubectl"   
     mode: 0755   
   when:
     not kubectl_dir.stat.exists 

@@ -4,11 +4,11 @@
   become: true
   file:
     state: absent
-    path: "{{ ansible_env.HOME }}/.deno"
+    path: "{{ lookup('env', 'HOME') }}/.deno"
   when:
     deno.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME }}/.deno"
+- stat: path="{{ lookup('env', 'HOME') }}/.deno"
   register: deno_dir
 
 - when: not deno_dir.stat.exists

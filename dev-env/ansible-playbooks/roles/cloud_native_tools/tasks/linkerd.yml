@@ -5,11 +5,11 @@
 - name: "Linkerd - Remove exisiting version"  
   file:
     state: absent
-    path: "{{ ansible_env.HOME }}/.linkerd2"
+    path: "{{ lookup('env', 'HOME') }}/.linkerd2"
   when:
     linkerd.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME}}/.linkerd2/bin"
+- stat: path="{{ lookup('env', 'HOME')}}/.linkerd2/bin"
   register: linkerd_bin
 
 - when: not linkerd_bin.stat.exists

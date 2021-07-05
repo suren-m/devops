@@ -1,14 +1,14 @@
 - name: check $Home
   debug:
-    msg: "{{ ansible_env.HOME }}"
+    msg: "{{ lookup('env', 'HOME') }}"
 
 - name: setup local bin for user
   file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
+    path: "{{ lookup('env', 'HOME') }}/.local/bin"
     state: directory
 
 - name: setup local share for user
   file:
-    path: "{{ ansible_env.HOME }}/.local/share"
+    path: "{{ lookup('env', 'HOME') }}/.local/share"
     state: directory
 

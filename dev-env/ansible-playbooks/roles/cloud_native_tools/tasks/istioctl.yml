@@ -5,11 +5,11 @@
 - name: "Istioctl - Remove exisiting version"  
   file:
     state: absent
-    path: "{{ ansible_env.HOME }}/.istioctl"
+    path: "{{ lookup('env', 'HOME') }}/.istioctl"
   when:
     istioctl.remove_existing == true
 
-- stat: path="{{ ansible_env.HOME}}/.istioctl/bin"
+- stat: path="{{ lookup('env', 'HOME')}}/.istioctl/bin"
   register: istioctl_bin
 
 - when: not istioctl_bin.stat.exists
