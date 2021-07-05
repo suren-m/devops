@@ -1,3 +1,5 @@
 ---
 
 - include_tasks: kubectl.yml
+
+- include_tasks: helm.yml

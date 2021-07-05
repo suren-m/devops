@@ -1,0 +1,34 @@
+---
+# https://get.helm.sh/helm-v3.6.2-linux-amd64.tar.gz
+# Note that in WSL2 with Docker-Desktop, there will be a helm symlink in /usr/local/bin
+
+- name: Helm - Remove exisiting version  
+  file:
+    state: absent
+    path: "{{ ansible_env.HOME}}/.local/bin/helm"
+  when:
+    helm.remove_existing == true
+
+- stat: path="{{ ansible_env.HOME}}/.local/bin/helm"
+  register: helm_dir
+
+- when: not helm_dir.stat.exists 
+  block:
+    - name: "Helm - Download and Unarchive to /tmp/helm-install"  
+      unarchive:
+        src: "https://get.helm.sh/helm-{{ helm.ver }}-{{ os }}-{{ arch }}.tar.gz"      
+        dest: /tmp
+        remote_src: yes               
+    - name: "Helm - cp binary to ~/.local/bin"
+      copy: 
+        src: "/tmp/{{ os }}-{{ arch }}/helm"
+        dest: "{{ ansible_env.HOME }}/.local/bin"
+        mode: 0755      
+    - name: "Helm - Cleanup tmp/helm-install"
+      file:
+        state: absent
+        path: /tmp/{{ os }}-{{ arch }}
+         
+
+
+     

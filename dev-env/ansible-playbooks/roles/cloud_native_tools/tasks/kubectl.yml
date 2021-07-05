@@ -12,8 +12,7 @@
   set_fact: 
     target_version: "{{ latest_version.content | default(kubectl.fallback_ver) }}"
 
-- name: Kubectl - Remove exisiting version
-  become: true
+- name: Kubectl - Remove exisiting version  
   file:
     state: absent
     path: "{{ ansible_env.HOME}}/.local/bin/kubectl"
@@ -30,12 +29,11 @@
 
 - debug: msg="https://dl.k8s.io/{{ target_version }}/bin/{{os}}/{{arch}}/kubectl"
 
-- name: "Kubectl - Install (download to ~/.local/bin/)"
-  become: true
+- name: "Kubectl - Install (download to ~/.local/bin/)"  
   get_url:
     url: "https://dl.k8s.io/{{ target_version }}/bin/{{os}}/{{arch}}/kubectl"
-    dest: "{{ ansible_env.HOME}}/.local/bin/kubectl"  
-    mode: 0755    
+    dest: "{{ ansible_env.HOME}}/.local/bin/kubectl"   
+    mode: 0755   
   when:
     not kubectl_dir.stat.exists 
     
