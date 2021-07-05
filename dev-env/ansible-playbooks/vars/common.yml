@@ -1,0 +1,15 @@
+
+common:
+  state: present
+  tools:
+    - dpkg
+    - lsb-release
+    - software-properties-common # apt-add-repo        
+    - ca-certificates            
+    - openssh-client        
+    - gnupg # needed for docker      
+    - jq
+    - tmux
+    - ripgrep     
+    - vim
+    - neovim                    

@@ -59,22 +59,13 @@
   
 - name: "common"
   hosts: all
-  tags: common
   become: true
+  tags: common
+  vars_files: 
+    - "./vars/common.yml"  
 
-  tasks:
-    - package:
-        update_cache: yes
-        name: "{{ item }}"
-      loop:
-        - dpkg
-        - lsb-release
-        - software-properties-common # apt-add-repo        
-        - ca-certificates            
-        - openssh-client        
-        - gnupg # needed for docker        
-        - vim
-        - neovim                
+  roles:
+    - common
         
 - name: "programming languages and frameworks"
   hosts: all

@@ -1,6 +1,12 @@
 ---
-- name: update and upgrade
+- name: Common - update and upgrade
   package:
     upgrade: yes
     update_cache: yes
+
+- name: Common - Install Common Tools
+  package:
+    name: "{{ item }}"
+    state: "{{ common.state }}"
+  loop: "{{ common.tools }}"
 
