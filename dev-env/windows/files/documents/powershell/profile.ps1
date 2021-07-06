@@ -2,13 +2,12 @@
 
 #------------#
 # Functions for aliases and env:vars below
-
 # similar to running 'env' on bash (here it's assigned to winenv alias)
-Function GetEnvVars { Get-Childitem -path env: }
+# Not needed if busybox is installed via scoop. (it comes with `env`)
+Function winenv { Get-Childitem -path env: }
 
 # switch to wsl home dir from windows (set path of default distro)
-Function WslHome {Set-Location -Path \\wsl$\Debian\home\suren}
-
+Function wslhome {Set-Location -Path \\wsl$\Debian\home\suren}
 
 #------------#
 # Env vars (similar to `export foo=bar`)
@@ -20,14 +19,10 @@ $env:myprofile = "$([Environment]::GetFolderPath('MyDocuments'))\powershell\prof
 #------------#
 # Aliases (similar to `alias foo=bar`)
 
-Set-Alias -Name home -Value WslHome
-
 Set-Alias -Name g -Value git
 Set-Alias -Name v -Value vi
 Set-Alias -Name k -Value kubectl
 
-# Not needed if busybox is installed via scoop. (it comes with `env`)
-# Set-Alias -Name winenv -Value GetEnvVars
 
 #------------#
 
@@ -37,4 +32,4 @@ Set-Alias -Name k -Value kubectl
 
 Invoke-Expression (&starship init powershell)
 
-#------------#
+#------------#W

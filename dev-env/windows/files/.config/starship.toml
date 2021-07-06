@@ -1,0 +1,7 @@
+# Starship config - goes into ~/.config/
+
+[shell]
+disabled = false
+bash_indicator = "bash"
+powershell_indicator = "PS"
+zsh_indicator = "zsh"
