@@ -63,6 +63,7 @@ Copy across dotfiles for `Profile.ps1`, `.vimrc`, etc.
    * https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 * Install Rust via Rustup
+   * https://www.rust-lang.org/tools/install
 
 * Relaunch shell and ensure `cargo` is installed as is in the `path`
 
