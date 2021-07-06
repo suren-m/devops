@@ -23,7 +23,7 @@ $env:myprofile = "$([Environment]::GetFolderPath('MyDocuments'))\powershell\prof
 Set-Alias -Name home -Value WslHome
 
 Set-Alias -Name g -Value git
-Set-Alias -Name v -Value vim
+Set-Alias -Name v -Value vi
 Set-Alias -Name k -Value kubectl
 
 # Not needed if busybox is installed via scoop. (it comes with `env`)

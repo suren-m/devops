@@ -8,6 +8,7 @@ $cli_tools = @(
 "7zip",
 "bat",
 "busybox", # comes with sed, awk, vim, etc.
+"jq",
 "ripgrep",
 "tokei"
 )
