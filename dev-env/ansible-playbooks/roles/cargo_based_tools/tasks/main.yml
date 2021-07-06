@@ -1,0 +1,15 @@
+---
+# IMPORTANT: Make sure Rust, Cargo are installed and available in the shell
+
+- name: "cargo - Install tools"
+  shell: "cargo {{ cargo.operation }} {{ item }}"    
+  loop: "{{ cargo.tools }}"
+  when:     
+    - cargo.operation == 'install'    
+
+- name: "cargo - Uninstall tools"
+  shell: "cargo {{ cargo.operation }} {{ item }}"  
+  loop: "{{ cargo.tools }}"
+  when: 
+    - cargo.operation == 'uninstall' 
+    

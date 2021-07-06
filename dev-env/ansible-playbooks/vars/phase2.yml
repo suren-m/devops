@@ -9,9 +9,10 @@ brew:
     - tokei
     - watchexec
 
+# Builds from source and takes time. 
+# install also does upgrades if available (this check is faster)
 cargo:
-  operation: install # or uninstall
-  replace_existing: false
+  operation: install # or uninstall  
   tools:    
     - broot
     - mdbook
