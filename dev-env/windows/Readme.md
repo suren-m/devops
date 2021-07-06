@@ -55,4 +55,20 @@ Copy across dotfiles for `Profile.ps1`, `.vimrc`, etc.
 
 ---
 
+## 4. Rust Installation (MSVC)
 
+* Rust on Windows requires Microsoft C++ build tools 
+
+* Install MS Visual C++ build tools 2019 from below (if not already installed)
+   * https://visualstudio.microsoft.com/visual-cpp-build-tools/
+
+* Install Rust via Rustup
+
+* Relaunch shell and ensure `cargo` is installed as is in the `path`
+
+```
+# below command requires busybox and ripgrep from step 2.2
+# From Powershell
+env | grep 'Path' | tr ';' '\n' | rg 'cargo'
+```
+---

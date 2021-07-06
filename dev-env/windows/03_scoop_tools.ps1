@@ -12,7 +12,8 @@ $cli_tools = @(
 "lf",
 "jq",
 "ripgrep",
-"tokei"
+"tokei",
+"watchexec"
 )
 
 foreach($tool in $cli_tools) {
