@@ -5,3 +5,8 @@ disabled = false
 bash_indicator = "bash"
 powershell_indicator = "PS"
 zsh_indicator = "zsh"
+
+[directory]
+truncation_length = 5
+truncate_to_repo = false
+truncation_symbol = "…/"
