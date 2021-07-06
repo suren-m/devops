@@ -9,6 +9,7 @@ $cli_tools = @(
 "bat",
 "busybox", # comes with sed, awk, vim, etc.
 "gh",
+"lf",
 "jq",
 "ripgrep",
 "tokei"

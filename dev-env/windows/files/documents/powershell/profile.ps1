@@ -9,12 +9,17 @@ Function winenv { Get-Childitem -path env: }
 # switch to wsl home dir from windows (set path of default distro)
 Function wslhome {Set-Location -Path \\wsl$\Debian\home\suren}
 
+# quick launch repo paths
+Function devops {Set-Location -Path $env:userprofile\repos\devops}
+Function winops {Set-Location -Path $env:userprofile\repos\devops\dev-env\windows}
+
 #------------#
 # Env vars (similar to `export foo=bar`)
 
 # profile file location (similar to ~/.zprofile or ~/.profile)
 # after this, `. $env:profile` can be run to restart shell. (similar to source ~/.bashrc)
-$env:myprofile = "$([Environment]::GetFolderPath('MyDocuments'))\powershell\profile.ps1"
+$env:myprofile = "$env:userprofile\documents\powershell\profile.ps1"
+
 
 #------------#
 # Aliases (similar to `alias foo=bar`)
