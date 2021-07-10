@@ -17,3 +17,7 @@ istioctl:
 linkerd:
   remove_existing: false
   install: https://run.linkerd.io/install
+
+dapr:
+  remove_existing: false
+  ver: v1.2.0

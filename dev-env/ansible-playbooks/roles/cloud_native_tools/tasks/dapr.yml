@@ -1,0 +1,30 @@
+# https://github.com/dapr/cli/releases/download/v1.2.0/dapr_linux_amd64.tar.gz
+
+- name: dapr - Remove exisiting version
+  file:
+    state: absent
+    path: "{{ lookup('env', 'HOME')}}/.local/bin/dapr"
+  when: dapr.remove_existing == true
+
+- stat: path="{{ lookup('env', 'HOME')}}/.local/bin/dapr"
+  register: dapr_bin
+
+- debug: msg="https://github.com/dapr/cli/releases/download/{{ dapr.ver }}/dapr_{{ target.platform }}_{{ target.arch }}.tar.gz"
+
+- when: not dapr_bin.stat.exists
+  block:
+    - name: "dapr - Download and Unarchive to /tmp/"
+      unarchive:
+        src: "https://github.com/dapr/cli/releases/download/{{ dapr.ver }}/dapr_{{ target.platform }}_{{ target.arch }}.tar.gz"
+        dest: /tmp
+        remote_src: yes
+    - name: "dapr - cp binary to ~/.local/bin"
+      copy:
+        src: "/tmp/dapr"
+        dest: "{{ lookup('env', 'HOME') }}/.local/bin"
+        mode: 0755
+  always:
+    - name: "dapr - Cleanup tmp/dapr"
+      file:
+        state: absent
+        path: /tmp/dapr

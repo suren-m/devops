@@ -5,6 +5,7 @@ brew:
   tools:    
     - bat
     - gh
+    - k9s
     - pastel
     - tokei
     - watchexec
