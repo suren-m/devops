@@ -12,9 +12,9 @@
     state: directory
 
 # for cht.sh and other cli tools that'll be installed later
-- name: ~/.local/bin/ - setup shell config dir
+- name: ~/.local/bin/ - setup local bin
   file:
-    path: "{{ lookup('env', 'HOME') }}/.config/shell"
+    path: "{{ lookup('env', 'HOME') }}/.local/bin"
     state: directory
 
 - name: zsh and zplug
