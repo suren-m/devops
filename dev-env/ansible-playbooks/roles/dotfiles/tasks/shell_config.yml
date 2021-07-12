@@ -23,13 +23,6 @@
 
 #----------------#
 
-# ~/.config/shell/*
-
-- name: ~/.config/shell/ - setup shell config dir
-  file:
-    path: "{{ lookup('env', 'HOME') }}/.config/shell"
-    state: directory
-
 - name: ~/.config/shell/ - copy common_config
   copy:
     src: .config/shell/common_config
