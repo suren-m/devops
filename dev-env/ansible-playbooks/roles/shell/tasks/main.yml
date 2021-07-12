@@ -3,6 +3,20 @@
 # ansible_env.HOME will point to /root whereas lookup('env', 'HOME') will be $HOME
 - debug: msg="ansible_env.home => {{ ansible_env.HOME }} and lookup('env', 'HOME') -> {{ lookup('env', 'HOME') }}"
 
+# ~/.config/shell/*
+
+# dir setup for dotfiles 
+- name: ~/.config/shell/ - setup shell config dir
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.config/shell"
+    state: directory
+
+# for cht.sh and other cli tools that'll be installed later
+- name: ~/.local/bin/ - setup shell config dir
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.config/shell"
+    state: directory
+
 - name: zsh and zplug
   become: true
   package:
