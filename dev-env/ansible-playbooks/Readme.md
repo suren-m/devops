@@ -13,7 +13,7 @@
         * For e.g: `remove_existing` for `go` task is in `programming.yml`
     * Global vars such as `target.platform` and `target.arch` are located in `inventory/group_vars/`
 2. Set `zsh` as default shell (see: https://wiki.debian.org/Zsh)    
-    * chsh -s /bin/zsh    
+    * sudo chsh -s /bin/zsh    
     * Enter password if prompted
 3. Exit and Restart Terminal (not just `source ~/.zshrc`)
     * This is because `homebrew's` env_vars are loaded via `.profile` or `.zprofile` 
