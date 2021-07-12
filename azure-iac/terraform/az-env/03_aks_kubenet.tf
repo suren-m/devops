@@ -1,5 +1,5 @@
-resource "azurerm_kubernetes_cluster" "aks" {
-  name                = var.aks_cluster_name  
+resource "azurerm_kubernetes_cluster" "aks_kubenet" {
+  name                = "demo-kubenet"  
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku_tier            = "Free"
@@ -12,7 +12,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   default_node_pool {
     name                 = "default"
     type                 = "VirtualMachineScaleSets"
-    vm_size              = "Standard_D2as_v4"
+    vm_size              = "Standard_B2s"
     availability_zones   = ["1", "2", "3"]
     enable_auto_scaling  = true
     node_count           = 1
@@ -73,13 +73,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "common" {
+resource "azurerm_kubernetes_cluster_node_pool" "aks_kubenet_common" {
   name                  = "common"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_kubenet.id
   enable_auto_scaling   = true
   vm_size               = "Standard_B2s"
   node_count            = 1
-  max_count             = 4
+  max_count             = 3
   min_count             = 1
   max_pods              = 20
   orchestrator_version  = var.kubernetes_version
@@ -88,21 +88,3 @@ resource "azurerm_kubernetes_cluster_node_pool" "common" {
   node_labels           = { workloads = "general" }
   vnet_subnet_id        = data.azurerm_subnet.aks.id
 }
-
-resource "azurerm_kubernetes_cluster_node_pool" "cpu-optimized-pool" {
-  name                  = "cpuoptimized"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  enable_auto_scaling   = true
-  vm_size               = "Standard_F4s_v2"
-  node_count            = 1
-  max_count             = 2
-  min_count             = 1
-  max_pods              = 30
-  orchestrator_version  = var.kubernetes_version
-  availability_zones    = [1, 2, 3]
-  mode                  = "User"
-  node_labels           = { workloads = "cpu-optimized" }
-  node_taints           = ["workloads=cpu-optimized:NoSchedule"]
-  vnet_subnet_id        = data.azurerm_subnet.aks.id
-}
-

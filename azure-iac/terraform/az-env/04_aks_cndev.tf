@@ -1,5 +1,5 @@
-resource "azurerm_kubernetes_cluster" "aks" {
-  name                = var.aks_cluster_name  
+resource "azurerm_kubernetes_cluster" "aks_cndev" {
+  name                = "cndev"  
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku_tier            = "Free"
@@ -73,36 +73,19 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "common" {
+resource "azurerm_kubernetes_cluster_node_pool" "aks_cndev_common" {
   name                  = "common"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cndev.id
   enable_auto_scaling   = true
-  vm_size               = "Standard_B2s"
+  vm_size               = "Standard_D2as_v4"
   node_count            = 1
-  max_count             = 4
-  min_count             = 1
-  max_pods              = 20
-  orchestrator_version  = var.kubernetes_version
-  availability_zones    = [1, 2, 3]
-  mode                  = "User"
-  node_labels           = { workloads = "general" }
-  vnet_subnet_id        = data.azurerm_subnet.aks.id
-}
-
-resource "azurerm_kubernetes_cluster_node_pool" "cpu-optimized-pool" {
-  name                  = "cpuoptimized"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  enable_auto_scaling   = true
-  vm_size               = "Standard_F4s_v2"
-  node_count            = 1
-  max_count             = 2
+  max_count             = 3
   min_count             = 1
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
   availability_zones    = [1, 2, 3]
   mode                  = "User"
-  node_labels           = { workloads = "cpu-optimized" }
-  node_taints           = ["workloads=cpu-optimized:NoSchedule"]
+  node_labels           = { workloads = "general" }
   vnet_subnet_id        = data.azurerm_subnet.aks.id
 }
 
