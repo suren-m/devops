@@ -30,24 +30,24 @@
 resource "azurerm_user_assigned_identity" "aks_controlplane_ua_mi" {
   resource_group_name = azurerm_resource_group.base.name
   location            = azurerm_resource_group.base.location
-  name = "${local.res_prefix}-aks-controlplane-ua-mi"
-  tags = local.tags
+  name                = "${local.res_prefix}-aks-controlplane-ua-mi"
+  tags                = local.tags
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#kubelet_identity
 resource "azurerm_user_assigned_identity" "aks_kubelet_ua_mi" {
   resource_group_name = azurerm_resource_group.base.name
   location            = azurerm_resource_group.base.location
-  name = "${local.res_prefix}-aks-kubelet-ua-mi"
-  tags = local.tags
+  name                = "${local.res_prefix}-aks-kubelet-ua-mi"
+  tags                = local.tags
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#oms_agent_identity
 resource "azurerm_user_assigned_identity" "aks_oms_agent_ua_mi" {
   resource_group_name = azurerm_resource_group.base.name
   location            = azurerm_resource_group.base.location
-  name = "${local.res_prefix}-aks-oms-agent-ua-mi"
-  tags = local.tags
+  name                = "${local.res_prefix}-aks-oms-agent-ua-mi"
+  tags                = local.tags
 }
 
 resource "azurerm_role_assignment" "network_contributor" {

@@ -2,8 +2,8 @@
 module "azenv-tfstate-storage" {
   source     = "../modules/storage/"
   res_prefix = "azenv"
-  rg_name = azurerm_resource_group.base.name
-  loc     = var.loc
+  rg_name    = azurerm_resource_group.base.name
+  loc        = var.loc
 
   sg_name_suffix = "tfstateuks"
 
@@ -14,11 +14,11 @@ module "azenv-tfstate-storage" {
 }
 
 module "azshell-storage" {
-  source     = "../modules/storage/"
-  res_prefix = "azshell"
-  rg_name = azurerm_resource_group.base.name
+  source          = "../modules/storage/"
+  res_prefix      = "azshell"
+  rg_name         = azurerm_resource_group.base.name
   blob_containers = []
-  loc     = var.loc
-  sg_name_suffix = "uks"
-  tags = local.tags
+  loc             = var.loc
+  sg_name_suffix  = "uks"
+  tags            = local.tags
 }
