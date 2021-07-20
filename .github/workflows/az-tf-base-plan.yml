@@ -6,12 +6,13 @@ on:
       - 'temp/**'
     paths:
       - azure-iac/terraform/az-base/**      
+      - azure-iac/terraform/az-base-gw/**      
   schedule:    
     - cron:  '0 7,19 * * *'  
   workflow_dispatch:
 
 jobs:
-  fmt-init-and-plan:
+  azbase-fmt-init-plan:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -67,6 +68,82 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           TF_VAR_winuser: ${{ secrets.TF_VAR_WINUSER }}
           TF_VAR_winpass: ${{ secrets.TF_VAR_WINPASS }}
+
+      # publish results as a comment if workflow was a pull request
+      # see: https://github.com/hashicorp/setup-terraform
+      - uses: actions/github-script@0.9.0
+        if: github.event_name == 'pull_request'        
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            
+            <details><summary>Show Plan</summary>         
+            #### See: [Plan Summary log](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            </details>
+            
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+              
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+  azbase-gw-fmt-init-plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: azure-iac/terraform/az-base-gw
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install the latest version of Terraform CLI 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ secrets.TF_VERSION }}
+
+      - name: Terraform version
+        run: terraform version
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -recursive -check
+        continue-on-error: true
+
+      # Initialize with remote state
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init -backend-config="resource_group_name=${{ secrets.TF_BASE_RG_NAME }}" \
+          -backend-config="storage_account_name=${{ secrets.TF_BASE_SG_ACCT_NAME }}" \
+          -backend-config="container_name=${{ secrets.TF_BASE_SG_CONTAINER_NAME }}" \
+          -backend-config="key=${{ secrets.TF_BASE_GW_STATE_KEY }}" 
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        continue-on-error: false
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}    
 
       # publish results as a comment if workflow was a pull request
       # see: https://github.com/hashicorp/setup-terraform
