@@ -8,7 +8,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: azure-iac/terraform/az-base    
+        working-directory: azure-iac/terraform/az-env    
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
