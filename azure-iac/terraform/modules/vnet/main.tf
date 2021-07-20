@@ -27,8 +27,8 @@ resource "azurerm_virtual_network" "vnet" {
     }
   }
 
-  tags = var.tags   
-  
+  tags = var.tags
+
 }
 
 # resource "azurerm_subnet" "subnets" {

@@ -1,5 +1,5 @@
 resource "azurerm_kubernetes_cluster" "aks_kubenet" {
-  name                = "demo-kubenet"  
+  name                = "demo-kubenet"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku_tier            = "Free"
