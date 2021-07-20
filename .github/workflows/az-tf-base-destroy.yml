@@ -53,10 +53,10 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}          
 
-      # Apply
+      # Destroy
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve
+        run: terraform destroy -auto-approve
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -115,10 +115,10 @@ jobs:
           TF_VAR_winuser: ${{ secrets.TF_VAR_WINUSER }}
           TF_VAR_winpass: ${{ secrets.TF_VAR_WINPASS }}
 
-      # Apply
+      # Destroy
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve
+        run: terraform destroy -auto-approve
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
