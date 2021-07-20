@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  azbase:
+  az-base:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -95,9 +95,9 @@ jobs:
               body: output
             })
 
-  azbase-gw:
+  az-base-gw:
     runs-on: ubuntu-latest
-    needs: azbase
+    needs: az-base
     defaults:
       run:
         shell: bash
