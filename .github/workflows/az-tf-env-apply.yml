@@ -37,10 +37,10 @@ jobs:
       - name: Terraform Init
         id: init
         run: |
-          terraform init -backend-config="resource_group_name=${{ secrets.TF_BASE_RG_NAME }}" \
-          -backend-config="storage_account_name=${{ secrets.TF_BASE_SG_ACCT_NAME }}" \
-          -backend-config="container_name=${{ secrets.TF_BASE_SG_CONTAINER_NAME }}" \
-          -backend-config="key=${{ secrets.TF_BASE_STATE_KEY }}" 
+          terraform init -backend-config="resource_group_name=${{ secrets.TF_AZ_ENV_RG_NAME }}" \
+          -backend-config="storage_account_name=${{ secrets.TF_AZ_ENV_SG_ACCT_NAME }}" \
+          -backend-config="container_name=${{ secrets.TF_AZ_ENV_SG_CONTAINER_NAME }}" \
+          -backend-config="key=${{ secrets.TF_AZ_ENV_STATE_KEY }}" 
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -57,8 +57,6 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}          
-          TF_VAR_winuser: ${{ secrets.TF_VAR_WINUSER }}
-          TF_VAR_winpass: ${{ secrets.TF_VAR_WINPASS }}
 
       # Apply
       - name: Terraform Apply
@@ -69,6 +67,5 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          TF_VAR_winuser: ${{ secrets.TF_VAR_WINUSER }}
-          TF_VAR_winpass: ${{ secrets.TF_VAR_WINPASS }}
+
 
