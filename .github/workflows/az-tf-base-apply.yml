@@ -1,4 +1,4 @@
-name: TF Apply
+name: AZ-TF-BASE Apply
 on:
   push:
     branches:
@@ -51,7 +51,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        continue-on-error: true
+        continue-on-error: false
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
