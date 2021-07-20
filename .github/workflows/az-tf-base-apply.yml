@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'azure-iac/terraform/az-base'      
+      - azure-iac/terraform/az-base/**        
   workflow_dispatch:
 
 jobs:
