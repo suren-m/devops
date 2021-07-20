@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  az-base:
+  az-env:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,21 +42,10 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
-        continue-on-error: false
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}          
-
       # Apply
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve
+        run: terraform destroy -auto-approve
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}

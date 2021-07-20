@@ -2,8 +2,8 @@ module "vm_master" {
   source     = "../../modules/vm/"
   res_prefix = var.res_prefix
   loc        = var.loc
-  rg_name    = var.rg_name  
-  
+  rg_name    = var.rg_name
+
   vm_prefix = "${var.cluster_prefix}-master"
   vm_count  = var.master_count
 
@@ -11,14 +11,14 @@ module "vm_master" {
 
   vm_size = var.vm_size
 
-  vm_admin    = var.vm_admin
-  pub_key = var.pub_key
-  tags = var.tags
+  vm_admin = var.vm_admin
+  pub_key  = var.pub_key
+  tags     = var.tags
 }
 
 module "vm_worker" {
   source     = "../../modules/vm/"
-  res_prefix = var.res_prefix  
+  res_prefix = var.res_prefix
   loc        = var.loc
   rg_name    = var.rg_name
 
@@ -30,8 +30,8 @@ module "vm_worker" {
   vm_size = var.vm_size
 
 
-  vm_admin    = var.vm_admin
-  pub_key = var.pub_key
-  tags = var.tags
+  vm_admin = var.vm_admin
+  pub_key  = var.pub_key
+  tags     = var.tags
 }
 

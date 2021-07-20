@@ -1,5 +1,5 @@
 resource "azurerm_kubernetes_cluster" "aks_cndev" {
-  name                = "cndev"  
+  name                = "cndev"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku_tier            = "Free"
@@ -17,7 +17,7 @@ resource "azurerm_kubernetes_cluster" "aks_cndev" {
     enable_auto_scaling  = true
     node_count           = 2
     max_count            = 3
-    min_count            = 2    
+    min_count            = 2
     orchestrator_version = var.kubernetes_version
     vnet_subnet_id       = data.azurerm_subnet.aks2.id
   }

@@ -26,7 +26,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     ssh_key {
       key_data = var.linux_profile.pub_key
     }
-  }    
+  }
 
   network_profile {
     network_plugin     = var.network_profile.network_plugin
@@ -55,7 +55,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       enabled                    = true
       log_analytics_workspace_id = var.log_analytics_workspace_id
     }
-  }  
+  }
   tags = var.tags
 }
 
