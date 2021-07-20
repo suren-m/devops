@@ -22,4 +22,7 @@ jobs:
       
       - name: Check Version
         run: ansible --version
+        
+      - name: Ping demovm
+        run: ping demo-vm.azbase.io -n 5
       
