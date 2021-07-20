@@ -25,4 +25,7 @@ jobs:
         
       - name: Ping demovm
         run: ping demo-vm.azbase.io -n 5
+        
+      - name: Check Phase1
+        run: ansible-playbook -i inventory/cloud phase1.yml --check
       
