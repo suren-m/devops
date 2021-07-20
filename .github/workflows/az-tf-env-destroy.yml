@@ -1,0 +1,67 @@
+name: AZ-TF-BASE Destroy
+on:   
+  workflow_dispatch:
+
+jobs:
+  az-base:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: azure-iac/terraform/az-base    
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install the latest version of Terraform CLI 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ secrets.TF_VERSION }}
+
+      - name: Terraform version
+        run: terraform version
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -recursive -check
+        continue-on-error: true
+
+      # Initialize with remote state
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init -backend-config="resource_group_name=${{ secrets.TF_AZ_ENV_RG_NAME }}" \
+          -backend-config="storage_account_name=${{ secrets.TF_AZ_ENV_SG_ACCT_NAME }}" \
+          -backend-config="container_name=${{ secrets.TF_AZ_ENV_SG_CONTAINER_NAME }}" \
+          -backend-config="key=${{ secrets.TF_AZ_ENV_STATE_KEY }}" 
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        continue-on-error: false
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}          
+
+      # Apply
+      - name: Terraform Destroy
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+  
+  
