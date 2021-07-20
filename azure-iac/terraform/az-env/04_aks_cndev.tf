@@ -102,3 +102,7 @@ resource "azurerm_role_assignment" "assignment" {
   # Increase the scope to VNET or RG level Only if subnet-level is insufficient (likewise for NSG)
   scope                = data.azurerm_subnet.aks2.id
 }
+
+
+# Check with az and jq
+# az aks show -n cndev -g azenv-uks --query=identity | jq '.principalId' | xargs az role assignment list --all -o table --assignee
