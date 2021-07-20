@@ -6,7 +6,7 @@
 # static inventory example
 ansible-playbook -i inventory/cloud phase1.yml --check
 ```
-#### See github workflow for more details
+#### See github workflow for more details (ensure the self-hosted runner has access to target VMs to execute playbooks)
 
 ---
 ## WSL2 Debian Example
