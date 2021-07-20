@@ -26,6 +26,9 @@ jobs:
       - name: Ping demovm
         run: ping demo-vm.azbase.io -c 5
         
-      - name: Check Phase1
+      - name: Prereq (including ansible-apt)
+        run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
+        
+      - name: Check
         run: ansible-playbook -i inventory/cloud phase1.yml --check
       
