@@ -9,7 +9,7 @@ module "networking" {
   tags            = local.tags
 }
 
-
+# test comment
 
 resource "azurerm_private_dns_zone" "pvt_dns" {
   name                = "${var.prefix}.io"
