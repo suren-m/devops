@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  az-base:
+  az-env:
     runs-on: ubuntu-latest
     defaults:
       run:
