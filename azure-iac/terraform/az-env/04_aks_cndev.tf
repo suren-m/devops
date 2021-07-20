@@ -40,12 +40,12 @@ resource "azurerm_kubernetes_cluster" "aks_cndev" {
     service_cidr       = "10.2.0.0/24"
   }
 
-  role_based_access_control {
-    enabled = true
-    azure_active_directory {
-      managed = true
-    }
-  }
+  # role_based_access_control {
+  #   enabled = true
+  #   azure_active_directory {
+  #     managed = true
+  #   }
+  # }
 
   addon_profile {
     oms_agent {
