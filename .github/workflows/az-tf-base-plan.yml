@@ -4,7 +4,8 @@ on:
     branches:
       - main
       - 'temp/**'
-      - dev    
+    paths:
+      - azure-iac/terraform/az-base/**      
   schedule:    
     - cron:  '0 7,19 * * *'  
   workflow_dispatch:
