@@ -5,6 +5,7 @@
 ```
 # Skip if SP already exists
 az ad sp create-for-rbac --name <sp-name>
+az ad sp list --display-name <sp-name> -o table
 az role assignment list --assignee "<objectId>" --all -o table
 az role definition list -n 'Owner'
 az role assignment create --assignee-object-id $assignee --role "Owner" --resource-group "azbase-uks"
