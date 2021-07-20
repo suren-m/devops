@@ -3,5 +3,5 @@ output "nic" {
 }
 
 output "vm" {
-  value = azurerm_linux_virtual_machine.vm
+  value = azurerm_virtual_machine.vm
 }

@@ -16,6 +16,8 @@ variable "vm_admin" {}
 
 variable "pub_key" {}
 
+variable "custom_data" {}
+
 variable "os_disk" {
   default = {
     caching              = "ReadWrite"
@@ -28,7 +30,7 @@ variable "image" {
   default = {
     publisher = "Debian"
     offer     = "debian-10"
-    sku       = "10"
+    sku       = "10-cloudinit"
     version   = "latest"
   }
 }
