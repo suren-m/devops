@@ -6,7 +6,7 @@ data "azurerm_subnet" "vm" {
 
 module "vm" {
   source     = "../modules/vm/"
-  res_prefix = local.res_prefix
+  res_prefix = "linux"
   vm_prefix  = "dev"
   loc        = var.loc
   rg_name    = azurerm_resource_group.base.name
