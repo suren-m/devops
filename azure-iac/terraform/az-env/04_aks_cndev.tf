@@ -96,7 +96,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cndev_common" {
 
 # Make sure the SP executing this template has access for role assignment (owner on that RG)
 resource "azurerm_role_assignment" "assignment" {
-  principal_id         = azurerm_kubernetes_cluster.aks.identity[0].principal_id
+  principal_id         = azurerm_kubernetes_cluster.aks_cndev.identity[0].principal_id
   role_definition_name = "Network Contributor"  
  
   # Increase the scope to VNET or RG level Only if subnet-level is insufficient (likewise for NSG)
