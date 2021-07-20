@@ -1,5 +1,16 @@
 # Azure environment provisioned using Terraform
 
+# Ensure SP executing the terraform pipeline has access for role assignments
+
+```
+# Skip if SP already exists
+az ad sp create-for-rbac --name <sp-name>
+az role assignment list --assignee "<objectId>" --all -o table
+az role definition list -n 'Owner'
+az role assignment create --assignee-object-id $assignee --role "Owner" --resource-group "azbase-uks"
+az role assignment create --assignee-object-id $assignee --role "Owner" --resource-group "azenv-uks"
+```
+
 
 ## Symlinking (only if required)
 
@@ -9,3 +20,4 @@ resource_group_name="<tfstate-resourcegroup>"
 storage_account_name="<tfstate-sg>"
 container_name="<container-name>"
 key="<.tfstate-=file-name>"
+
