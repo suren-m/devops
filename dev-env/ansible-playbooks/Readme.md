@@ -1,5 +1,13 @@
 # Ansible Playbooks for Dev environment automation
 
+## Azure VM Example
+
+```
+# static inventory example
+ansible-playbook -i inventory/cloud phase1.yml --check
+```
+#### See github workflow for more details
+
 ---
 ## WSL2 Debian Example
 
