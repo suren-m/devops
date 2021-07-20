@@ -44,8 +44,8 @@ resource "azurerm_windows_virtual_machine" "win_dev" {
   resource_group_name = azurerm_resource_group.base.name
   location            = azurerm_resource_group.base.location
   size                = "Standard_D2as_v4"
-  admin_username      = var.win_admin_username
-  admin_password      = var.win_admin_pass
+  admin_username      = var.winuser
+  admin_password      = var.winpass
   network_interface_ids = [
     azurerm_network_interface.nic_win.id,
   ]
