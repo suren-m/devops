@@ -1,0 +1,25 @@
+name: AZ-PLAYBOOK-LINUX-DEV
+on:
+  workflow_dispatch:
+
+jobs:
+  ansible-playbook-linux-dev:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: dev-env/ansible-playbooks
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Update and Upgrade        
+        run: sudo apt update -y && sudo apt upgrade -y
+
+      - name: Setup Ansible
+        sudo apt install -y wget git ansible python-apt  
+      
+      - name: Check Version
+        ansible --version
+      
