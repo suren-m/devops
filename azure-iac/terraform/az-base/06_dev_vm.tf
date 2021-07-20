@@ -22,6 +22,8 @@ module "vm" {
 
   vm_admin = "suren"
   pub_key  = file("../files/id_rsa.pub")
+  custom_data  = file("../files/cloud_init")
+
 
   tags = local.tags
 }
