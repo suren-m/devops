@@ -4,7 +4,7 @@ resource "azurerm_public_ip" "vnet_gw_pub_ip" {
   resource_group_name = var.rg_name
 
   allocation_method = "Dynamic"
-  tags = var.tags
+  tags              = var.tags
 }
 
 resource "azurerm_virtual_network_gateway" "vnet_gw" {
@@ -18,7 +18,7 @@ resource "azurerm_virtual_network_gateway" "vnet_gw" {
   active_active = false
   enable_bgp    = false
   sku           = "Basic"
-  tags = var.tags
+  tags          = var.tags
 
   ip_configuration {
     name                          = "vnetGatewayConfig"
