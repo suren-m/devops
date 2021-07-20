@@ -17,6 +17,18 @@ data "azurerm_subnet" "aks" {
   resource_group_name  = local.base_rg
 }
 
+data "azurerm_subnet" "aks2" {
+  name                 = "aks-2"
+  virtual_network_name = local.base_prefix
+  resource_group_name  = local.base_rg
+}
+
+data "azurerm_subnet" "sub256" {
+  name                 = "sub-256"
+  virtual_network_name = local.base_prefix
+  resource_group_name  = local.base_rg
+}
+
 data "azurerm_subnet" "k8s" {
   name                 = "k8s-iaas"
   virtual_network_name = local.base_prefix

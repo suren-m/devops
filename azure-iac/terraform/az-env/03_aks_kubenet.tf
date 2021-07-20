@@ -19,7 +19,7 @@ resource "azurerm_kubernetes_cluster" "aks_kubenet" {
     max_count            = 2
     min_count            = 1
     orchestrator_version = var.kubernetes_version
-    vnet_subnet_id       = data.azurerm_subnet.aks.id
+    vnet_subnet_id       = data.azurerm_subnet.sub256.id
   }
 
   linux_profile {
@@ -86,5 +86,5 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_kubenet_common" {
   availability_zones    = [1, 2, 3]
   mode                  = "User"
   node_labels           = { workloads = "general" }
-  vnet_subnet_id        = data.azurerm_subnet.aks.id
+  vnet_subnet_id        = data.azurerm_subnet.sub256.id
 }

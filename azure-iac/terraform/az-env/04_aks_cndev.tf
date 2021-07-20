@@ -15,11 +15,11 @@ resource "azurerm_kubernetes_cluster" "aks_cndev" {
     vm_size              = "Standard_D2as_v4"
     availability_zones   = ["1", "2", "3"]
     enable_auto_scaling  = true
-    node_count           = 1
-    max_count            = 2
-    min_count            = 1
+    node_count           = 2
+    max_count            = 3
+    min_count            = 2    
     orchestrator_version = var.kubernetes_version
-    vnet_subnet_id       = data.azurerm_subnet.aks.id
+    vnet_subnet_id       = data.azurerm_subnet.aks2.id
   }
 
   linux_profile {
@@ -78,14 +78,14 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cndev_common" {
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cndev.id
   enable_auto_scaling   = true
   vm_size               = "Standard_D2as_v4"
-  node_count            = 1
+  node_count            = 2
   max_count             = 3
-  min_count             = 1
+  min_count             = 2
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
   availability_zones    = [1, 2, 3]
   mode                  = "User"
   node_labels           = { workloads = "general" }
-  vnet_subnet_id        = data.azurerm_subnet.aks.id
+  vnet_subnet_id        = data.azurerm_subnet.aks2.id
 }
 
