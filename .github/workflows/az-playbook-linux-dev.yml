@@ -29,6 +29,8 @@ jobs:
       - name: Prereq (including ansible-apt)
         run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
         
-      - name: Check
-        run: ansible-playbook -i inventory/cloud phase1.yml --check
+      - name: Phase1
+        run: ansible-playbook -i inventory/cloud phase1.yml
       
+      - name: Phase2
+        run: ansible-playbook -i inventory/cloud phase2.yml
