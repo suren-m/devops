@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - 'temp/**'
+      - dev
     paths:
       - azure-iac/terraform/az-base
   schedule:    
