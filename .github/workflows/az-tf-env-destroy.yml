@@ -1,4 +1,4 @@
-name: AZ-TF-BASE Destroy
+name: AZ-TF-ENV Destroy
 on:   
   workflow_dispatch:
 
