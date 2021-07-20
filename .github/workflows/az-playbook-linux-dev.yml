@@ -18,8 +18,8 @@ jobs:
         run: sudo apt update -y && sudo apt upgrade -y
 
       - name: Setup Ansible
-        sudo apt install -y wget git ansible python-apt  
+        run: sudo apt install -y wget git ansible python-apt  
       
       - name: Check Version
-        ansible --version
+        run: ansible --version
       
