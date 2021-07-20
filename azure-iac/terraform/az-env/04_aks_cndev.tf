@@ -89,3 +89,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cndev_common" {
   vnet_subnet_id        = data.azurerm_subnet.aks2.id
 }
 
+# If using System-Assigned MI, ensure it has access to subnet
+# az aks show -n <clustername> -g <rgname> --query=identity (or identityProfile for kubeletIdentity)
+# az role assignment list --assignee <Id> --all -o table
+# az role assignment create --assignee $ASSIGNEE --role 'Network Contributor' --scope $VNETID
+
+# resource "azurerm_role_assignment" "assignment" {
+#   principal_id         = azurerm_kubernetes_cluster.aks.identity[0].principal_id
+#   role_definition_name = "Network Contributor"  
+ 
+#   # Increase the scope to VNET or RG level Only if subnet-level is insufficient (likewise for NSG)
+#   scope                = "/subscriptions/<sub>/resourcegroups/<vnet-rg>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"   
+# }
