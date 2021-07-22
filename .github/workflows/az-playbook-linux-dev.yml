@@ -1,3 +1,7 @@
+# See:
+# https://docs.microsoft.com/en-us/azure/developer/ansible/install-on-linux-vm?tabs=azure-cli
+# https://docs.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli
+
 name: AZ-PLAYBOOK-LINUX-DEV
 on:
   workflow_run:
@@ -35,6 +39,7 @@ jobs:
       # - name: Prereq (including ansible-apt)
       #   run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
 
+      # Dynamic Inventory filename matters - should end with azure_rm.yml
       - name: Phase1 (dynamic inventory)
         run: ansible-playbook -i inventory/linux_azure_rm.yml phase1.yml
       # - name: Phase2
