@@ -35,6 +35,7 @@ data "azurerm_subnet" "k8s" {
   resource_group_name  = local.base_rg
 }
 
+
 # law
 data "azurerm_log_analytics_workspace" "law" {
   name                = local.base_prefix

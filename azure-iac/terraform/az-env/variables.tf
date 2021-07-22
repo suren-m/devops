@@ -47,3 +47,10 @@ variable "worker_count" {
 
 variable "vm_size" {
 }
+
+# vms
+variable "winuser" {}
+variable "winpass" {
+  type      = string
+  sensitive = true
+}
