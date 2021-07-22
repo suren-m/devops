@@ -20,6 +20,7 @@ variable "custom_data" {}
 
 variable "os_disk" {
   default = {
+    create_option       = "FromImage"
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"
     size_gb              = "50"

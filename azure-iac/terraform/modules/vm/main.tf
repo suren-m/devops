@@ -41,7 +41,7 @@ resource "azurerm_virtual_machine" "vm" {
   ]
 
   storage_os_disk {
-    create_option     = "FromImage"
+    create_option     = var.os_disk.create_option
     name = "${var.res_prefix}-${var.vm_prefix}-${count.index}-osdisk"
     caching              = var.os_disk.caching
     managed_disk_type  = var.os_disk.storage_account_type
