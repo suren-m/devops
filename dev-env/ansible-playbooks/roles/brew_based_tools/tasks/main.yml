@@ -10,6 +10,23 @@
 
 # - debug: var=currently_installed
 
+- name: Print Path Variable
+  debug:
+    msg: "'{{ lookup('env', 'PATH') }}'"
+
+- name: Print HOME
+  debug:
+    msg: "'{{ lookup('env', 'HOME') }}'"
+
+- name: Print USER
+  debug:
+    msg: "'{{ lookup('env', 'USER') }}'"
+
+- name: Print SHELL
+  debug:
+    msg: "'{{ lookup('env', 'SHELL') }}'"
+
+
 - name: "Brew - Install or upgrade tools"
   shell: "brew {{ brew.operation }} {{ item.item }}"  
   with_items: "{{ currently_installed.results }}" 
