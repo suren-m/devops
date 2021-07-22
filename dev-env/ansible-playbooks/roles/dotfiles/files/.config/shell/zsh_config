@@ -1,3 +1,6 @@
+# don't store commands prefixed ith a space
+setopt HIST_IGNORE_SPACE
+
 # use vim mode
 bindkey -v
 
