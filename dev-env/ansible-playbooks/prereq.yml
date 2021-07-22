@@ -26,3 +26,8 @@
         - unzip # needed for deno
         - apt-transport-https # needed for dotnet
 
+    # needed for doing `expect:` (see homebrew install)
+    - name: install pexpect
+      pip:
+        name: pexpect
+      become: yes
