@@ -5,7 +5,8 @@ alias kus=kustomize
 alias lg=lazygit
 alias v=vim
 
-
+export VISUAL=vi
+export EDITOR=vi
 # -----Path vars exports----- #
 # local bin
 export PATH=$PATH:$HOME/.local/bin

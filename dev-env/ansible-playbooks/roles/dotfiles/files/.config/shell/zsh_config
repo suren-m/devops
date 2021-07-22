@@ -1,2 +1,10 @@
+# use vim mode
+bindkey -v
+
+# Vi style: (also see built-in fc command)
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # bind ctrl+o to lfcd
 bindkey -s '^o' 'lfcd\n'
