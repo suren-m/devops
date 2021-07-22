@@ -2,11 +2,10 @@
 # IMPORTANT: Make sure brew is installed and available in the shell
 
 - name: "Brew - stat - check currently installed"
-  stat: path="/home/linuxbrew/.linuxbrew/bin/{{item}}"  
+  stat: path="/home/linuxbrew/.linuxbrew/bin/{{item}}"
   loop: "{{ brew.tools }}"
   register: currently_installed
-  when:
-    ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian'
 
 # - debug: var=currently_installed
 
@@ -14,23 +13,31 @@
   debug:
     msg: "'{{ lookup('env', 'PATH') }}'"
 
-- name: Print HOME
-  debug:
-    msg: "'{{ lookup('env', 'HOME') }}'"
+# - name: Print HOME
+#   debug:
+#     msg: "'{{ lookup('env', 'HOME') }}'"
 
-- name: Print USER
-  debug:
-    msg: "'{{ lookup('env', 'USER') }}'"
+# - name: Print USER
+#   debug:
+#     msg: "'{{ lookup('env', 'USER') }}'"
 
-- name: Print SHELL
-  debug:
-    msg: "'{{ lookup('env', 'SHELL') }}'"
+# - name: Print SHELL
+#   debug:
+#     msg: "'{{ lookup('env', 'SHELL') }}'"
 
+# Ansible doesn't use interactive mode / login shell
+# so profile won't be loaded by default
+- name: Source Profile for brew to be added to PATH
+  shell: ". {{ lookup('env', 'HOME') }}/.profile"
+
+- name: Print Path Variable again to verify if brew is loaded
+  debug:
+    msg: "'{{ lookup('env', 'PATH') }}'"
 
 - name: "Brew - Install or upgrade tools"
-  shell: "brew {{ brew.operation }} {{ item.item }}"  
-  with_items: "{{ currently_installed.results }}" 
-  when: 
+  shell: "brew {{ brew.operation }} {{ item.item }}"
+  with_items: "{{ currently_installed.results }}"
+  when:
     - ansible_os_family == 'Debian'
     - brew.operation != 'uninstall'
     - item.stat.exists == false or brew.replace_existing == true or brew.operation == 'upgrade'
@@ -38,8 +45,8 @@
 - name: "Brew - Uninstall tools"
   shell: "brew {{ brew.operation }} {{ item.item }}"
   # no_log: true
-  with_items: "{{ currently_installed.results }}" 
-  when: 
+  with_items: "{{ currently_installed.results }}"
+  when:
     - ansible_os_family == 'Debian'
-    - brew.operation == 'uninstall' 
+    - brew.operation == 'uninstall'
     - item.stat.exists == true # don't attempt to uninstall if it doesn't exist
