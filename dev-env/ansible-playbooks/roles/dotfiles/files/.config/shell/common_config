@@ -54,3 +54,10 @@ source "$HOME/.cargo/env"
 
 # This loads nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
+
+# Launch Chrome and search from terminal
+s () {
+    # e.g: after parsing first arg which is the query, pass all chromium switches as rest of args
+    app="/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe \"google.com/search?query=$1\" ${@:2}"
+    eval $app
+}
