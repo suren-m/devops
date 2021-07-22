@@ -3,12 +3,12 @@ on:
   pull_request:
     branches:
       - main
-      - 'temp/**'
+      - "temp/**"
     paths:
-      - azure-iac/terraform/az-base/**      
-      - azure-iac/terraform/az-base-gw/**      
-  schedule:    
-    - cron:  '0 7,19 * * *'  
+      - azure-iac/terraform/az-base/**
+      - azure-iac/terraform/az-base-gw/**
+  schedule:
+    - cron: "0 7,19 * * *"
   workflow_dispatch:
 
 jobs:
@@ -17,13 +17,13 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: azure-iac/terraform/az-base      
+        working-directory: azure-iac/terraform/az-base
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Install the latest version of Terraform CLI 
+      # Install the latest version of Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -44,7 +44,7 @@ jobs:
           terraform init -backend-config="resource_group_name=${{ secrets.TF_BASE_RG_NAME }}" \
           -backend-config="storage_account_name=${{ secrets.TF_BASE_SG_ACCT_NAME }}" \
           -backend-config="container_name=${{ secrets.TF_BASE_SG_CONTAINER_NAME }}" \
-          -backend-config="key=${{ secrets.TF_BASE_STATE_KEY }}" 
+          -backend-config="key=${{ secrets.TF_BASE_STATE_KEY }}"
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -66,13 +66,11 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          TF_VAR_winuser: ${{ secrets.TF_VAR_WINUSER }}
-          TF_VAR_winpass: ${{ secrets.TF_VAR_WINPASS }}
 
       # publish results as a comment if workflow was a pull request
       # see: https://github.com/hashicorp/setup-terraform
       - uses: actions/github-script@0.9.0
-        if: github.event_name == 'pull_request'        
+        if: github.event_name == 'pull_request'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -80,12 +78,12 @@ jobs:
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
             #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
+
             <details><summary>Show Plan</summary>         
             #### See: [Plan Summary log](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            
+
             </details>
-            
+
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
               
             github.issues.createComment({
@@ -107,7 +105,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Install the latest version of Terraform CLI 
+      # Install the latest version of Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -128,7 +126,7 @@ jobs:
           terraform init -backend-config="resource_group_name=${{ secrets.TF_BASE_RG_NAME }}" \
           -backend-config="storage_account_name=${{ secrets.TF_BASE_SG_ACCT_NAME }}" \
           -backend-config="container_name=${{ secrets.TF_BASE_SG_CONTAINER_NAME }}" \
-          -backend-config="key=${{ secrets.TF_BASE_GW_STATE_KEY }}" 
+          -backend-config="key=${{ secrets.TF_BASE_GW_STATE_KEY }}"
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -144,12 +142,12 @@ jobs:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}    
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
       # publish results as a comment if workflow was a pull request
       # see: https://github.com/hashicorp/setup-terraform
       - uses: actions/github-script@0.9.0
-        if: github.event_name == 'pull_request'        
+        if: github.event_name == 'pull_request'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -157,12 +155,12 @@ jobs:
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
             #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
+
             <details><summary>Show Plan</summary>         
             #### See: [Plan Summary log](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            
+
             </details>
-            
+
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
               
             github.issues.createComment({

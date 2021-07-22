@@ -27,7 +27,7 @@ jobs:
         run: ansible --version
 
       - name: Ping demovm
-        run: ping demo-vm.azbase.io -c 5
+        run: ping azenv-uks-dev-0.azbase.io -c 5
 
       - name: Prereq (including ansible-apt)
         run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
