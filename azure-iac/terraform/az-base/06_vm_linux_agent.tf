@@ -9,7 +9,7 @@ module "linux-agent-vm" {
   subnet_id = data.azurerm_subnet.vm.id
   
   vm_size   = "Standard_D2as_v4"
-  os_disk = {
+  storage_os_disk = {
     create_option       = "FromImage"
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"

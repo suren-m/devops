@@ -18,7 +18,7 @@ variable "pub_key" {}
 
 variable "custom_data" {}
 
-variable "os_disk" {
+variable "storage_os_disk" {
   default = {
     create_option       = "FromImage"
     caching              = "ReadWrite"

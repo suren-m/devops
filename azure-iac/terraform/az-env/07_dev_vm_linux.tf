@@ -8,12 +8,13 @@ module "linux-dev-vm" {
   vm_count  = 1
   subnet_id = data.azurerm_subnet.vm.id
   vm_size   = "Standard_D2as_v4"
-  os_disk = {
+
+  storage_os_disk = {
+    create_option       = "FromImage"
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"
     size_gb              = "50"
   }
-
   delete_os_disk = true
 
   vm_admin = "suren"

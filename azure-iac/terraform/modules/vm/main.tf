@@ -41,11 +41,11 @@ resource "azurerm_virtual_machine" "vm" {
   ]
 
   storage_os_disk {
-    create_option     = var.os_disk.create_option
+    create_option     = var.storage_os_disk.create_option
     name = "${var.res_prefix}-${var.vm_prefix}-${count.index}-osdisk"
-    caching              = var.os_disk.caching
-    managed_disk_type  = var.os_disk.storage_account_type
-    disk_size_gb         = var.os_disk.size_gb
+    caching              = var.storage_os_disk.caching
+    managed_disk_type  = var.storage_os_disk.storage_account_type
+    disk_size_gb         = var.storage_os_disk.size_gb
   }
 
   delete_os_disk_on_termination = var.delete_os_disk
