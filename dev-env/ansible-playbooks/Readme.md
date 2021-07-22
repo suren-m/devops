@@ -35,3 +35,15 @@ ansible-playbook -i inventory/cloud phase1.yml --check
 ---
 
 
+#### Ansible on Azure (credentials file)
+
+Values shouldn't contain quotation marks
+
+```
+[default]
+subscription_id=....
+client_id=...
+secret=...
+tenant=...
+```
+
