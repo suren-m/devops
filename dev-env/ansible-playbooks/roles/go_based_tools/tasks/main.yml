@@ -4,6 +4,8 @@
     state: absent
     path: "{{ lookup('env', 'HOME') }}/go/bin/lazygit"
   when: go_tools.lazygit.remove_existing == true
+  environment:
+    PATH: "/usr/local/go/bin/go:{{ ansible_env.PATH }}"
 
 - stat: path="{{ lookup('env', 'HOME') }}/go/bin/lazygit"
   register: lazygit_bin
@@ -11,3 +13,5 @@
 - name: Lazygit - Install using go get {{ go_tools.lazygit.install }}
   shell: "go get {{ go_tools.lazygit.install }}"
   when: not lazygit_bin.stat.exists
+  environment:
+    PATH: "/usr/local/go/bin/go:{{ ansible_env.PATH }}"

@@ -1,26 +1,26 @@
-
-brew:  
-  operation: install # or uninstall, upgrade, etc  
+brew:
+  operation: install # or uninstall, upgrade, etc
   replace_existing: false # has no effect if it's upgrade or uninstall operation
-  tools:    
+  tools:
     - bat
+    - broot
     - gh
     - k9s
     - pastel
     - tokei
     - watchexec
 
-# Builds from source and takes time. 
+# Builds from source and takes time.
 # install also does upgrades if available (this check is faster)
 cargo:
-  operation: install # or uninstall  
-  tools:    
-    - broot
+  operation: install # or uninstall
+  tools:
+    # - broot
     - mdbook
     - cargo-edit
     - evcxr_repl
-  
-go_tools:  
-  lazygit: 
+
+go_tools:
+  lazygit:
     remove_existing: false
     install: github.com/jesseduffield/lazygit
