@@ -55,6 +55,9 @@ source "$HOME/.cargo/env"
 # This loads nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 
+# Broot
+source "$HOME/.config/broot/launcher/bash/br"
+
 # Launch Chrome and search from terminal
 s () {
     # e.g: after parsing first arg which is the query, pass all chromium switches as rest of args
