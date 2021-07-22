@@ -18,7 +18,12 @@ module "linux-agent-vm" {
   pub_key  = file("../files/id_rsa.pub")
   custom_data  = file("../files/cloud_init")
 
-
+  image = {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "20.04-LTS"
+    version   = "latest"
+  }
   tags = local.tags
 }
 
