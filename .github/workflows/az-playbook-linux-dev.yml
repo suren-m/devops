@@ -1,5 +1,8 @@
 name: AZ-PLAYBOOK-LINUX-DEV
 on:
+  workflow_run:
+    workflows: ["AZ-TF-ENV Apply"]
+    types: [completed]
   workflow_dispatch:
 
 jobs:
@@ -13,24 +16,23 @@ jobs:
       # Checkout
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Update and Upgrade        
+
+      - name: Update and Upgrade
         run: sudo apt update -y && sudo apt upgrade -y
 
       - name: Setup Ansible
-        run: sudo apt install -y wget git ansible python-apt  
-      
+        run: sudo apt install -y wget git ansible python-apt
+
       - name: Check Version
         run: ansible --version
-        
+
       - name: Ping demovm
         run: ping demo-vm.azbase.io -c 5
-        
+
       - name: Prereq (including ansible-apt)
         run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
-        
+
       - name: Phase1
-        run: ansible-playbook -i inventory/cloud phase1.yml
-      
-      - name: Phase2
-        run: ansible-playbook -i inventory/cloud phase2.yml
+        run: ansible-playbook -i inventory/cloud phase1.yml --tags shell
+      # - name: Phase2
+      #   run: ansible-playbook -i inventory/cloud phase2.yml
