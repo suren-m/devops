@@ -42,5 +42,8 @@ jobs:
       # Dynamic Inventory filename matters - should end with azure_rm.yml
       - name: prereq.yml (dynamic inventory)
         run: ansible-playbook -i inventory/linux_azure_rm.yml prereq.yml
+
+      - name: phase1.yml (dynamic inventory)
+        run: ansible-playbook -i inventory/linux_azure_rm.yml phase1.yml
       # - name: Phase2
       #   run: ansible-playbook -i inventory/cloud phase2.yml
