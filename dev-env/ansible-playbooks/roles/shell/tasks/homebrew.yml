@@ -4,29 +4,32 @@
 # /home/linuxbrew on linux - requires 64-bit intel processors
 #
 
-- name: Homebrew / Linuxbew - Remove exisiting version  
+- name: Homebrew / Linuxbew - Remove exisiting version
   become: true
   file:
     state: absent
     path: "/home/linuxbrew"
-  when: homebrew.remove_existing == true and ansible_os_family == 'Debian' 
+  when: homebrew.remove_existing == true and ansible_os_family == 'Debian'
 
 - stat: path="/home/linuxbrew"
   register: homebrew_dir
-  when: ansible_os_family == 'Debian' 
-
+  when: ansible_os_family == 'Debian'
 
 # Takes some time
-- when: not homebrew_dir.stat.exists  
+- when: not homebrew_dir.stat.exists
   block:
     - name: Homebrew / Linuxbew - Download install script
       get_url:
-        url: '{{ homebrew.install }}'
+        url: "{{ homebrew.install }}"
         dest: /tmp/homebrew_install.sh
-        mode: 0755    
-    - name: Homebrew / Linuxbew - Install       
-      command: /tmp/homebrew_install.sh 
-      register: brew_output
+        mode: 0755
+    - name: Homebrew / Linuxbew - Install
+      expect:
+        command: /tmp/homebrew_install.sh
+        responses:
+          "Press RETURN to continue or any other key to abort": ""
+      # register: brew_output
+
     # - debug: var=brew_output.stdout
     # - debug: var=brew_output.stderr
   always:
@@ -34,6 +37,5 @@
       file:
         state: absent
         path: /tmp/homebrew_install.sh
-
 # For env vars needed for homebrew, run its shellenv command
 # `/home/linuxbrew/.linuxbrew/bin/brew shellenv`

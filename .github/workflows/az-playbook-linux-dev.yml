@@ -46,5 +46,5 @@ jobs:
       - name: phase1.yml (dynamic inventory)
         run: ansible-playbook -i inventory/linux_azure_rm.yml phase1.yml
 
-      - name: Phase2
+      - name: Phase2.yml
         run: ansible-playbook -i inventory/cloud phase2.yml
