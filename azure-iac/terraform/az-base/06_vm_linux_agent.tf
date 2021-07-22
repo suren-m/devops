@@ -20,8 +20,8 @@ module "linux-agent-vm" {
 
   image = {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "20.04-LTS"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
     version   = "latest"
   }
   tags = local.tags
