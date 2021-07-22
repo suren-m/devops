@@ -48,6 +48,8 @@ resource "azurerm_virtual_machine" "vm" {
     disk_size_gb         = var.os_disk.size_gb
   }
 
+  delete_os_disk_on_termination = var.delete_os_disk
+
   storage_image_reference {
     publisher = var.image.publisher
     offer     = var.image.offer

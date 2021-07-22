@@ -16,7 +16,7 @@ module "linux-agent-vm" {
     size_gb              = "50"
   }
 
-  delete_os_disk_on_termination = true
+  delete_os_disk = true
 
   vm_admin = "suren"
   pub_key  = file("../files/id_rsa.pub")

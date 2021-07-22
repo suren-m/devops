@@ -27,6 +27,10 @@ variable "os_disk" {
   }
 }
 
+variable "delete_os_disk" {
+  default = true  
+}
+
 variable "image" {
   default = {
     publisher = "Debian"
