@@ -28,7 +28,8 @@ resource "azurerm_windows_virtual_machine" "win_dev" {
     disk_size_gb         = "127"
   }
 
-  delete_os_disk_on_termination = true
+  # not applicable for this res type. tf will remove by default
+  #delete_os_disk_on_termination = true
   
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
