@@ -11,3 +11,7 @@
 | ![AZ Env Apply](https://github.com/suren-m/devops/actions/workflows/az-tf-env-apply.yml/badge.svg)           |
 | ![AZ Env Destroy](https://github.com/suren-m/devops/actions/workflows/az-tf-env-destroy.yml/badge.svg)       | 
 | ![AZ All Format](https://github.com/suren-m/devops/actions/workflows/az-tf-format.yml/badge.svg)             | 
+
+| Ansible Playbooks |
+| ----------------- |
+| ![AZ-PLAYBOOK-LINUX-DEV](https://github.com/suren-m/devops/actions/workflows/az-playbook-linux-dev.yml/badge.svg)              |
