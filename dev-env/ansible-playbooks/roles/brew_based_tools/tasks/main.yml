@@ -33,11 +33,19 @@
   when: ansible_os_family == 'Debian'
 
 - debug: var=brew_vars
+  when: ansible_os_family == 'Debian'
 
-- name: Print Path Variable again to verify if brew is loaded
-  debug:
-    msg: "'{{ lookup('env', 'PATH') }}'"
+- name: register exports
+  shell: "sh -c {{ brew_vars.stdout }}"
+  register: brew_vars
+  when: ansible_os_family == 'Debian'
 
+# - name: Print Path Variable again to verify if brew is loaded
+#   debug:
+#     msg: "'{{ lookup('env', 'PATH') }}'"
+
+# Ansible doesn't use a login shell so it won't load vars from ~/.profile
+# remote env had to be setup for brew to be found
 - name: "Brew - Install or upgrade tools"
   shell: "brew {{ brew.operation }} {{ item.item }}"
   with_items: "{{ currently_installed.results }}"
@@ -45,6 +53,13 @@
     - ansible_os_family == 'Debian'
     - brew.operation != 'uninstall'
     - item.stat.exists == false or brew.replace_existing == true or brew.operation == 'upgrade'
+  environment:
+    HOMEBREW_PREFIX: "/home/linuxbrew/.linuxbrew"
+    HOMEBREW_CELLAR: "/home/linuxbrew/.linuxbrew/Cellar"
+    HOMEBREW_REPOSITORY: "/home/linuxbrew/.linuxbrew/Homebrew"
+    PATH: "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:{{ ansible_env.PATH }}"
+    MANPATH: "/home/linuxbrew/.linuxbrew/share/man:"
+    INFOPATH: "/home/linuxbrew/.linuxbrew/share/info:"
 
 - name: "Brew - Uninstall tools"
   shell: "brew {{ brew.operation }} {{ item.item }}"
@@ -54,3 +69,10 @@
     - ansible_os_family == 'Debian'
     - brew.operation == 'uninstall'
     - item.stat.exists == true # don't attempt to uninstall if it doesn't exist
+  environment:
+    HOMEBREW_PREFIX: "/home/linuxbrew/.linuxbrew"
+    HOMEBREW_CELLAR: "/home/linuxbrew/.linuxbrew/Cellar"
+    HOMEBREW_REPOSITORY: "/home/linuxbrew/.linuxbrew/Homebrew"
+    PATH: "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:{{ ansible_env.PATH }}"
+    MANPATH: "/home/linuxbrew/.linuxbrew/share/man:"
+    INFOPATH: "/home/linuxbrew/.linuxbrew/share/info:"
