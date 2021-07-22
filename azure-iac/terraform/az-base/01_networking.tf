@@ -22,3 +22,9 @@ resource "azurerm_private_dns_zone_virtual_network_link" "pvt_dns_vnet_link" {
   registration_enabled  = true
   tags                  = local.tags
 }
+
+data "azurerm_subnet" "vm" {
+  name                 = "vm"
+  virtual_network_name = module.networking.vnet.name
+  resource_group_name  = azurerm_resource_group.base.name
+}

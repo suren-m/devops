@@ -26,7 +26,7 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile {
     computer_name = "${var.res_prefix}-${var.vm_prefix}-${count.index}"
     admin_username = "suren" 
-    custom_data = var.custom_data # cloud init
+    # custom_data = var.custom_data # cloud init
   }
   os_profile_linux_config {
     disable_password_authentication = true
