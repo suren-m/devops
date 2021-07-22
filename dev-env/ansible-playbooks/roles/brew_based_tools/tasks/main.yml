@@ -27,8 +27,12 @@
 
 # Ansible doesn't use interactive mode / login shell
 # so profile won't be loaded by default
-- name: Source Profile for brew to be added to PATH
-  shell: ". {{ lookup('env', 'HOME') }}/.profile"
+- name: register exports
+  shell: "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
+  register: brew_vars
+  when: ansible_os_family == 'Debian'
+
+- debug: var=brew_vars
 
 - name: Print Path Variable again to verify if brew is loaded
   debug:
