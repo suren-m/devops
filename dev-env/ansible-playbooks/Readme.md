@@ -27,7 +27,6 @@ ansible-playbook -i inventory/cloud phase1.yml --check
     * This is because `homebrew's` env_vars are loaded via `.profile` or `.zprofile` 
 
 ## Phase 2
-1. Install ansible-galaxy co
 1. Run `ansible-playbook phase2.yml` 
     * Tools in phase2 require tools from phase1 such as `cargo` and `go` available in shell.
 2. For `vs code` and `windows_terminal` configs, see `config_files` directory
