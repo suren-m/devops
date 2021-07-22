@@ -23,8 +23,10 @@
         src: "/tmp/dapr"
         dest: "{{ lookup('env', 'HOME') }}/.local/bin"
         mode: 0755
+        remote_src: yes
   always:
     - name: "dapr - Cleanup tmp/dapr"
       file:
         state: absent
         path: /tmp/dapr
+        remote_src: yes
