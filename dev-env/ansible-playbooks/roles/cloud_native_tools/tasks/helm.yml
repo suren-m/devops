@@ -2,35 +2,32 @@
 # https://get.helm.sh/helm-v3.6.2-linux-amd64.tar.gz
 # Note that in WSL2 with Docker-Desktop, there will be a helm symlink in /usr/local/bin
 
-- name: Helm - Remove exisiting version  
+- name: Helm - Remove exisiting version
   file:
     state: absent
     path: "{{ lookup('env', 'HOME')}}/.local/bin/helm"
-  when:
-    helm.remove_existing == true
+  when: helm.remove_existing == true
 
 - stat: path="{{ lookup('env', 'HOME')}}/.local/bin/helm"
   register: helm_dir
 
 - debug: msg="https://get.helm.sh/helm-{{ helm.ver }}-{{ target.platform }}-{{ target.arch }}.tar.gz"
 
-- when: not helm_dir.stat.exists 
+- when: not helm_dir.stat.exists
   block:
-    - name: "Helm - Download and Unarchive to /tmp/helm-install"  
+    - name: "Helm - Download and Unarchive to /tmp/helm-install"
       unarchive:
-        src: "https://get.helm.sh/helm-{{ helm.ver }}-{{ target.platform }}-{{ target.arch }}.tar.gz"      
+        src: "https://get.helm.sh/helm-{{ helm.ver }}-{{ target.platform }}-{{ target.arch }}.tar.gz"
         dest: /tmp
-        remote_src: yes               
+        remote_src: yes
     - name: "Helm - cp binary to ~/.local/bin"
-      copy: 
+      copy:
         src: "/tmp/{{ target.platform }}-{{ target.arch }}/helm"
         dest: "{{ lookup('env', 'HOME') }}/.local/bin"
-        mode: 0755      
+        mode: 0755
+        remote_src: yes
     - name: "Helm - Cleanup tmp/helm-install"
       file:
         state: absent
         path: /tmp/{{ target.platform }}-{{ target.arch }}
-         
-
-
-     
+        remote_src: yes
