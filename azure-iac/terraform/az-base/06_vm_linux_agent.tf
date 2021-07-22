@@ -17,7 +17,8 @@ module "linux-agent-vm" {
   vm_admin = "suren"
   pub_key  = file("../files/id_rsa.pub")
   custom_data  = file("../files/cloud_init")
-
+  
+  # https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest
   image = {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
