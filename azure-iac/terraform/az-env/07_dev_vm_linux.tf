@@ -14,6 +14,8 @@ module "linux-dev-vm" {
     size_gb              = "50"
   }
 
+  delete_os_disk = true
+
   vm_admin = "suren"
   pub_key  = file("../files/id_rsa.pub")
   custom_data  = file("../files/cloud_init")
