@@ -17,22 +17,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Update and Upgrade
-        run: sudo apt update -y && sudo apt upgrade -y
+      # - name: Update and Upgrade
+      #   run: sudo apt update -y && sudo apt upgrade -y
 
-      - name: Setup Ansible
-        run: sudo apt install -y wget git ansible python-apt
+      # - name: Setup Ansible
+      #   run: sudo apt install -y wget git ansible python3-pip python-apt
+
+      # - name: Install Azurerm plugin
+      #   run: pip3 install ansible[azure]
 
       - name: Check Version
         run: ansible --version
 
-      - name: Ping demovm
+      - name: Ping vm
         run: ping azenv-uks-dev-0.azbase.io -c 5
 
-      - name: Prereq (including ansible-apt)
-        run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
+      # - name: Prereq (including ansible-apt)
+      #   run: ansible-playbook -i inventory/cloud phase1.yml --tags prereq
 
-      - name: Phase1
-        run: ansible-playbook -i inventory/cloud phase1.yml --tags shell
+      - name: Phase1 (dynamic inventory)
+        run: ansible-playbook -i inventory/linux_azure_rm.yml phase1.yml
       # - name: Phase2
       #   run: ansible-playbook -i inventory/cloud phase2.yml

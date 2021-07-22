@@ -1,0 +1,16 @@
+# ansible-inventory -i myazure_rm.yml --graph
+# ansible-inventory -i myazure_rm.yml --list (hostvars)
+# ansible-playbook site.yml -i myazure_rm.yml
+
+# FILENAME IS IMPORTANT -> must end with 'azure_rm.yml' (or yaml)
+
+plugin: azure_rm
+plain_host_names: yes
+include_vm_resource_groups:
+  - azenv-uks
+auth_source: auto
+conditional_groups:
+  linux: "'linux' in os_profile.system"
+  windows: "'windows' in os_profile.system"
+exclude_host_filters:
+  - tags.os != 'linux'

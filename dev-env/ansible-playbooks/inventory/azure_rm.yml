@@ -1,0 +1,16 @@
+# ansible-inventory -i azure.yml --graph
+# For Hostvars:
+# ansible-inventory -i azure.yml --list
+# Usage in playbook:
+# ansible-playbook playbook_name.yml -i azure.yml
+
+plugin: azure_rm
+auth_source: auto
+# avoid appending unique ids
+plain_host_names: yes
+include_vm_resource_groups:
+  - azenv-uks
+# host vars based on OS
+conditional_groups:
+  linux: "'linux' in os_profile.system"
+  windows: "'windows' in os_profile.system"
