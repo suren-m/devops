@@ -1,0 +1,28 @@
+- name: "prereq"
+  hosts: all
+  tags: prereq
+  become: true
+
+  tasks:
+    - package:
+        upgrade: yes
+        update_cache: yes
+
+    - name: Make users passwordless for sudo in group sudo
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: "^%sudo"
+        line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+        validate: "visudo -cf %s"
+
+    - package:
+        name: "{{ item }}"
+      loop:
+        - git
+        - wget
+        - curl
+        - python-apt # needed for ansible --check
+        - unzip # needed for deno
+        - apt-transport-https # needed for dotnet
+

@@ -1,107 +1,85 @@
 # -----------------------------------------------------------
-# Make sure to run init.sh from prereq/<target-env> directory prior to this 
+
+# -----------------------------------------------------------
+# Make sure to run init.sh from prereq/<target-env> directory prior to this
 
 # Test Run: ansible-playbook phase1.yml --check
-# Specific Tags: ansible-playbook phase1.yml --tags precheck 
+# Specific Tags: ansible-playbook phase1.yml --tags precheck
 
-# All: ansible-playbook phase1.yml 
+# All: ansible-playbook phase1.yml
 
 # For Special variables on a given host run
 # ansible -m setup localhost
 # https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#special-variables
 
-# -----------------------------------------------------------
-
 - name: "prelaunch"
   hosts: all
   tags: prelaunch
-  gather_facts: yes # needed for distro vars such as below   
-  
-  pre_tasks:
-    - debug: 
-        msg: 
-          "Env Home: {{ lookup('env', 'HOME') }}
-           OS Family: {{ ansible_os_family }},
-           Distro: {{ ansible_distribution }},
-           release: {{ ansible_distribution_release }},                      
-           Distro Major Ver: {{ ansible_distribution_major_version }},          
-           Distro Ver: {{ ansible_distribution_version }},             
-           Arch: {{ ansible_architecture }}"     
+  gather_facts: yes # needed for distro vars such as below
 
-- name: "prereq"
-  hosts: all
-  tags: prereq
-  become: true
-  
-  tasks:
-    - package:
-        upgrade: yes
-        update_cache: yes
-    - package:
-        name: "{{ item }}"
-      loop:
-        - git
-        - wget
-        - curl                 
-        - python-apt # needed for ansible --check
-        - unzip # needed for deno
-        - apt-transport-https # needed for dotnet
+  pre_tasks:
+    - debug:
+        msg: "Env Home: {{ lookup('env', 'HOME') }}
+          OS Family: {{ ansible_os_family }},
+          Distro: {{ ansible_distribution }},
+          release: {{ ansible_distribution_release }},
+          Distro Major Ver: {{ ansible_distribution_major_version }},
+          Distro Ver: {{ ansible_distribution_version }},
+          Arch: {{ ansible_architecture }}"
 
 - name: "shell"
   hosts: all
-  tags: shell  
-  vars_files: 
-    - "./vars/shell.yml"    
+  tags: shell
+  vars_files:
+    - "./vars/shell.yml"
 
-  roles: 
+  roles:
     - shell
-  
+
 - name: "common"
   hosts: all
   become: true
   tags: common
-  vars_files: 
-    - "./vars/common.yml"  
+  vars_files:
+    - "./vars/common.yml"
 
   roles:
     - common
-        
+
 - name: "programming languages and frameworks"
   hosts: all
   tags: programming
-  vars_files: 
-    - "./vars/programming.yml"    
+  vars_files:
+    - "./vars/programming.yml"
 
-  roles: 
+  roles:
     - programming
 
 - name: "cloud native tools"
   hosts: all
   tags: cntools
-  vars_files: 
-    - "./vars/cloud_native_tools.yml"    
+  vars_files:
+    - "./vars/cloud_native_tools.yml"
 
-  roles: 
+  roles:
     - cloud_native_tools
 
 - name: "devops tools"
   hosts: all
   become: true
   tags: devops
-  vars_files: 
-    - "./vars/devops.yml"    
+  vars_files:
+    - "./vars/devops.yml"
 
-  roles: 
+  roles:
     - devops
 
 # Not using become:true for dotfiles roles
 # To avoid permission issues when other tools need to create config files
 - name: "dotfiles"
   hosts: all
-  tags: dotfiles  
-  vars_files: 
-    - "./vars/dotfiles.yml"  
+  tags: dotfiles
+  vars_files:
+    - "./vars/dotfiles.yml"
   roles:
-    - dotfiles 
-
-
+    - dotfiles
