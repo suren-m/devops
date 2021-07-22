@@ -4,5 +4,3 @@ localhost
 [local:vars]
 ansible_connection=local
 
-[azure]
-demo-vm.azbase.io
