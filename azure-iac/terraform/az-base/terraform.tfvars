@@ -124,12 +124,12 @@ vnet_subnets = [
     default_nsg = false
   },
   {
-    name        = "spark-pub"
+    name        = "spark-pub2"
     cidr        = ["10.0.204.0/23"]
     default_nsg = false
   },
   {
-    name        = "spark-pvt"
+    name        = "spark-pvt2"
     cidr        = ["10.0.206.0/23"]
     default_nsg = false
   }
