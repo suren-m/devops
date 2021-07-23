@@ -1,11 +1,13 @@
 ---
-# for role-specific vars, use the files from vars directory when possible 
+# for role-specific vars, use the files from vars directory when possible
 # variables here will be overwritten if `vars_files` are used in plays or `include_vars` in tasks
 
 # used when downloading binaries (e.g: go)
 target:
   platform: linux
-  arch: amd64 # dpkg --print-architecture  
+  arch: amd64 # dpkg --print-architecture
+
+# ansible_python_interpreter:
 
 # ansible -m setup localhost
 # lsb_release -cs == ansible_distribution_release
