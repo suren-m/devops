@@ -1,0 +1,37 @@
+# See:
+# https://docs.microsoft.com/en-us/azure/developer/ansible/vm-configure-windows?tabs=ansible#configure-the-winrm-listener
+# https://docs.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli
+# https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#authentication-options
+
+# ansible-galaxy collection install azure.azcollection
+# make sure winrm module is installed on the runner
+# pip install "pywinrm>=0.3.0"
+
+name: az-windows-devenv-ansible-playbook
+on:
+  workflow_run:
+    workflows: ["AZ-TF-ENV Apply"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  ansible-playbook-windows-dev:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check Version
+        run: ansible --version
+
+      - name: Extract targets for winrm
+        run: ansible-inventory -i azure-iac/ansible/inventory/windows_azure_rm.yml --list | jq '.windows' > targets.json
+
+      - name: Establish winrm
+        run: ansible-playbook /dev-env/windows/ansible-playbooks/winrm.yml --extra-args="@targets.json" --extra-args="rg_name=azenv-uks"
+      # - name: Install tools
+      #   run: ansible-playbook -i azure-iac/ansible/inventory/windows_azure_rm.yml /dev-env/windows/ansible-playbooks/install.yml

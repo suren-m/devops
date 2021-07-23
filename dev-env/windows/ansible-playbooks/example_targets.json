@@ -1,0 +1,6 @@
+{
+    "hosts": [
+        "azenv-uks-dev-0",
+        "azenv-uks-dev-1"
+    ]
+}

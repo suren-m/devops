@@ -1,21 +1,24 @@
 ---
-- name: Create Azure VM
+# ansible-inventory -i windows_azure_rm.yml --list | jq '.windows' > targets.json
+# ansible-playbook winrm.yml --extra-vars="@targets.json" --extra-vars="rg_name=azenv-uks"
+- name: Setup winRM for Azure VMs
   hosts: localhost
   connection: local
   tasks:
     - name: Create VM script extension to enable HTTPS WinRM listener
       azure_rm_virtualmachineextension:
         name: winrm-extension
-        resource_group: azenv-uks
-        virtual_machine_name: azenv-uks-win
+        resource_group: "{{ rg_name | default('az-env-uks') }}" # pass it via extra-vars
+        virtual_machine_name: "{{ item }}"
         publisher: Microsoft.Compute
         virtual_machine_extension_type: CustomScriptExtension
         type_handler_version: "1.9"
         settings: '{"fileUris": ["https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"],"commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ConfigureRemotingForAnsible.ps1"}'
         auto_upgrade_minor_version: true
-
+      with_items: "{{ hosts }}"
     - name: wait for the WinRM port to come online
       wait_for:
         port: 5986
-        host: "azenv-uks-win"
+        host: "{{ item }}"
         timeout: 600
+      with_items: "{{ hosts }}"

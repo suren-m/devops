@@ -15,3 +15,5 @@
 | Ansible Playbooks |
 | ----------------- |
 | ![az-linux-devenv-ansible-playbook](https://github.com/suren-m/devops/actions/workflows/az-linux-devenv-ansible-playbook/badge.svg)              |
+| ![az-windows-devenv-ansible-playbook](https://github.com/suren-m/devops/actions/workflows/az-windows-devenv-ansible-playbook/badge.svg)              |
+

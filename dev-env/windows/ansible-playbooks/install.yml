@@ -1,5 +1,5 @@
 ---
-- hosts: win
+- hosts: all
   vars:
     ansible_user: "{{ lookup('env', 'winuser') }}"
     ansible_password: "{{ lookup('env', 'winpass') }}"
