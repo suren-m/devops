@@ -10,8 +10,8 @@ ansible-inventory -i inventory/linux_azure_rm.yml --graph (or --list)
 cd ../../
 ansible-playbook dev-env/linux/ansible-playbooks/prereq.yml -i azure-iac/ansible/inventory/linux_azure_rm.yml
 
-# See az-linux-devenv-ansible-playbook.yml for more details
 ```
+> See [az-linux-devenv-ansible-playbook.yml](https://github.com/suren-m/devops/blob/main/.github/workflows/az-linux-devenv-ansible-playbook.yml)  and [az-windows-devenv-ansible-playbook.yml](https://github.com/suren-m/devops/blob/main/.github/workflows/az-windows-devenv-ansible-playbook.yml) for more details
 ---
 
 ### Static Inventory Example
