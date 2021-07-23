@@ -7,10 +7,10 @@ module "linux-agent-vm" {
 
   vm_count  = 1
   subnet_id = data.azurerm_subnet.vm.id
-  
-  vm_size   = "Standard_D2as_v4"
+
+  vm_size = "Standard_D2as_v4"
   storage_os_disk = {
-    create_option       = "FromImage"
+    create_option        = "FromImage"
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"
     size_gb              = "50"
@@ -18,9 +18,9 @@ module "linux-agent-vm" {
 
   delete_os_disk = true
 
-  vm_admin = "suren"
-  pub_key  = file("../files/id_rsa.pub")
-  custom_data  = file("../files/cloud_init")
+  vm_admin    = "suren"
+  pub_key     = file("../files/id_rsa.pub")
+  custom_data = file("../files/cloud_init")
 
   # https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest
   image = {
@@ -28,7 +28,7 @@ module "linux-agent-vm" {
     offer     = "0001-com-ubuntu-server-focal"
     sku       = "20_04-lts-gen2"
     version   = "latest"
-  }  
+  }
 
   tags = local.tags
 }
