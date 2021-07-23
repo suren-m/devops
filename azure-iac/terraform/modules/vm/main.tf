@@ -24,15 +24,15 @@ resource "azurerm_virtual_machine" "vm" {
   vm_size = var.vm_size
 
   os_profile {
-    computer_name = "${var.res_prefix}-${var.vm_prefix}-${count.index}"
-    admin_username = "suren" 
+    computer_name  = "${var.res_prefix}-${var.vm_prefix}-${count.index}"
+    admin_username = "suren"
     # custom_data = var.custom_data # cloud init
   }
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
       key_data = var.pub_key
-      path = "/home/suren/.ssh/authorized_keys"
+      path     = "/home/suren/.ssh/authorized_keys"
     }
   }
 
@@ -42,10 +42,10 @@ resource "azurerm_virtual_machine" "vm" {
 
   storage_os_disk {
     create_option     = var.storage_os_disk.create_option
-    name = "${var.res_prefix}-${var.vm_prefix}-${count.index}-osdisk"
-    caching              = var.storage_os_disk.caching
-    managed_disk_type  = var.storage_os_disk.storage_account_type
-    disk_size_gb         = var.storage_os_disk.size_gb
+    name              = "${var.res_prefix}-${var.vm_prefix}-${count.index}-osdisk"
+    caching           = var.storage_os_disk.caching
+    managed_disk_type = var.storage_os_disk.storage_account_type
+    disk_size_gb      = var.storage_os_disk.size_gb
   }
 
   delete_os_disk_on_termination = var.delete_os_disk
@@ -56,6 +56,6 @@ resource "azurerm_virtual_machine" "vm" {
     sku       = var.image.sku
     version   = var.image.version
   }
-  
+
   tags = var.tags
 }

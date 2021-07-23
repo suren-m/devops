@@ -1,6 +1,6 @@
 resource "azurerm_network_interface" "nic_win" {
   count = 1
-  name = "${local.res_prefix}-win-${count.index}"
+  name  = "${local.res_prefix}-win-${count.index}"
 
   location            = var.loc.long
   resource_group_name = azurerm_resource_group.rg.name
@@ -33,7 +33,7 @@ resource "azurerm_windows_virtual_machine" "win_dev" {
 
   # not applicable for this res type. tf will remove by default
   #delete_os_disk_on_termination = true
-  
+
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
     offer     = "Windows-10"
@@ -41,5 +41,5 @@ resource "azurerm_windows_virtual_machine" "win_dev" {
     version   = "latest"
   }
 
-  tags = "${merge(local.tags, {"os"="windows"})}"
+  tags = merge(local.tags, { "os" = "windows" })
 }

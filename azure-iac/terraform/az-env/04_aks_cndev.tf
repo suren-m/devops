@@ -59,7 +59,7 @@ resource "azurerm_kubernetes_cluster" "aks_cndev" {
 
   # https://docs.microsoft.com/en-us/azure/aks/use-managed-identity#bring-your-own-control-plane-mi
   identity {
-    type                      = "SystemAssigned"
+    type = "SystemAssigned"
     # user_assigned_identity_id = data.azurerm_user_assigned_identity.aks_controlplane_ua_mi.id
   }
 
@@ -97,10 +97,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cndev_common" {
 # Make sure the SP executing this template has access for role assignment (owner on that RG)
 resource "azurerm_role_assignment" "assignment" {
   principal_id         = azurerm_kubernetes_cluster.aks_cndev.identity[0].principal_id
-  role_definition_name = "Network Contributor"  
- 
+  role_definition_name = "Network Contributor"
+
   # Increase the scope to VNET or RG level Only if subnet-level is insufficient (likewise for NSG)
-  scope                = data.azurerm_subnet.aks2.id
+  scope = data.azurerm_subnet.aks2.id
 }
 
 
