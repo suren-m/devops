@@ -2,7 +2,7 @@
 # https://docs.microsoft.com/en-us/azure/developer/ansible/install-on-linux-vm?tabs=azure-cli
 # https://docs.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli
 
-name: AZ-LINUX-ANSIBLE-PLAYBOOK
+name: az-linux-devenv-ansible-playbook
 on:
   workflow_run:
     workflows: ["AZ-TF-ENV Apply"]
