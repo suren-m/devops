@@ -2,8 +2,8 @@ name: az-release
 on:
   workflow_run:
     workflows:
-      - "AZ-TF-BASE Apply"
-      - "AZ-TF-ENV Apply"
+      - "az-tf-base-apply"
+      - "az-tf-env-apply"
     types: [completed]
   workflow_dispatch:
 

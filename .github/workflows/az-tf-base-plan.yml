@@ -1,4 +1,4 @@
-name: AZ-TF-BASE Plan
+name: az-tf-base-plan
 on:
   pull_request:
     branches:

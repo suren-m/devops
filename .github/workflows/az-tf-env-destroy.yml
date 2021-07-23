@@ -1,5 +1,5 @@
-name: AZ-TF-ENV Destroy
-on:   
+name: az-tf-env-destroy
+on:
   workflow_dispatch:
 
 jobs:
@@ -8,13 +8,13 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: azure-iac/terraform/az-env    
+        working-directory: azure-iac/terraform/az-env
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Install the latest version of Terraform CLI 
+      # Install the latest version of Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -35,7 +35,7 @@ jobs:
           terraform init -backend-config="resource_group_name=${{ secrets.TF_AZ_ENV_RG_NAME }}" \
           -backend-config="storage_account_name=${{ secrets.TF_AZ_ENV_SG_ACCT_NAME }}" \
           -backend-config="container_name=${{ secrets.TF_AZ_ENV_SG_CONTAINER_NAME }}" \
-          -backend-config="key=${{ secrets.TF_AZ_ENV_STATE_KEY }}" 
+          -backend-config="key=${{ secrets.TF_AZ_ENV_STATE_KEY }}"
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -51,6 +51,3 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-
-  
-  

@@ -1,4 +1,4 @@
-name: AZ-TF-BASE Apply
+name: az-tf-base-apply
 on:
   push:
     branches:

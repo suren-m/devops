@@ -5,7 +5,7 @@
 name: az-linux-devenv-ansible-playbook
 on:
   workflow_run:
-    workflows: ["AZ-TF-ENV Apply"]
+    workflows: ["az-tf-env-apply"]
     types: [completed]
   workflow_dispatch:
 
