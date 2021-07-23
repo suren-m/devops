@@ -38,13 +38,15 @@
         - git
         - wget
         - curl
+        - python3
+        - python3-pip
         - python-apt # needed for ansible --check
-        - python-pexpect # needed for expect: (see homebrew install)
+        # - python-pexpect # needed for expect: (see homebrew install)
         - unzip # needed for deno
         - apt-transport-https # needed for dotnet
 
     # needed for doing `expect:` (see homebrew install)
-    # - name: install pexpect
-    #   pip:
-    #     name: pexpect
-    #   become: yes
+    - name: install pexpect
+      pip:
+        name: pexpect
+      become: yes
