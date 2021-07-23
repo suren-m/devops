@@ -1,0 +1,16 @@
+---
+- hosts: win
+  vars:
+    ansible_user: "{{ lookup('env', 'winuser') }}"
+    ansible_password: "{{ lookup('env', 'winpass') }}"
+    ansible_connection: winrm
+    ansible_winrm_transport: ntlm
+    ansible_winrm_server_cert_validation: ignore
+  tasks:
+    - name: Test connection
+      win_ping:
+
+    - name: Ensure 7-Zip is installed via Chocolatey
+      win_chocolatey:
+        name: 7zip
+        state: present
