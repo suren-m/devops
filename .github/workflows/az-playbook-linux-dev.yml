@@ -2,7 +2,7 @@
 # https://docs.microsoft.com/en-us/azure/developer/ansible/install-on-linux-vm?tabs=azure-cli
 # https://docs.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli
 
-name: AZ-PLAYBOOK-LINUX-DEV
+name: AZ-LINUX-ANSIBLE-PLAYBOOK
 on:
   workflow_run:
     workflows: ["AZ-TF-ENV Apply"]
@@ -15,7 +15,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: dev-env/ansible-playbooks
+        working-directory: dev-env/linux/ansible-playbooks
     steps:
       # Checkout
       - name: Checkout

@@ -14,4 +14,4 @@
 
 | Ansible Playbooks |
 | ----------------- |
-| ![AZ-PLAYBOOK-LINUX-DEV](https://github.com/suren-m/devops/actions/workflows/az-playbook-linux-dev.yml/badge.svg)              |
+| ![AZ-LINUX-ANSIBLE-PLAYBOOK](https://github.com/suren-m/devops/actions/workflows/az-playbook-linux-dev.yml/badge.svg)              |
