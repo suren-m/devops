@@ -20,6 +20,9 @@ Function winops {Set-Location -Path $env:userprofile\repos\devops\dev-env\window
 # after this, `. $env:profile` can be run to restart shell. (similar to source ~/.bashrc)
 $env:myprofile = "$env:userprofile\documents\powershell\profile.ps1"
 
+# Append to PATH
+# To see: env | grep 'Path' | sed 's/;/\n/g' (or simply $env:PATH)
+$env:PATH += ";c:\cuda\bin"
 
 #------------#
 # Aliases (similar to `alias foo=bar`)
