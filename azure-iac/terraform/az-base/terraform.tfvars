@@ -112,5 +112,25 @@ vnet_subnets = [
     name        = "sub-4094-4"
     cidr        = ["10.0.128.0/20"]
     default_nsg = false
+  },
+  {
+    name        = "spark-pub"
+    cidr        = ["10.0.200.0/23"]
+    default_nsg = false
+  },
+  {
+    name        = "spark-pvt"
+    cidr        = ["10.0.202.0/23"]
+    default_nsg = false
+  },
+  {
+    name        = "spark-pub"
+    cidr        = ["10.0.204.0/23"]
+    default_nsg = false
+  },
+  {
+    name        = "spark-pvt"
+    cidr        = ["10.0.206.0/23"]
+    default_nsg = false
   }
 ]
