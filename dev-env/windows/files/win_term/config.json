@@ -7,6 +7,18 @@
         },
         {
             "command": {
+                "action": "scrollUp"
+            },
+            "keys": "ctrl+shift+k"
+        },
+        {
+            "command": {
+                "action": "scrollDown"
+            },
+            "keys": "ctrl+shift+j"
+        },
+        {
+            "command": {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
@@ -14,15 +26,14 @@
             "keys": "alt+shift+d"
         },
         {
-            "keys": "win+`",
             "command": {
                 "action": "globalSummon",
-                "name": "_quake",
-                "dropdownDuration": 200,
-                "toggleVisibility": true,
+                "desktop": "toCurrent",
                 "monitor": "any",
-                "desktop": "toCurrent"
-            }
+                "name": "_quake",
+                "toggleVisibility": true
+            },
+            "keys": "shift+space"
         }
     ],
     "alwaysOnTop": false,
@@ -31,8 +42,8 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
-    "initialCols": 140,
-    "initialRows": 40,
+    "initialCols": 160,
+    "initialRows": 30,
     "launchMode": "focus",
     "multiLinePasteWarning": false,
     "profiles": {
@@ -44,8 +55,7 @@
             "cursorHeight": 25,
             "cursorShape": "vintage",
             "fontFace": "Cascadia Code PL",
-            "fontSize": 14,
-            "fontWeight": "normal",
+            "fontSize": 16,
             "padding": "8"
         },
         "list": [
@@ -74,7 +84,8 @@
                 "hidden": false,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
-            }
+            },
+            {}
         ]
     },
     "schemes": [
