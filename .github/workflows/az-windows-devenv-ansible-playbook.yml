@@ -7,7 +7,7 @@
 # make sure winrm module is installed on the runner
 # pip install "pywinrm>=0.3.0"
 
-name: az-windows-devenv-ansible-playbook
+name: az-windows-devenv
 on:
   workflow_run:
     workflows: ["az-tf-env-apply"]
