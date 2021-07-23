@@ -3,6 +3,9 @@
 ## Azure VM Example
 
 ```
+# Dynamic Inventory on Azure
+ansible-playbook -i inventory/linux_azure_rm.yml prereq.yml
+
 # static inventory example
 ansible-playbook -i inventory/cloud phase1.yml --check
 ```
