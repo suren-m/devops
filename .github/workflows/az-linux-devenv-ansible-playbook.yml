@@ -15,7 +15,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: dev-env/linux/ansible-playbooks
     steps:
       # Checkout
       - name: Checkout
@@ -41,10 +40,10 @@ jobs:
 
       # Dynamic Inventory filename matters - should end with azure_rm.yml
       - name: prereq.yml (dynamic inventory)
-        run: ansible-playbook -i inventory/linux_azure_rm.yml prereq.yml
+        run: ansible-playbook -i azure-iac/ansible/inventory/linux_azure_rm.yml dev-env/linux/ansible-playbooks/prereq.yml
 
       - name: phase1.yml (dynamic inventory)
-        run: ansible-playbook -i inventory/linux_azure_rm.yml phase1.yml
+        run: ansible-playbook -i azure-iac/ansible/inventory/linux_azure_rm.yml dev-env/linux/ansible-playbooks/phase1.yml
 
       - name: Phase2.yml (dynamic inventory)
-        run: ansible-playbook -i inventory/linux_azure_rm.yml phase2.yml
+        run: ansible-playbook -i azure-iac/ansible/inventory/linux_azure_rm.yml dev-env/linux/ansible-playbooks/phase2.yml
