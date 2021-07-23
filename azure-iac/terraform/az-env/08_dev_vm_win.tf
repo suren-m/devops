@@ -1,5 +1,6 @@
 resource "azurerm_network_interface" "nic_win" {
-  name = "${local.res_prefix}-win"
+  count = 2
+  name = "${local.res_prefix}-windev-${count.index}"
 
   location            = var.loc.long
   resource_group_name = azurerm_resource_group.rg.name
@@ -12,14 +13,15 @@ resource "azurerm_network_interface" "nic_win" {
 }
 
 resource "azurerm_windows_virtual_machine" "win_dev" {
-  name                = "${local.res_prefix}-win"
+  count = 2
+  name                = "${local.res_prefix}-windev-${count.index}"
   location            = var.loc.long
   resource_group_name = azurerm_resource_group.rg.name
   size                = "Standard_D2as_v4"
   admin_username      = var.winuser
   admin_password      = var.winpass
   network_interface_ids = [
-    azurerm_network_interface.nic_win.id,
+    element(azurerm_network_interface.nic_win.*.id, count.index),
   ]
 
   os_disk {
