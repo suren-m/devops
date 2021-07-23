@@ -1,4 +1,4 @@
-name: TF Release
+name: az-release
 on:
   workflow_run:
     workflows:
