@@ -1,4 +1,4 @@
-name: AZ-TF-Format
+name: az-tf-format
 on:
   workflow_dispatch:
 
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Install the latest version of Terraform CLI 
+      # Install the latest version of Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -22,35 +22,35 @@ jobs:
 
       - name: Terraform version
         run: terraform version
-        
+
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -recursive 
+        run: terraform fmt -recursive
 
       - name: set output for short sha
         id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"  
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - name: Git commit and push
         id: push
-        run: |       
+        run: |
           git checkout -b temp/tf-fmt-${{ steps.vars.outputs.sha_short }}   
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
           git commit -m "Ran terraform fmt"
-          git push origin temp/tf-fmt-${{ steps.vars.outputs.sha_short }} 
-      
+          git push origin temp/tf-fmt-${{ steps.vars.outputs.sha_short }}
+
       # publish results as a comment if workflow was a pull request
       # see: https://github.com/hashicorp/setup-terraform
-      - uses: actions/github-script@0.9.0  
+      - uses: actions/github-script@0.9.0
         with:
           # use PAT to work around limitation on triggering actions from bot created PR
           github-token: ${{ secrets.TF_FMT_PR_TOKEN }}
           script: |
             const output = `#### Applied Terraform format
             #### Terraform fmt ⚙️ (below files have been modified)
-            
+
             \`\`\`
             ${{ steps.fmt.outputs.stdout }}
             \`\`\`
