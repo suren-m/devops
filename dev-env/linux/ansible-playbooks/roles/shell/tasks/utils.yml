@@ -3,15 +3,15 @@
 # https://github.com/chubin/cheat.sh
 
 - name: Cht.sh - check if it already exists
-  stat: 
+  stat:
     path: "{{ lookup('env', 'HOME') }}/.local/bin/cht.sh"
-  register: chtsh_bin  
+  register: chtsh_bin
 
 # - debug: var=chtsh_bin
 
 - name: Cht.sh - Download
   get_url:
-    url:  https://cht.sh/:cht.sh
+    url: https://cht.sh/:cht.sh
     dest: "{{ lookup('env', 'HOME') }}/.local/bin/cht.sh"
     mode: a+x
   when: not chtsh_bin.stat.exists or chtsh.reinstall == true
@@ -19,7 +19,7 @@
 # lf
 # https://github.com/gokcehan/lf/releases/download/r24/lf-linux-arm64.tar.gz
 
-- name: lf - Remove exisiting version  
+- name: lf - Remove exisiting version
   file:
     state: absent
     path: "{{ lookup('env', 'HOME') }}/.local/bin/lf"
@@ -28,12 +28,13 @@
 - stat: path="{{ lookup('env', 'HOME') }}/.local/bin/lf"
   register: lf_bin
 
-- debug: msg="https://github.com/gokcehan/lf/releases/download/{{ lf.ver }}/lf-{{ target.platform }}-{{ target.arch }}.tar.gz"
+# causes error?
+# - debug: msg="https://github.com/gokcehan/lf/releases/download/{{ lf.ver }}/lf-{{ target.platform }}-{{ target.arch }}.tar.gz"
 
-- when: not lf_bin.stat.exists 
-  name: "lf - Download and Unarchive to ~/.local/bin"  
+- when: not lf_bin.stat.exists
+  name: "lf - Download and Unarchive to ~/.local/bin"
   unarchive:
     src: "https://github.com/gokcehan/lf/releases/download/{{ lf.ver }}/lf-{{ target.platform }}-{{ target.arch }}.tar.gz"
     dest: "{{ lookup('env', 'HOME') }}/.local/bin"
     mode: 0755
-    remote_src: yes               
+    remote_src: yes
