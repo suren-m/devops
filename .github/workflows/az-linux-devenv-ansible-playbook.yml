@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ansible-playbook-linux-dev:
+  on-success:
     runs-on: self-hosted
     defaults:
       run:

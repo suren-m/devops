@@ -1,0 +1,59 @@
+name: TF Release
+on:
+  workflow_run:
+    workflows:
+      - "AZ-TF-BASE Apply"
+      - "AZ-TF-ENV Apply"
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: set output for short sha
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.vars.outputs.sha_short }}
+          release_name: Release ${{ steps.vars.outputs.sha_short }}
+          body: |
+            Infrastructure provisioned via Apply workflow
+          draft: false
+          prerelease: false
+
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: set output for short sha
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - uses: actions/github-script@0.9.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Apply failed for ${{ steps.vars.outputs.sha_short }}        
+
+            *Pusher: @${{ github.actor }}*`;
+                                      
+            github.issues.create({         
+              title: "Terraform apply failed",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["failure"],
+              body: output
+            })

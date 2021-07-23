@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ansible-playbook-windows-dev:
+  on-success:
     runs-on: self-hosted
     defaults:
       run:
