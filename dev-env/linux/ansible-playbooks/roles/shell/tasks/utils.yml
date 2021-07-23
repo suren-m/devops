@@ -28,8 +28,7 @@
 - stat: path="{{ lookup('env', 'HOME') }}/.local/bin/lf"
   register: lf_bin
 
-# causes error?
-# - debug: msg="https://github.com/gokcehan/lf/releases/download/{{ lf.ver }}/lf-{{ target.platform }}-{{ target.arch }}.tar.gz"
+- debug: msg="https://github.com/gokcehan/lf/releases/download/{{ lf.ver }}/lf-{{ target.platform }}-{{ target.arch }}.tar.gz"
 
 - when: not lf_bin.stat.exists
   name: "lf - Download and Unarchive to ~/.local/bin"
