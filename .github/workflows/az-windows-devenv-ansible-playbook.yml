@@ -33,5 +33,9 @@ jobs:
 
       - name: Establish winrm
         run: ansible-playbook dev-env/windows/ansible-playbooks/winrm.yml -e="@targets.json" -e="rg_name=azenv-uks"
-      # - name: Install tools
-      #   run: ansible-playbook -i azure-iac/ansible/inventory/windows_azure_rm.yml dev-env/windows/ansible-playbooks/install.yml
+
+      - name: Install tools
+        run: ansible-playbook -i azure-iac/ansible/inventory/windows_azure_rm.yml dev-env/windows/ansible-playbooks/install.yml
+        env: # used by ansible to connect to vm
+          winuser: ${{ secrets.TF_VAR_WINUSER }}
+          winpass: ${{ secrets.TF_VAR_WINPASS }}

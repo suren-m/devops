@@ -14,3 +14,8 @@
       win_chocolatey:
         name: 7zip
         state: present
+
+    - name: Ensure helm is installed via Chocolatey
+      win_chocolatey:
+        name: kubernetes-helm
+        state: present
