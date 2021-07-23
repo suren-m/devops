@@ -17,3 +17,6 @@
 | ![az-linux-devenv-ansible-playbook](https://github.com/suren-m/devops/actions/workflows/az-linux-devenv-ansible-playbook.yml/badge.svg)              |
 | ![az-windows-devenv-ansible-playbook](https://github.com/suren-m/devops/actions/workflows/az-windows-devenv-ansible-playbook.yml/badge.svg)          |
 
+| Releases |
+| ----------------- |
+| ![az-release](https://github.com/suren-m/devops/actions/workflows/az-release.yml/badge.svg)              |
