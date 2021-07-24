@@ -1,86 +1,102 @@
+---
 # -----------------------------------------------------------
-# Make sure to run phase1.yml playbook prior to this 
+
+# -----------------------------------------------------------
+# Make sure to run phase1.yml playbook prior to this
 
 # Test Run: ansible-playbook post_source.yml --check
 # Specific Tags: ansible-playbook post_source.yml --tags prelaunch
 
-# All: ansible-playbook post_source.yml 
+# All: ansible-playbook post_source.yml
 # -----------------------------------------------------------
 
 # only targetting debian based OS for now
-# -----------------------------------------------------------
-
 - name: "prelaunch"
   hosts: all
   tags: prelaunch
-  gather_facts: yes # needed for distro vars such as below   
-  
+  gather_facts: yes # needed for distro vars such as below
+
   pre_tasks:
-    - debug: 
-        msg: 
-          "Env Home: {{ lookup('env', 'HOME') }}
-           OS Family: {{ ansible_os_family }},
-           Distro: {{ ansible_distribution }},
-           release: {{ ansible_distribution_release }},                      
-           Distro Major Ver: {{ ansible_distribution_major_version }},          
-           Distro Ver: {{ ansible_distribution_version }},             
-           Arch: {{ ansible_architecture }}"   
+    - debug:
+        msg: "Env Home: {{ lookup('env', 'HOME') }}
+          OS Family: {{ ansible_os_family }},
+          Distro: {{ ansible_distribution }},
+          release: {{ ansible_distribution_release }},
+          Distro Major Ver: {{ ansible_distribution_major_version }},
+          Distro Ver: {{ ansible_distribution_version }},
+          Arch: {{ ansible_architecture }}"
 
 - name: "validate"
   hosts: all
   tags: validate
-  gather_facts: yes # needed for distro vars such as below   
+  gather_facts: yes # needed for distro vars such as below
 
-  pre_tasks:      
+  pre_tasks:
     - stat: path="{{ lookup('env', 'HOME') }}/.zshrc"
       register: zshrc
-    - name: 'check zshrc'
+    - name: "check zshrc"
       fail:
         msg: "zshrc doesn't exist. Make sure to run phase1.yml"
       when: not zshrc.stat.exists
 
     - stat: path="{{ lookup('env', 'HOME') }}/.config/shell"
       register: shell_config
-    - name: 'check shell config dir'
+    - name: "check shell config dir"
       fail:
         msg: "~/.config/shell doesn't exist. Make sure to run phase1.yml"
-      when: not shell_config.stat.isdir 
+      when: not shell_config.stat.isdir
 
     - stat: path="{{ lookup('env', 'HOME') }}/.local/bin"
       register: localbin
-    - name: 'check local bin'
+    - name: "check local bin"
       fail:
         msg: "~/.local/bin doesn't exist. Make sure to run phase1.yml"
-      when: not localbin.stat.isdir 
+      when: not localbin.stat.isdir
 
     - stat: path="/home/linuxbrew/.linuxbrew/bin/brew"
       register: brew_bin
-    - name: 'check brew_bin'
+    - name: "check brew_bin"
       fail:
         msg: "Unable to find brew. Make sure Homebrew is installed from phase1"
       when: not localbin.stat.exists and ansible_os_family == 'Debian'
 
     - stat: path="{{ lookup('env', 'HOME') }}/.cargo/bin"
       register: cargo_bin
-    - name: 'check cargo_bin'
+    - name: "check cargo_bin"
       fail:
         msg: "~/.cargo/bin doesn't exist. Make sure Rust is intalled from phase1"
       when: not cargo_bin.stat.exists
 
     - stat: path="{{ lookup('env', 'HOME') }}/go/bin"
       register: go_bin
-    - name: 'check go bin (local)'
+    - name: "check go bin (local)"
       fail:
         msg: "~/go/bin doesn't exist. Make sure Go and its bin dirs are configured from phase1"
       when: not go_bin.stat.exists
 
-- name: "Phase2 Items (those that need `source ~/.zshrc`)"
+- name: "Brew based tools"
   hosts: all
-  tags: phase2
-  vars_files: 
-    - "./vars/phase2.yml"    
+  tags: brewtools
+  vars_files:
+    - "./vars/phase2.yml"
 
-  roles: 
+  roles:
     - brew_based_tools
-    - cargo_based_tools
+
+- name: "Go based Tools"
+  hosts: all
+  tags: gotools
+  vars_files:
+    - "./vars/phase2.yml"
+
+  roles:
     - go_based_tools
+
+- name: "Cargo based Tools"
+  hosts: all
+  tags: cargotools
+  vars_files:
+    - "./vars/phase2.yml"
+
+  roles:
+    - cargo_based_tools
