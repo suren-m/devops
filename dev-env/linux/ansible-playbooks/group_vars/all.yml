@@ -7,7 +7,6 @@ target:
   platform: linux
   arch: amd64 # dpkg --print-architecture
 
-# ansible_python_interpreter:
-
+ansible_python_interpreter: /usr/bin/python3
 # ansible -m setup localhost
 # lsb_release -cs == ansible_distribution_release
