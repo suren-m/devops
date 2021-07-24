@@ -39,20 +39,12 @@
         - git
         - wget
         - curl
-        - virtualenv
-        - pipenv
-        - python-apt # needed for ansible --check
         - python3-dev
         - python3-pip
-        # - python-pexpect # needed for expect: (see homebrew install)
+        - python3-setuptools
+        - python3-pexpect # needed for expect: (see homebrew install)
+        - python3-apt # needed for ansible --check
         - unzip # needed for deno
         - apt-transport-https # needed for dotnet
 
-    # needed for doing `expect:` (see homebrew install)
-    - name: install pexpect
-      become: yes
-      pip:
-        name:
-      loop:
-        - setuptools
-        - pexpect
+# Make sure ansible_python_interpreter is using /usr/bin/python3
