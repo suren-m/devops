@@ -12,7 +12,8 @@
           Distro Major Ver: {{ ansible_distribution_major_version }},
           Distro Ver: {{ ansible_distribution_version }},
           Arch: {{ ansible_architecture }},
-          Target: {{ target.arch}} -  {{ target.platform }}"
+          Target: {{ target.arch}} -  {{ target.platform }},
+          Interpreter: {{ ansible_python_interpreter }}"
 
 - name: "prereq"
   hosts: all
