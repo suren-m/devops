@@ -1,4 +1,0 @@
-resource_group_name="azbase-uks"
-storage_account_name="azenvtfstateuks"
-container_name="azurerm"
-key="aks-demos.tfstate"
