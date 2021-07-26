@@ -41,7 +41,7 @@ spec:
           while sleep 2s; 
           do {  az1='curl -s -m 2 -w \'%{http_code}\' 10.0.128.97 -o /dev/null'; 
           az2='curl -s -m 2 -w \'%{http_code}\' 10.0.128.98 -o /dev/null'; 
-          ( [[ `eval $az1` = 200 ]] && echo 'hit az1' ) || ( [[  `eval $az2` = 200 ]] && echo 'hit az2' ) || echo 'both down'; 
+          ( [[ `eval $az1` = 200 ]] && echo 'OK response from webapi-svc-az1' ) || ( [[  `eval $az2` = 200 ]] && echo 'OK response from webapi-svc-az2' ) || echo 'both down'; 
           };
           done;
           "]
@@ -112,7 +112,7 @@ spec:
           while sleep 2s; 
           do {  az1='curl -s -m 2 -w \'%{http_code}\' 10.0.128.97 -o /dev/null'; 
           az2='curl -s -m 2 -w \'%{http_code}\' 10.0.128.98 -o /dev/null'; 
-          ( [[ `eval $az2` = 200 ]] && echo 'hit az2' ) || ( [[  `eval $az1` = 200 ]] && echo 'hit az1' ) || echo 'both down'; 
+          ( [[ `eval $az2` = 200 ]] && echo 'OK response from webapi-svc-az2' ) || ( [[  `eval $az1` = 200 ]] && echo 'OK response from webapi-svc-az1' ) || echo 'both down'; 
           };
           done;
           "]
