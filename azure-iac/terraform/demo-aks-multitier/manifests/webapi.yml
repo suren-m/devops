@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: webapi
+spec: {}
+status: {}
+
+# Az1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapi-az1
+  name: webapi-az1
+  namespace: webapi
+spec:
+  replicas: 1 # only scale within same Nodepool
+  selector:
+    matchLabels:
+      app: webapi-az1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapi-az1
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values: # nodepool names
+                      - az1
+      tolerations:
+        - key: "zone"
+          operator: "Equal"
+          value: "az1"
+          effect: "NoSchedule"
+
+---
+# Internal LB Service (or internal ingress controller) for AZ1
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapi-svc-az1
+  namespace: webapi
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: webapi-az1
+
+---
+# Az2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapi-az2
+  name: webapi-az2
+  namespace: webapi
+spec:
+  replicas: 1 # only scale within same Nodepool
+  selector:
+    matchLabels:
+      app: webapi-az2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapi-az2
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values: # nodepool names
+                      - az2
+      tolerations:
+        - key: "zone"
+          operator: "Equal"
+          value: "az2"
+          effect: "NoSchedule"
+---
+# Internal LB Service (or internal ingress controller) for AZ2
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapi-svc-az2
+  namespace: webapi
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: webapi-az2
