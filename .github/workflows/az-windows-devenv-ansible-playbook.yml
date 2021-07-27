@@ -16,7 +16,7 @@ on:
 
 jobs:
   on-success:
-    runs-on: self-hosted
+    runs-on: runner-2
     defaults:
       run:
         shell: bash
