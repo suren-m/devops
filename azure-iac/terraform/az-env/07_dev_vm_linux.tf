@@ -5,7 +5,7 @@ module "linux-dev-vm" {
   loc        = var.loc
   rg_name    = azurerm_resource_group.rg.name
 
-  vm_count  = 1
+  vm_count  = 2
   subnet_id = data.azurerm_subnet.vm.id
   vm_size   = "Standard_D2as_v4"
 
