@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "nic_win" {
-  count = 1
+  count = 2
   name  = "${local.res_prefix}-win-${count.index}"
 
   location            = var.loc.long
@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "nic_win" {
 }
 
 resource "azurerm_windows_virtual_machine" "win_dev" {
-  count = 1
+  count = 2
   # Ensure this is no more than 15 characters or else tf will fail at time of apply
   name                = "${local.res_prefix}-win-${count.index}"
   location            = var.loc.long
