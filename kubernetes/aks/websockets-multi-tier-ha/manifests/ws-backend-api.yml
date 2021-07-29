@@ -1,0 +1,128 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ws-api
+spec: {}
+status: {}
+
+# Az1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ws-api-az1
+  name: ws-api-az1
+  namespace: ws-api
+spec:
+  replicas: 1 # only scale within same Nodepool
+  selector:
+    matchLabels:
+      app: ws-api-az1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ws-api-az1
+    spec:
+      containers:
+        - image: surenmcode/ws-server:1.0-py
+          name: ws-backend-api-az1
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values: # nodepool names
+                      - az1
+      tolerations:
+        - key: "zone"
+          operator: "Equal"
+          value: "az1"
+          effect: "NoSchedule"
+
+---
+# Internal LB Service (or internal ingress controller) for AZ1
+apiVersion: v1
+kind: Service
+metadata:
+  name: ws-api-svc-az1
+  namespace: ws-api
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: ws-api-az1
+
+---
+# Az2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ws-api-az2
+  name: ws-api-az2
+  namespace: ws-api
+spec:
+  replicas: 1 # only scale within same Nodepool
+  selector:
+    matchLabels:
+      app: ws-api-az2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ws-api-az2
+    spec:
+      containers:
+        - image: surenmcode/ws-server:1.0-py
+          name: ws-backend-api-az2
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values: # nodepool names
+                      - az2
+      tolerations:
+        - key: "zone"
+          operator: "Equal"
+          value: "az2"
+          effect: "NoSchedule"
+---
+# Internal LB Service (or internal ingress controller) for AZ2
+apiVersion: v1
+kind: Service
+metadata:
+  name: ws-api-svc-az2
+  namespace: ws-api
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: ws-api-az2

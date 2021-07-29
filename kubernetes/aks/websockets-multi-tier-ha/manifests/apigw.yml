@@ -1,0 +1,148 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: apigw
+spec: {}
+status: {}
+
+# Az1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apigw-az1
+  name: apigw-az1
+  namespace: apigw
+spec:
+  replicas: 1 # only scale within same Nodepool
+  selector:
+    matchLabels:
+      app: apigw-az1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: apigw-az1
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          command: ["bin/bash", "-c", "--"]
+          # hit az2 if az1 is down
+          args: ["
+          while sleep 2s; 
+          do {  az1='curl -s -m 2 -w \'%{http_code}\' 10.0.128.97 -o /dev/null'; 
+          az2='curl -s -m 2 -w \'%{http_code}\' 10.0.128.98 -o /dev/null'; 
+          ( [[ `eval $az1` = 200 ]] && echo 'OK response from webapi-svc-az1' ) || ( [[  `eval $az2` = 200 ]] && echo 'OK response from webapi-svc-az2' ) || echo 'both down'; 
+          };
+          done;
+          "]
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values: # nodepool names
+                      - az1
+      tolerations:
+        - key: "zone"
+          operator: "Equal"
+          value: "az1"
+          effect: "NoSchedule"
+
+---
+# Internal LB Service (or internal ingress controller) for AZ1
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigw-svc-az1
+  namespace: apigw
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: apigw-az1
+
+---
+# Az2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apigw-az2
+  name: apigw-az2
+  namespace: apigw
+spec:
+  replicas: 1 # only scale within same Nodepool
+  selector:
+    matchLabels:
+      app: apigw-az2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: apigw-az2
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          command:
+            ["bin/bash", "-c", "--"]
+            # hit az1 if az2 is not available
+          args: ["
+          while sleep 2s; 
+          do {  az1='curl -s -m 2 -w \'%{http_code}\' 10.0.128.97 -o /dev/null'; 
+          az2='curl -s -m 2 -w \'%{http_code}\' 10.0.128.98 -o /dev/null'; 
+          ( [[ `eval $az2` = 200 ]] && echo 'OK response from webapi-svc-az2' ) || ( [[  `eval $az1` = 200 ]] && echo 'OK response from webapi-svc-az1' ) || echo 'both down'; 
+          };
+          done;
+          "]
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values: # nodepool names
+                      - az2
+      tolerations:
+        - key: "zone"
+          operator: "Equal"
+          value: "az2"
+          effect: "NoSchedule"
+---
+# Internal LB Service (or internal ingress controller) for AZ2
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigw-svc-az2
+  namespace: apigw
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: apigw-az2
