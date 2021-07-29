@@ -1,0 +1,8 @@
+controller:
+  service:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      proxy-send-timeout: 3600
+      proxy-read-timeout: 3600
+
+# https://kubernetes.github.io/ingress-nginx/user-guide/miscellaneous/#websockets
