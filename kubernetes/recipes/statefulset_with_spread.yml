@@ -1,0 +1,82 @@
+# Stateful set
+# Spread constraints to evenly distribute pods across AZs based on node's zone label
+# Affinity to 'not' deploy to default nodepool
+# DownwardApi to get node info
+# VolumeClaimTemplates to dynamically provision a disk volume per pod
+# Finally exposing statefulset as a loadbalancer service (not headless)
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  serviceName: "nginx"
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: nginx
+          image: k8s.gcr.io/nginx-slim:0.8
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
+          env: # Downward API to collect deployed Nodename
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+      topologySpreadConstraints:
+        - maxSkew: 1 # spread pods based on zone label
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: web
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: NotIn
+                    values: # avoid default nodepool
+                      - default
+  volumeClaimTemplates: # dynamic provisioning of volumes
+    - metadata:
+        name: www
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  ports:
+    - port: 80
+      name: web
+  type: LoadBalancer
+  selector:
+    app: nginx

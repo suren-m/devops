@@ -4,6 +4,7 @@ alias k=kubectl
 alias kus=kustomize
 alias lg=lazygit
 alias v=vim
+alias l=less
 
 export VISUAL=vi
 export EDITOR=vi

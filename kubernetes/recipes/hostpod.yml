@@ -1,0 +1,25 @@
+# Run a pod to printout its hostname and IP every 3 seconds.
+# Also store stdout to a file in /tmp
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: hostpod
+  name: hostpod
+spec:
+  containers:
+    - image: busybox
+      name: hostpod
+      command: ["bin/sh", "-c", "--"]
+      args:
+        - count=0;
+          pod_info="`hostname -s` (`hostname -i`)";
+          while sleep 3s;
+          do { count=$((count+1)); echo "$pod_info - $count - `date`" | tee -a /tmp/datelog; };
+          done;
+  # nodeSelector:
+  #   kubernetes.io/hostname: target-node-name
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
