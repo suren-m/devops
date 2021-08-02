@@ -5,8 +5,6 @@ alias kus=kustomize
 alias lg=lazygit
 alias v=vim
 alias l=less
-alias devops=$HOME/repos/devops
-alias apps=$HOME/repos/apps
 
 export VISUAL=vi
 export EDITOR=vi
