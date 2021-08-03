@@ -1,7 +1,7 @@
 resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
   name                = "dualzone"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
   sku_tier            = "Free"
   kubernetes_version  = var.kubernetes_version
 
