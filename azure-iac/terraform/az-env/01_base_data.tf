@@ -23,6 +23,12 @@ data "azurerm_subnet" "aks2" {
   resource_group_name  = local.base_rg
 }
 
+data "azurerm_subnet" "aks3" {
+  name                 = "sub-4094"
+  virtual_network_name = local.base_prefix
+  resource_group_name  = local.base_rg
+}
+
 data "azurerm_subnet" "sub256" {
   name                 = "sub-256"
   virtual_network_name = local.base_prefix

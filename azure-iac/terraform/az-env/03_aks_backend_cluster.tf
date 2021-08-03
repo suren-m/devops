@@ -1,11 +1,11 @@
-resource "azurerm_kubernetes_cluster" "aks_apigw" {
-  name                = "apigw"
+resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
+  name                = "dualzone"
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   sku_tier            = "Free"
   kubernetes_version  = var.kubernetes_version
 
-  dns_prefix = "apigw-aks"
+  dns_prefix = "webapi-aks"
   
   default_node_pool {
     name                 = "default"
@@ -17,7 +17,7 @@ resource "azurerm_kubernetes_cluster" "aks_apigw" {
     max_count            = 2
     min_count            = 1
     orchestrator_version = var.kubernetes_version
-    vnet_subnet_id       = data.azurerm_subnet.apigw.id
+    vnet_subnet_id       = data.azurerm_subnet.aks2.id    
   }
 
   auto_scaler_profile {
@@ -55,34 +55,34 @@ resource "azurerm_kubernetes_cluster" "aks_apigw" {
   }  
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "aks_apigw_az1" {
+resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
   name                  = "az1"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_apigw.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_webapi.id
   enable_auto_scaling   = true
   vm_size               = "Standard_D2as_v4"
   node_count            = 1
-  max_count             = 2
+  max_count             = 3
   min_count             = 1
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
   availability_zones    = [1]
   mode                  = "User"  
-  vnet_subnet_id        = data.azurerm_subnet.apigw.id
+  vnet_subnet_id        = data.azurerm_subnet.aks2.id
   node_taints           = ["zone=az1:NoSchedule"]
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "aks_apigw_az2" {
+resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az2" {
   name                  = "az2"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_apigw.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_webapi.id
   enable_auto_scaling   = true
   vm_size               = "Standard_D2as_v4"
   node_count            = 1
-  max_count             = 2
+  max_count             = 3
   min_count             = 1
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
   availability_zones    = [2]
   mode                  = "User"  
-  vnet_subnet_id        = data.azurerm_subnet.apigw.id
+  vnet_subnet_id        = data.azurerm_subnet.aks2.id
   node_taints           = ["zone=az2:NoSchedule"]
 }

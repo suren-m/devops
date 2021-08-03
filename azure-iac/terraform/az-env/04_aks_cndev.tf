@@ -19,7 +19,7 @@
 #     max_count            = 3
 #     min_count            = 2
 #     orchestrator_version = var.kubernetes_version
-#     vnet_subnet_id       = data.azurerm_subnet.aks2.id
+#     vnet_subnet_id       = data.azurerm_subnet.aks3.id
 #   }
 
 #   linux_profile {
@@ -86,7 +86,7 @@
 #   availability_zones    = [1, 2, 3]
 #   mode                  = "User"
 #   node_labels           = { workloads = "general" }
-#   vnet_subnet_id        = data.azurerm_subnet.aks2.id
+#   vnet_subnet_id        = data.azurerm_subnet.aks3.id
 # }
 
 # # If using System-Assigned MI, ensure it has access to subnet
@@ -100,7 +100,7 @@
 #   role_definition_name = "Network Contributor"
 
 #   # Increase the scope to VNET or RG level Only if subnet-level is insufficient (likewise for NSG)
-#   scope = data.azurerm_subnet.aks2.id
+#   scope = data.azurerm_subnet.aks3.id
 # }
 
 
