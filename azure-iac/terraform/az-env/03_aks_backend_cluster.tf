@@ -57,7 +57,7 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
 
 resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
   name                  = "az1"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_webapi.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_backend_dualzone.id
   enable_auto_scaling   = true
   vm_size               = "Standard_D2as_v4"
   node_count            = 1
@@ -73,7 +73,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
 
 resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az2" {
   name                  = "az2"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_webapi.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_backend_dualzone.id
   enable_auto_scaling   = true
   vm_size               = "Standard_D2as_v4"
   node_count            = 1
