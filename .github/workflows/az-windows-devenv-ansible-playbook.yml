@@ -10,13 +10,13 @@
 name: az-windows-devenv
 on:
   workflow_run:
-    workflows: ["az-tf-env-apply"]
+    workflows: ["az-tf-vm-env-apply"]
     types: [completed]
   workflow_dispatch:
 
 jobs:
   on-success:
-    runs-on: runner-2
+    runs-on: self-hosted
     defaults:
       run:
         shell: bash
