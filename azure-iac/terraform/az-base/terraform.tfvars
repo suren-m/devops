@@ -2,6 +2,7 @@
 prefix = "azbase"
 # subsequent resources after base
 env_prefix = "azenv" 
+vmenv_prefix = "azvmenv"
 loc = {
   short = "uks"
   long  = "uk south"

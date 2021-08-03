@@ -4,6 +4,7 @@
 locals {
   res_prefix                   = terraform.workspace == "default" ? "${var.prefix}-${var.loc.short}" : "${terraform.workspace}-${var.prefix}-${var.loc.short}"
   env_res_prefix               = terraform.workspace == "default" ? "${var.env_prefix}-${var.loc.short}" : "${terraform.workspace}-${var.env_prefix}-${var.loc.short}"
+  vmenv_res_prefix             = terraform.workspace == "default" ? "${var.vmenv_prefix}-${var.loc.short}" : "${terraform.workspace}-${var.vmenv_prefix}-${var.loc.short}"
   alphanumeric_only_res_prefix = terraform.workspace == "default" ? "${var.prefix}${var.loc.short}" : "${terraform.workspace}${var.prefix}${var.loc.short}"
   tags = {
     res_prefix   = "${local.res_prefix}"
@@ -23,4 +24,11 @@ resource "azurerm_resource_group" "base" {
 resource "azurerm_resource_group" "rg" {
   name     = local.env_res_prefix
   location = var.loc.long
+  tags = local.tags
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = local.vmenv_res_prefix
+  location = var.loc.long
+  tags = local.tags
 }

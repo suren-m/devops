@@ -2,6 +2,14 @@ variable "prefix" {
 
 }
 
+variable "env_prefix" {
+
+}
+
+variable "vmenv_prefix"{
+
+}
+
 variable "loc" {
 
 }

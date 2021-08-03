@@ -8,7 +8,7 @@ module "azenv-tfstate-storage" {
   sg_name_suffix = "tfstateuks"
 
   // one container per provider
-  blob_containers = ["docker", "helm", "azurerm"]
+  blob_containers = ["docker", "helm", "azurerm", "azurerm-vm"]
 
   tags = local.tags
 }
