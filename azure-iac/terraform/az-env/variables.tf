@@ -6,6 +6,10 @@ variable "base_rg" {
 
 }
 
+variable "env_rg" {
+  
+}
+
 variable "prefix" {
 
 }

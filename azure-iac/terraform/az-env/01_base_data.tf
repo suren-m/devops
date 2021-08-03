@@ -1,4 +1,9 @@
 // Networking 
+data "azurerm_resource_group" "rg" {
+  name     = local.res_prefix   
+}
+
+
 data "azurerm_subnet" "default" {
   name                 = "default"
   virtual_network_name = local.base_prefix

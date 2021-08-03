@@ -1,9 +1,12 @@
 // common
 prefix = "azbase"
+# subsequent resources after base
+env_prefix = "azenv" 
 loc = {
   short = "uks"
   long  = "uk south"
 }
+
 
 // networking
 vnet_addr_space = ["10.0.0.0/16"]

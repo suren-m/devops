@@ -17,19 +17,14 @@ locals {
   }
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = local.res_prefix
-  location = var.loc.long
-}
-
 # utils
-data "http" "tf_check" {
-  url = "https://checkpoint-api.hashicorp.com/v1/check/terraform"
+# data "http" "tf_check" {
+#   url = "https://checkpoint-api.hashicorp.com/v1/check/terraform"
 
-  request_headers = {
-    Accept = "application/json"
-  }
-}
+#   request_headers = {
+#     Accept = "application/json"
+#   }
+# }
 
 # resource "azurerm_resource_group" "live_demo_rg" {
 #   name     = "${local.res_prefix}-livedemo-rg"

@@ -1,13 +1,13 @@
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.aks_cluster_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   sku_tier            = "Free"
   kubernetes_version  = var.kubernetes_version
 
   dns_prefix = "${var.aks_cluster_name}-aks"
   # private_cluster_enabled = true
-  # node_resource_group = "aks-mc-${azurerm_resource_group.rg.name}"
+  # node_resource_group = "aks-mc-${data.azurerm_resource_group.rg.name}"
 
   default_node_pool {
     name                 = "default"
