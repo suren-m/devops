@@ -5,7 +5,7 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
   sku_tier            = "Free"
   kubernetes_version  = var.kubernetes_version
 
-  dns_prefix = "webapi-aks"
+  dns_prefix = "dualzone"
   
   default_node_pool {
     name                 = "default"
