@@ -22,7 +22,10 @@
         remote_src: yes
 
 
-  
- 
+# minikube start --driver=kvm2
+# minikube config set driver kvm2
+# virsh net-list --all
+# https://minikube.sigs.k8s.io/docs/drivers/kvm2/
+# https://minikube.sigs.k8s.io/docs/tutorials/nvidia_gpu/ 
     
 
