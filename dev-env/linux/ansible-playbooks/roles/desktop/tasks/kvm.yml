@@ -1,0 +1,16 @@
+- name: Update and Upgrade
+  package:
+    upgrade: yes
+    update_cache: yes
+
+- name: KVM and qemu tools
+  package:
+    name: "{{ item }}"
+    state: "{{ kvm.state }}"  
+  loop: 
+    - cpu-checker # kvm-ok
+    - qemu-kvm
+    - libvirt-daemon-system
+    - libvirt-clients
+    - bridge-utils
+    - virt-manager

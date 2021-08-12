@@ -17,6 +17,9 @@
     state: absent
     
 - include_tasks: vscode.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: kvm.yml
 
 #- name: load dconf
 #  shell: "dconf load /apps/guake/ < guake.dconf" 
