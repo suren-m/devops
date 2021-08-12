@@ -14,3 +14,9 @@
     - libvirt-clients
     - bridge-utils
     - virt-manager
+
+- name: Add user to libvirt and kvm groups
+  ansible.builtin.user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: libvirt, kvm
+    append: yes
