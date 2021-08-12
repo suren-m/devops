@@ -24,6 +24,8 @@
 - include_tasks: minikube.yml
   when: ansible_os_family == 'Debian'
 
+- include_tasks: nvidia_container_toolkit.yml  
+  when: ansible_os_family == 'Debian'
 #- name: load dconf
 #  shell: "dconf load /apps/guake/ < guake.dconf" 
 

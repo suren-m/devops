@@ -1,0 +1,29 @@
+---
+# https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+
+- name: Nvidia-Docker - apt-key add gpg 
+  apt_key:
+    url: "https://nvidia.github.io/nvidia-docker/gpgkey"
+  register: nvidia_docker_apt_key
+
+- debug: var=nvidia_docker_apt_key
+
+- name: "nvidia-docker Get sources"  
+  get_url:
+    url: "https://nvidia.github.io/nvidia-docker/{{ansible_distribution | lower}}{{ ansible_distribution_version }}/nvidia-docker.list"
+    dest: "/etc/apt/sources.list.d/nvidia-docker.list"       
+  register: nvidia_docker_repo
+  when:
+    not nvidia_docker_apt_key.changed or nvidia_docker.reinstall == true
+    
+- debug: var=nvidia_docker_repo
+
+- name: Nvidia-Docker - apt update and install
+  package:    
+    update_cache: yes
+    name: nvidia-docker2
+    state: "{{ nvidia_docker.state }}"
+  
+  
+# Test
+# docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
