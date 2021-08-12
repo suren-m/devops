@@ -1,0 +1,22 @@
+
+- name: gui tools
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - dconf-cli
+    - guake
+    - timeshift
+#    - redshift-gtk (night light available on recent distros)
+
+
+- name: test copy
+  copy: 
+    src: guake.dconf
+    dest: "{{ lookup('env', 'HOME') }}/guake.dconf"
+    state: absent
+    
+- include_tasks: vscode.yml
+
+#- name: load dconf
+#  shell: "dconf load /apps/guake/ < guake.dconf" 

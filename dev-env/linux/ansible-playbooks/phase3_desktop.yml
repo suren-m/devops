@@ -1,0 +1,31 @@
+- name: "prelaunch"
+  hosts: all
+  tags: prelaunch
+  gather_facts: yes # needed for distro vars such as below
+
+  pre_tasks:
+    - debug:
+        msg: "Env Home: {{ lookup('env', 'HOME') }}
+          OS Family: {{ ansible_os_family }},
+          Distro: {{ ansible_distribution }},
+          release: {{ ansible_distribution_release }},
+          Distro Major Ver: {{ ansible_distribution_major_version }},
+          Distro Ver: {{ ansible_distribution_version }},
+          Arch: {{ ansible_architecture }},
+          Target: {{ target.arch}} -  {{ target.platform }},
+          Interpreter: {{ ansible_python_interpreter }}"
+
+- name: "desktop"
+  hosts: all
+  tags: desktop
+  become: true
+  vars_files:
+    - "./vars/phase3_desktop.yml"
+    
+  tasks:
+    - package:
+        upgrade: yes
+        update_cache: yes
+
+  roles:
+    - desktop

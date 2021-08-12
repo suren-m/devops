@@ -1,0 +1,22 @@
+- name: "VS code Download"  
+  get_url:
+    url: "{{ vscode.download_link }}"
+    dest: /tmp/vscode.deb   
+    mode: 0755   
+  when: ansible_os_family == 'Debian'
+
+- name: "VS Code Install"
+  apt: 
+    deb: /tmp/vscode.deb
+  when: ansible_os_family == 'Debian'
+  
+- name: "VS Code cleanup"
+  file: 
+    path: /tmp/vscode.deb
+    state: absent
+  when: ansible_os_family == 'Debian'
+ 
+  
+ 
+    
+
