@@ -27,3 +27,13 @@
   
 # Test
 # docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+# https://github.com/NVIDIA/k8s-device-plugin#preparing-your-gpu-nodes
+# To set it as default
+#{
+#    "runtimes": {
+#        "nvidia": {
+#            "path": "nvidia-container-runtime",
+#            "runtimeArgs": []
+#        }
+#    }
+#}
