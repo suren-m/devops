@@ -7,3 +7,7 @@ kvm:
 
 docker:
    state: present
+
+minikube:
+   download_link: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+   reinstall: false

@@ -1,0 +1,28 @@
+- name: "minikube - stat"
+  stat: 
+    path: /usr/bin/minikube
+  register: minikube_bin
+
+- when: not minikube_bin.stat.exists or minikube.reinstall == true
+  block:
+    - name: "minikube - Download"
+      get_url:
+        url: "{{ minikube.download_link }}"
+        dest: /tmp/minikube.deb   
+        mode: 0755 
+        remote_src: yes
+    - name: "minikube - Install"
+      apt: 
+        deb: /tmp/minikube.deb # requires xz-utils        
+  always:
+    - name: "minikube - Cleanup"
+      file:
+        path: /tmp/minikube.deb
+        state: absent     
+        remote_src: yes
+
+
+  
+ 
+    
+
