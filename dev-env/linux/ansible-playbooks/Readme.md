@@ -49,3 +49,6 @@ secret=...
 tenant=...
 ```
 
+----
+
+#### Linux Desktop 
