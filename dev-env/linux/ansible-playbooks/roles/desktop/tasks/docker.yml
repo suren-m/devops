@@ -1,0 +1,35 @@
+---
+- name: Docker - apt-key add gpg 
+  apt_key:
+    url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+  register: docker_apt_key
+  when: ansible_os_family == 'Debian'
+
+- debug: var=docker_apt_key
+
+- name: Docker - apt-add-repository 
+  apt_repository:
+    repo: "deb [arch={{ target.arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+  register: docker_repo
+  when: docker_apt_key.changed and ansible_os_family == 'Debian' 
+
+- debug: var=docker_repo
+
+- name: Docker - apt update and install
+  package:    
+    name: "{{ item }}"
+    state: "{{ docker.state }}"
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+  when: docker_repo.changed and ansible_os_family == 'Debian' 
+
+# sudo usermod -aG docker $USER
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes
+  when: docker_repo.changed and ansible_os_family == 'Debian' 
+

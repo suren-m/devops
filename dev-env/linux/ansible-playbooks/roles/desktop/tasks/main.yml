@@ -17,6 +17,8 @@
 
 - include_tasks: kvm.yml
 
+- include_tasks: docker.yml
+
 #- name: load dconf
 #  shell: "dconf load /apps/guake/ < guake.dconf" 
 
