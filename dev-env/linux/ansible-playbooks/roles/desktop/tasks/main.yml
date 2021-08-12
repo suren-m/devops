@@ -5,17 +5,13 @@
     state: present
   loop:
     - dconf-cli
+    - dconf-editor
+    - gnome-shell-extension-prefs
+    - gnome-tweaks
     - guake
     - timeshift
 #    - redshift-gtk (night light available on recent distros)
-
-
-- name: test copy
-  copy: 
-    src: guake.dconf
-    dest: "{{ lookup('env', 'HOME') }}/guake.dconf"
-    state: absent
-    
+  
 - include_tasks: vscode.yml
   when: ansible_os_family == 'Debian'
 
@@ -23,3 +19,6 @@
 
 #- name: load dconf
 #  shell: "dconf load /apps/guake/ < guake.dconf" 
+
+# dconf write "/org/gnome/desktop/input-sources/xkb-options" "['caps:swapescape']"
+

@@ -52,3 +52,9 @@ tenant=...
 ----
 
 #### Linux Desktop 
+
+assign esc to caps lock via dconf or gnome tweaks
+```
+dconf write "/org/gnome/desktop/input-sources/xkb-options" "['caps:swapescape']"
+```
+For VS Code, set keyboard dispatch to keycode to activate `esc` for `caps lock`
