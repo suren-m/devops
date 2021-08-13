@@ -21,3 +21,7 @@ linkerd:
 dapr:
   remove_existing: false
   ver: v1.2.0
+
+skaffold:
+  remove_existing: false
+  ver: latest

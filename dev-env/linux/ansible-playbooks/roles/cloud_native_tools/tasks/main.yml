@@ -11,3 +11,5 @@
 - include_tasks: linkerd.yml
 
 - include_tasks: dapr.yml
+
+- include_tasks: skaffold.yml

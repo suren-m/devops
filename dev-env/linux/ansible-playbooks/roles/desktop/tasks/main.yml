@@ -10,6 +10,8 @@
     - gnome-tweaks
     - guake
     - timeshift
+    - lm-sensors
+    - psensor
 #    - redshift-gtk (night light available on recent distros)
   
 - include_tasks: vscode.yml
@@ -26,6 +28,9 @@
 
 - include_tasks: nvidia_container_toolkit.yml  
   when: ansible_os_family == 'Debian'
+
+
+
 #- name: load dconf
 #  shell: "dconf load /apps/guake/ < guake.dconf" 
 

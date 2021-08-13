@@ -1,0 +1,19 @@
+# https://skaffold.dev/docs/install/
+
+- name: skaffold - Remove exisiting version
+  file:
+    state: absent
+    path: "{{ lookup('env', 'HOME')}}/.local/bin/skaffold"
+  when: skaffold.remove_existing == true
+
+- stat: path="{{ lookup('env', 'HOME')}}/.local/bin/skaffold"
+  register: skaffold_bin
+
+- when: not skaffold_bin.stat.exists
+  block:
+    - name: "skaffold - Download and install to local bin"
+      get_url:
+        url: "https://storage.googleapis.com/skaffold/releases/{{skaffold.ver}}/skaffold-linux-amd64"
+        dest: "{{ lookup('env', 'HOME') }}/.local/bin/skaffold"
+        mode: 0755
+        remote_src: yes
