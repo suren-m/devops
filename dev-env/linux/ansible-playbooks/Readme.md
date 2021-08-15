@@ -58,3 +58,29 @@ assign esc to caps lock via dconf or gnome tweaks
 dconf write "/org/gnome/desktop/input-sources/xkb-options" "['caps:swapescape']"
 ```
 For VS Code, set keyboard dispatch to keycode to activate `esc` for `caps lock`
+
+---
+### Fedora Dev Env Setup
+
+### RPM Fusion repos
+
+```bash
+# free
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+# non-free
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# update
+sudo dnf -y update
+```
+
+### Nvidia Drivers
+
+```bash
+sudo dnf -y install akmod-nvidia
+sudo dnf install xorg-x11-drv-nvidia-cuda
+sudo reboot
+
+# or see nvidia auto-installer
+```
