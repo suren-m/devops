@@ -29,4 +29,3 @@
       file:
         state: absent
         path: /tmp/dapr
-        remote_src: yes

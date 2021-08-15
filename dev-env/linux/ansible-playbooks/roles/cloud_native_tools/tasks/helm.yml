@@ -30,4 +30,4 @@
       file:
         state: absent
         path: /tmp/{{ target.platform }}-{{ target.arch }}
-        remote_src: yes
+
