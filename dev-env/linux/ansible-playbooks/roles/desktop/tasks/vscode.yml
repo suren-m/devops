@@ -9,8 +9,7 @@
       get_url:
         url: "{{ vscode.download_link }}"
         dest: /tmp/vscode.deb   
-        mode: 0755 
-        remote_src: yes
+        mode: 0755
     - name: "VS Code - Install"
       apt: 
         deb: /tmp/vscode.deb # requires xz-utils        
@@ -18,8 +17,7 @@
     - name: "VS Code - Cleanup"
       file:
         path: /tmp/vscode.deb
-        state: absent     
-        remote_src: yes
+        state: absent
 
 
   

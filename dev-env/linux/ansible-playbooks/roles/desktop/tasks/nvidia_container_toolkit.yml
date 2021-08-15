@@ -10,7 +10,7 @@
 
 - name: "nvidia-docker Get sources"  
   get_url:
-    url: "https://nvidia.github.io/nvidia-docker/{{ansible_distribution | lower}}{{ ansible_distribution_version }}/nvidia-docker.list"
+    url: "https://nvidia.github.io/nvidia-docker/ubuntu20.04/nvidia-docker.list"
     dest: "/etc/apt/sources.list.d/nvidia-docker.list"       
   register: nvidia_docker_repo
   when:
