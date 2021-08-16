@@ -1,0 +1,44 @@
+{
+    "editor.minimap.enabled": false,
+    "editor.matchBrackets": "never",
+    "editor.renderLineHighlight": "none",
+    "editor.formatOnSave": true,
+    "explorer.confirmDelete": false,
+    "editor.codeLens": false,
+    "explorer.compactFolders": false,
+    "explorer.confirmDragAndDrop": false,
+    "extensions.ignoreRecommendations": true,
+    "files.autoSave": "afterDelay",
+    "html.autoClosingTags": false,
+    "window.zoomLevel": 1,
+    // "workbench.colorTheme": "United Ubuntu",
+    "workbench.statusBar.visible": true,
+    "workbench.activityBar.visible": true,
+    // Extensions
+    // Live Server    
+    "liveServer.settings.donotShowInfoMsg": true,
+    // ---
+    // Rust Analyzer 
+    // https://rust-analyzer.github.io/manual.html#vs-code
+    "rust-analyzer.updates.askBeforeDownload": false,
+    "rust-analyzer.inlayHints.enable": false,
+    // "rust-client.rustupPath": "$HOME/.cargo/bin/rustup"
+    // ---
+    // vim
+    // Toggle inlay hints   
+    // ctrl + k and ctrl + i for showing docs (gh for vim extension)    
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    //"vim.leader": "<backspace>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-c>": false,
+        "<C-x>": false,
+        "<C-f>": false,
+        "<C-k>": false
+    }
+    // Only if required
+    // "vim.hlsearch": true,
+}
