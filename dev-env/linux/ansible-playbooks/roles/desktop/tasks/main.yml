@@ -6,13 +6,14 @@
   loop:
     - dconf-cli
     - dconf-editor
-    - gnome-shell-extension-prefs
-    - gnome-tweaks
     - guake
     - timeshift
     - lm-sensors
     - psensor
 #    - redshift-gtk (night light available on recent distros)
+
+- name: load dconf
+  shell: "dconf load /apps/guake/ < guake.dconf"
   
 - include_tasks: vscode.yml
   when: ansible_os_family == 'Debian'
@@ -28,6 +29,7 @@
 
 - include_tasks: nvidia_container_toolkit.yml  
   when: ansible_os_family == 'Debian'
+
 
 
 

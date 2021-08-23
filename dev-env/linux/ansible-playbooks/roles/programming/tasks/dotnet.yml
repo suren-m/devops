@@ -1,4 +1,4 @@
----
+-
 
 - debug: 
     msg:
@@ -26,7 +26,7 @@
 - name: Microsoft deb package for Debian
   become: true
   apt:
-    deb: "https://packages.microsoft.com/config/{{ansible_distribution|lower}}/{{ansible_distribution_major_version}}/packages-microsoft-prod.deb"
+    deb: "https://packages.microsoft.com/config/{{ansible_distribution|lower}}/10/packages-microsoft-prod.deb"
   when: ansible_distribution == 'Debian'
   register: pkg_msft_debian
 

@@ -65,3 +65,11 @@ s () {
     app="/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe \"google.com/search?query=$1\" ${@:2}"
     eval $app
 }
+
+# In case desktop environment doesn't pick up linuxbrew config from .profile or .zprofile
+export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
+export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
+export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
