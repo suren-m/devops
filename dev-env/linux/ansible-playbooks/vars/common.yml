@@ -37,6 +37,9 @@ common:
       - wbritish
       - xclip
       - zip
+      - neofetch
+      - ffmpeg     
+      - lolcat      
   net:
     state: present
     tools:    
@@ -49,3 +52,4 @@ common:
       - figlet
       - cowsay # also used in ansible output 
       - cmatrix
+
