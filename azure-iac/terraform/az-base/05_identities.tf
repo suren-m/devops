@@ -57,7 +57,7 @@ resource "azurerm_role_assignment" "network_contributor" {
 }
 
 resource "azurerm_role_assignment" "acr_pull" {
-  scope                = azurerm_resource_group.base.id
+  scope                = data.azurerm_resource_group.base.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_user_assigned_identity.aks_kubelet_ua_mi.principal_id
 }
