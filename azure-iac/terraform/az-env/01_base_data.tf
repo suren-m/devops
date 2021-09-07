@@ -29,7 +29,7 @@ data "azurerm_subnet" "aks2" {
 }
 
 data "azurerm_subnet" "aks3" {
-  name                 = "sub-4094"
+  name                 = "aks-3"
   virtual_network_name = local.base_prefix
   resource_group_name  = local.base_rg
 }
