@@ -37,14 +37,14 @@
         }
     ],
     "alwaysOnTop": false,
-    "centerOnLaunch": true,
+    // "centerOnLaunch": true,
     "confirmCloseAllTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
+    "defaultProfile": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
     "initialCols": 160,
     "initialRows": 30,
-    "launchMode": "focus",
+    // "launchMode": "focus",
     "multiLinePasteWarning": false,
     "profiles": {
         "defaults": {
@@ -52,13 +52,26 @@
             "backgroundImageOpacity": 0.20000000000000001,
             "colorScheme": "One Half Dark",
             "cursorColor": "#FAB2DF",
-            "cursorHeight": 25,
+            "cursorHeight": 20,
             "cursorShape": "vintage",
-            "fontFace": "Cascadia Code PL",
+            "fontFace": "Cascadia Code",
             "fontSize": 16,
             "padding": "8"
         },
         "list": [
+            {
+                "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
+                "hidden": false,
+                "name": "Ubuntu-20.04",
+                "source": "Windows.Terminal.Wsl",
+                "startingDirectory": "//wsl$/Ubuntu-20.04/home/suren"
+            },
+            {
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "source": "Windows.Terminal.PowershellCore"
+            },
             {
                 "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
@@ -66,12 +79,6 @@
                 "source": "Windows.Terminal.Wsl",
                 "startingDirectory": "//wsl$/Debian/home/suren",
                 "useAcrylic": false
-            },
-            {
-                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-                "hidden": false,
-                "name": "PowerShell",
-                "source": "Windows.Terminal.PowershellCore"
             },
             {
                 "commandline": "powershell.exe",
@@ -84,8 +91,8 @@
                 "hidden": false,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
-            },
-            {}
+            }       
+
         ]
     },
     "schemes": [
