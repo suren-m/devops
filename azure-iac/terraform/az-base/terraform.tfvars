@@ -48,7 +48,7 @@ vnet_subnets = [
     default_nsg = false
   },
   {
-    name        = "k8s-iaas"
+    name        = "aks-3"
     cidr        = ["10.0.48.0/20"]
     default_nsg = true
   },
@@ -113,7 +113,7 @@ vnet_subnets = [
     default_nsg = false
   },
   {
-    name        = "sub-4094-4"
+    name        = "k8s-iaas"
     cidr        = ["10.0.128.0/20"]
     default_nsg = false
   },
