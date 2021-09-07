@@ -27,4 +27,5 @@ data "azurerm_subnet" "vm" {
   name                 = "vm"
   virtual_network_name = module.networking.vnet.name
   resource_group_name  = data.azurerm_resource_group.base.name
+  depends_on = [module.networking.vnet]
 }
