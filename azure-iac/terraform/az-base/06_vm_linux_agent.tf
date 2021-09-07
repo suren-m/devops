@@ -3,7 +3,7 @@ module "linux-agent-vm" {
   res_prefix = local.res_prefix
   vm_prefix  = "linux-agent"
   loc        = var.loc
-  rg_name    = azurerm_resource_group.base.name
+  rg_name    = data.azurerm_resource_group.base.name
 
   vm_count  = 1
   subnet_id = data.azurerm_subnet.vm.id

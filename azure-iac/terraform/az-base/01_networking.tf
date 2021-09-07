@@ -2,7 +2,7 @@
 module "networking" {
   source          = "../modules/vnet/"
   res_prefix      = local.res_prefix
-  rg_name         = azurerm_resource_group.base.name
+  rg_name         = data.azurerm_resource_group.base.name
   loc             = var.loc
   vnet_addr_space = var.vnet_addr_space
   vnet_subnets    = var.vnet_subnets
@@ -11,12 +11,12 @@ module "networking" {
 
 resource "azurerm_private_dns_zone" "pvt_dns" {
   name                = "${var.prefix}.io"
-  resource_group_name = azurerm_resource_group.base.name
+  resource_group_name = data.azurerm_resource_group.base.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "pvt_dns_vnet_link" {
   name                  = local.res_prefix
-  resource_group_name   = azurerm_resource_group.base.name
+  resource_group_name   = data.azurerm_resource_group.base.name
   private_dns_zone_name = azurerm_private_dns_zone.pvt_dns.name
   virtual_network_id    = module.networking.vnet.id
   registration_enabled  = true
@@ -26,5 +26,5 @@ resource "azurerm_private_dns_zone_virtual_network_link" "pvt_dns_vnet_link" {
 data "azurerm_subnet" "vm" {
   name                 = "vm"
   virtual_network_name = module.networking.vnet.name
-  resource_group_name  = azurerm_resource_group.base.name
+  resource_group_name  = data.azurerm_resource_group.base.name
 }

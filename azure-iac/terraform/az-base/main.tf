@@ -14,21 +14,14 @@ locals {
   }
 }
 
-resource "azurerm_resource_group" "base" {
-  name     = local.res_prefix
-  location = var.loc.long
-
-  tags = local.tags
+data "azurerm_resource_group" "base" {
+  name     = local.res_prefix  
 }
 
-resource "azurerm_resource_group" "env_rg" {
-  name     = local.env_res_prefix
-  location = var.loc.long
-  tags = local.tags
+data "azurerm_resource_group" "env_rg" {
+  name     = local.env_res_prefix  
 }
 
-resource "azurerm_resource_group" "vmenv_rg" {
-  name     = local.vmenv_res_prefix
-  location = var.loc.long
-  tags = local.tags
+data "azurerm_resource_group" "vmenv_rg" {
+  name     = local.vmenv_res_prefix  
 }

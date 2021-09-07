@@ -4,6 +4,8 @@
 
 ```
 # Skip if SP already exists
+e.g. az ad sp list --show-mine | grep 'name-of-sp'
+
 az ad sp create-for-rbac --name <sp-name>
 az ad sp list --display-name <sp-name> -o table
 az role assignment list --assignee "<objectId>" --all -o table
