@@ -9,7 +9,7 @@ loc = {
 
 // aks
 aks_cluster_name   = "azenv"
-kubernetes_version = "1.20.7"
+kubernetes_version = "1.21.2"
 aks_vm_size        = "Standard_B2s"
 default_pool = {
   init_count = 2
