@@ -22,6 +22,6 @@ module "linux-dev-vm" {
   custom_data = file("../files/cloud_init")
 
 
-  tags = merge(local.tags, { "os" = "linux" })i
+  tags = merge(local.tags, { "os" = "linux" })
 }
 
