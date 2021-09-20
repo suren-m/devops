@@ -3,7 +3,7 @@ module "linux-dev-vm" {
   res_prefix = local.res_prefix
   vm_prefix  = "dev"
   loc        = var.loc
-  rg_name    = azurerm_resource_group.rg.name
+  rg_name    = data.azurerm_resource_group.rg.name
 
   vm_count  = 2
   subnet_id = data.azurerm_subnet.vm.id
