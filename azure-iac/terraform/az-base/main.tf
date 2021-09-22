@@ -15,13 +15,13 @@ locals {
 }
 
 data "azurerm_resource_group" "base" {
-  name     = local.res_prefix  
+  name = local.res_prefix
 }
 
 data "azurerm_resource_group" "env_rg" {
-  name     = local.env_res_prefix  
+  name = local.env_res_prefix
 }
 
 data "azurerm_resource_group" "vmenv_rg" {
-  name     = local.vmenv_res_prefix  
+  name = local.vmenv_res_prefix
 }

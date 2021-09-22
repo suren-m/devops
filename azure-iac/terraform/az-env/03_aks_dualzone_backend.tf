@@ -6,18 +6,18 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
   kubernetes_version  = var.kubernetes_version
 
   dns_prefix = "dualzone"
-  
+
   default_node_pool {
     name                 = "default"
     type                 = "VirtualMachineScaleSets"
     vm_size              = "Standard_D2as_v4"
-    availability_zones   = ["1","2"]
+    availability_zones   = ["1", "2"]
     enable_auto_scaling  = true
     node_count           = 1
     max_count            = 2
     min_count            = 1
     orchestrator_version = var.kubernetes_version
-    vnet_subnet_id       = data.azurerm_subnet.aks2.id    
+    vnet_subnet_id       = data.azurerm_subnet.aks2.id
   }
 
   auto_scaler_profile {
@@ -49,10 +49,10 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
   }
 
   # https://docs.microsoft.com/en-us/azure/aks/use-managed-identity#bring-your-own-control-plane-mi
-  identity {    
-    type = "UserAssigned"
+  identity {
+    type                      = "UserAssigned"
     user_assigned_identity_id = data.azurerm_user_assigned_identity.aks_controlplane_ua_mi.id
-  }  
+  }
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
@@ -66,7 +66,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
   availability_zones    = [1]
-  mode                  = "User"  
+  mode                  = "User"
   vnet_subnet_id        = data.azurerm_subnet.aks2.id
   node_taints           = ["zone=az1:NoSchedule"]
 }
@@ -82,7 +82,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az2" {
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
   availability_zones    = [2]
-  mode                  = "User"  
+  mode                  = "User"
   vnet_subnet_id        = data.azurerm_subnet.aks2.id
   node_taints           = ["zone=az2:NoSchedule"]
 }
