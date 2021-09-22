@@ -6,7 +6,7 @@ variable "env_prefix" {
 
 }
 
-variable "vmenv_prefix"{
+variable "vmenv_prefix" {
 
 }
 
