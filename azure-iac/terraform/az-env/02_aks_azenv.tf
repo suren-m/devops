@@ -106,19 +106,3 @@ resource "azurerm_kubernetes_cluster_node_pool" "cpu-optimized" {
   vnet_subnet_id        = data.azurerm_subnet.aks.id
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "demopool" {
-  name                  = "demo"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  enable_auto_scaling   = true
-  vm_size               = "Standard_F2s_v2"
-  node_count            = 1
-  max_count             = 2
-  min_count             = 1
-  max_pods              = 30
-  orchestrator_version  = var.kubernetes_version
-  availability_zones    = [1, 2, 3]
-  mode                  = "User"
-  node_labels           = { workloads = "demo" }
-  node_taints           = ["workloads=demo:NoSchedule"]
-  vnet_subnet_id        = data.azurerm_subnet.aks.id
-}
