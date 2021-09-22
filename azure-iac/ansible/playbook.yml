@@ -1,0 +1,18 @@
+---
+- name: Update servers
+  hosts: all
+  become: true
+  tasks:
+  - name: install python-apt
+    apt:
+      name: python-apt
+      update_cache: yes
+      state: present
+  - name: Ensure nginx is at the latest version
+    apt:
+      name: nginx
+      state: latest
+  - name: Ensure that nginx is started
+    ansible.builtin.service:
+      name: nginx
+      state: started
