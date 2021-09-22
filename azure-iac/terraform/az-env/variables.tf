@@ -49,8 +49,8 @@ variable "vm_size" {
 }
 
 # vms
-# variable "winuser" {}
-# variable "winpass" {
-#   type      = string
-#   sensitive = true
-# }
+variable "winuser" {}
+variable "winpass" {
+  type      = string
+  sensitive = true
+}
