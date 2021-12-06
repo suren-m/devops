@@ -20,7 +20,7 @@ linkerd:
 
 dapr:
   remove_existing: false
-  ver: v1.2.0
+  ver: v1.5.0
 
 skaffold:
   remove_existing: false
