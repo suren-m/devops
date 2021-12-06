@@ -6,6 +6,7 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
   kubernetes_version  = var.kubernetes_version
 
   dns_prefix = "dualzone"
+  private_cluster_enabled = true
 
   default_node_pool {
     name                 = "default"
