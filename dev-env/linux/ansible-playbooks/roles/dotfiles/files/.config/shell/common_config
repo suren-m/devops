@@ -19,6 +19,9 @@ export PATH="$PATH:$DENO_INSTALL/bin"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
+# Blockchain tools
+export PATH=$PATH:$HOME/.local/share/solana/install/active_release/bin
+
 # Istioctl
 export PATH=$PATH:$HOME/.istioctl/bin
 
