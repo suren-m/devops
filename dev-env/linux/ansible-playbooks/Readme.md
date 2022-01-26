@@ -84,3 +84,10 @@ sudo reboot
 
 # or see nvidia auto-installer
 ```
+
+### GNOME minmize on icon re-click
+
+```
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+```
+
