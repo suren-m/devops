@@ -3,19 +3,19 @@
 
 rust:
   remove_existing: false
-  rustup_init: https://sh.rustup.rs 
+  rustup_init: https://sh.rustup.rs
 
 deno:
   remove_existing: false
   install: https://deno.land/x/install/install.sh
 
 go:
-  remove_existing: false 
+  remove_existing: false
   fallback_ver: go1.16.5
 
 dotnet:
   purge_existing_msft_pkg: false
-  sdk_version: 5.0
+  sdk_version: 6.0
 
 # Installed via Package managers
 python:
@@ -26,7 +26,6 @@ openjdk:
   state: present
 
 # NodeJS via NVM - This will also install latest nodejs stable by default
-nvm:    
-  remove_existing: false 
+nvm:
+  remove_existing: false
   install: https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh
-  
