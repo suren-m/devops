@@ -17,7 +17,7 @@ metadata:
   name: apigw-az1
   namespace: apigw
 spec:
-  replicas: 1 # only scale within same Nodepool
+  replicas: 2 # only scale within same Nodepool
   selector:
     matchLabels:
       app: apigw-az1
@@ -87,7 +87,7 @@ metadata:
   name: apigw-az2
   namespace: apigw
 spec:
-  replicas: 1 # only scale within same Nodepool
+  replicas: 20- # only scale within same Nodepool
   selector:
     matchLabels:
       app: apigw-az2
@@ -117,20 +117,7 @@ spec:
           done;
           "]
 
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: agentpool
-                    operator: In
-                    values: # nodepool names
-                      - az2
-      tolerations:
-        - key: "zone"
-          operator: "Equal"
-          value: "az2"
-          effect: "NoSchedule"
+
 ---
 # Internal LB Service (or internal ingress controller) for AZ2
 apiVersion: v1
