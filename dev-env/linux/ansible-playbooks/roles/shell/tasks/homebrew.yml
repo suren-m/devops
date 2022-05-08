@@ -27,7 +27,7 @@
       expect:
         command: /tmp/homebrew_install.sh
         responses:
-          "Press RETURN to continue or any other key to abort": ""
+          "Press RETURN/ENTER to continue or any other key to abort:": ""
         timeout: 600 # prevent timing out early with broken pipe
       # register: brew_output
 

@@ -31,4 +31,5 @@
 
 - include_tasks: utils.yml
 
-- include_tasks: homebrew.yml
+#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#- include_tasks: homebrew.yml
