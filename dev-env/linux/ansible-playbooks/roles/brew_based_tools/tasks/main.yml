@@ -35,10 +35,10 @@
 - debug: var=brew_vars
   when: ansible_os_family == 'Debian'
 
-- name: register exports
-  shell: "sh -c {{ brew_vars.stdout }}"
-  register: brew_vars
-  when: ansible_os_family == 'Debian'
+# - name: register exports
+#   shell: "sh -c {{ brew_vars.stdout }}"
+#   register: brew_vars
+#   when: ansible_os_family == 'Debian'
 
 # - name: Print Path Variable again to verify if brew is loaded
 #   debug:

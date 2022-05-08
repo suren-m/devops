@@ -23,4 +23,4 @@ cargo:
 go_tools:
   lazygit:
     remove_existing: false
-    install: github.com/jesseduffield/lazygit
+    install: github.com/jesseduffield/lazygit@latest
