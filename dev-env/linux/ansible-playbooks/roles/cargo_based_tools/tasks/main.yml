@@ -8,6 +8,7 @@
     - cargo.operation == 'install'
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.cargo/bin:{{ ansible_env.PATH }}"
+    OPENSSL_DIR: "/usr/bin/openssl"
 
 - name: "cargo - Uninstall tools"
   shell: "cargo {{ cargo.operation }} {{ item }}"

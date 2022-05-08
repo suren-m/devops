@@ -17,7 +17,7 @@ cargo:
   tools:
     # - broot
     - mdbook
-    - cargo-edit
+    #- cargo-edit
     # - evcxr_repl
 
 go_tools:

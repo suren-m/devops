@@ -41,6 +41,7 @@ common:
       - ffmpeg     
       - lolcat      
       - libssl-dev
+      - pkg-config
   net:
     state: present
     tools:    
