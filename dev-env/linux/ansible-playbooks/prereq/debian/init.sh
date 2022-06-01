@@ -7,7 +7,7 @@
 sudo apt update -y && sudo apt upgrade -y
 
 # python-apt needed for ansible --check
-sudo apt install -y wget git ansible python-apt
+sudo apt install -y wget git ansible python3-apt
 
 # create backup dir
 backup_dir="$HOME/.config/backup"

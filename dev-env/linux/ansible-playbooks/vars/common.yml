@@ -42,6 +42,7 @@ common:
       - lolcat      
       - libssl-dev
       - pkg-config
+      - bat
   net:
     state: present
     tools:    

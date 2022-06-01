@@ -60,7 +60,7 @@ source "$HOME/.cargo/env"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 
 # Broot
-source "$HOME/.config/broot/launcher/bash/br"
+# source "$HOME/.config/broot/launcher/bash/br"
 
 # Launch Chrome and search from terminal
 s () {
