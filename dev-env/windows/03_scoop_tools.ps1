@@ -14,7 +14,9 @@ $cli_tools = @(
 "jq",
 "ripgrep",
 "tokei",
-"watchexec"
+"watchexec",
+"terraform",
+"starship"
 )
 
 foreach($tool in $cli_tools) {
