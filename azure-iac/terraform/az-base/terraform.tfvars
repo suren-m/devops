@@ -4,8 +4,8 @@ prefix = "azbase"
 env_prefix   = "azenv"
 vmenv_prefix = "azvmenv"
 loc = {
-  short = "uks"
-  long  = "uk south"
+  short = "weu"
+  long  = "west europe"
 }
 
 
