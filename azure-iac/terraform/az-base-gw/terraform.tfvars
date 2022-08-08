@@ -1,6 +1,6 @@
 // common
 prefix = "azbase"
 loc = {
-  short = "uks"
-  long  = "uk south"
+  short = "weu"
+  long  = "west europe"
 }
