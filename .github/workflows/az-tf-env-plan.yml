@@ -1,12 +1,12 @@
 name: az-tf-env-plan
 on:
-  pull_request:
-    branches:
-      - main
-      - "temp/**"
-    paths:
-      - azure-iac/terraform/az-env/**
- # schedule:
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - "temp/**"
+  #   paths:
+  #     - azure-iac/terraform/az-env/**
+  # schedule:
   #  - cron: "0 7,19 * * *"
   workflow_dispatch:
 

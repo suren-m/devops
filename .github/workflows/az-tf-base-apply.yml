@@ -1,11 +1,11 @@
 name: az-tf-base-apply
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - azure-iac/terraform/az-base/**
-      - azure-iac/terraform/az-base-gw/**
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - azure-iac/terraform/az-base/**
+  #     - azure-iac/terraform/az-base-gw/**
   workflow_dispatch:
 
 jobs:

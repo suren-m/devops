@@ -1,13 +1,13 @@
 name: az-tf-base-plan
 on:
-  pull_request:
-    branches:
-      - main
-      - "temp/**"
-    paths:
-      - azure-iac/terraform/az-base/**
-      - azure-iac/terraform/az-base-gw/**
- # schedule:
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - "temp/**"
+  #   paths:
+  #     - azure-iac/terraform/az-base/**
+  #     - azure-iac/terraform/az-base-gw/**
+  # schedule:
   #  - cron: "0 7,19 * * *"
   workflow_dispatch:
 

@@ -1,10 +1,10 @@
 name: az-tf-env-apply
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - azure-iac/terraform/az-env/**
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - azure-iac/terraform/az-env/**
   workflow_dispatch:
 
 jobs:
