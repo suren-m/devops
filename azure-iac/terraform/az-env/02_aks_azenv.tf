@@ -20,7 +20,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     min_count            = 2
     orchestrator_version = var.kubernetes_version
     vnet_subnet_id       = data.azurerm_subnet.aks.id
-    node_taints           = ["CriticalAddonsOnly=true:NoSchedule"]    
+
+    only_critical_addons_enabled = true
+    # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#only_critical_addons_enabled
     # https://docs.microsoft.com/en-us/azure/aks/use-system-pools?tabs=azure-cli
   }
 

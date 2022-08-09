@@ -50,6 +50,13 @@ resource "azurerm_user_assigned_identity" "aks_oms_agent_ua_mi" {
   tags                = local.tags
 }
 
+# https://docs.microsoft.com/en-us/azure/aks/use-managed-identity#add-role-assignment
+resource "azurerm_role_assignment" "managed_identity_operator" {
+  scope                = azurerm_user_assigned_identity.aks_kubelet_ua_mi.id
+  role_definition_name = "Managed Identity Operator"
+  principal_id         = azurerm_user_assigned_identity.aks_controlplane_ua_mi.principal_id
+}
+
 resource "azurerm_role_assignment" "network_contributor" {
   scope                = module.networking.vnet.id
   role_definition_name = "Network Contributor"
