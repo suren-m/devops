@@ -63,6 +63,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   oms_agent {
       log_analytics_workspace_id = data.azurerm_log_analytics_workspace.law.id
   }
+
+  key_vault_secrets_provider {
+    secret_rotation_enabled = true
+    secret_rotation_interval = "5m"
+  }
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "common" {
