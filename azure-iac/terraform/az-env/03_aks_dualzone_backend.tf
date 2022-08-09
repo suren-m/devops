@@ -6,13 +6,14 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
   kubernetes_version  = var.kubernetes_version
 
   dns_prefix = "dualzone"
+  automatic_channel_upgrade = "stable"
   # private_cluster_enabled = true
 
   default_node_pool {
     name                 = "default"
     type                 = "VirtualMachineScaleSets"
     vm_size              = "Standard_D2as_v4"
-    availability_zones   = ["1", "2"]
+    zones   = ["1", "2"]
     enable_auto_scaling  = true
     node_count           = 1
     max_count            = 2
@@ -32,28 +33,24 @@ resource "azurerm_kubernetes_cluster" "aks_backend_dualzone" {
     service_cidr       = "10.2.0.0/24"
   }
 
-  role_based_access_control {
-    enabled = true
-    # azure_active_directory {
-    #   managed = true
-    # }
-  }
-
-  addon_profile {
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = data.azurerm_log_analytics_workspace.law.id
-    }
-    azure_policy {
-      enabled = true
-    }
-  }
-
   # https://docs.microsoft.com/en-us/azure/aks/use-managed-identity#bring-your-own-control-plane-mi
   identity {
     type                      = "UserAssigned"
-    user_assigned_identity_id = data.azurerm_user_assigned_identity.aks_controlplane_ua_mi.id
+    identity_ids = [data.azurerm_user_assigned_identity.aks_controlplane_ua_mi.id]
   }
+
+  kubelet_identity {
+    user_assigned_identity_id = data.azurerm_user_assigned_identity.aks_kubelet_ua_mi.id
+    client_id                 = data.azurerm_user_assigned_identity.aks_kubelet_ua_mi.client_id
+    object_id                 = data.azurerm_user_assigned_identity.aks_kubelet_ua_mi.principal_id
+  }
+
+  azure_policy_enabled = true
+
+  oms_agent {
+      log_analytics_workspace_id = data.azurerm_log_analytics_workspace.law.id
+  }
+
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
@@ -66,7 +63,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az1" {
   min_count             = 1
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
-  availability_zones    = [1]
+  zones    = [1]
   mode                  = "User"
   vnet_subnet_id        = data.azurerm_subnet.aks2.id
   node_taints           = ["zone=az1:NoSchedule"]
@@ -82,7 +79,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_backend_az2" {
   min_count             = 1
   max_pods              = 30
   orchestrator_version  = var.kubernetes_version
-  availability_zones    = [2]
+  zones    = [2]
   mode                  = "User"
   vnet_subnet_id        = data.azurerm_subnet.aks2.id
   node_taints           = ["zone=az2:NoSchedule"]

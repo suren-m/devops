@@ -1,16 +1,16 @@
 // common
 base_prefix = "azbase"
-base_rg     = "azbase-uks"
+base_rg     = "azbase-weu"
 prefix      = "azenv"
 loc = {
-  short = "uks"
-  long  = "uk south"
+  short = "weu"
+  long  = "west europe"
 }
 
 // aks
 aks_cluster_name   = "azenv"
-kubernetes_version = "1.21.2"
-aks_vm_size        = "Standard_B2s"
+kubernetes_version = "1.23.8"
+aks_vm_size        = "Standard_B2s" # old
 default_pool = {
   init_count = 2
   min_count  = 2

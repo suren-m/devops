@@ -5,7 +5,7 @@ module "azenv-tfstate-storage" {
   rg_name    = data.azurerm_resource_group.base.name
   loc        = var.loc
 
-  sg_name_suffix = "tfstateuks"
+  sg_name_suffix = var.loc.short
 
   // one container per provider
   blob_containers = ["docker", "helm", "azurerm", "azurerm-vm"]
@@ -19,6 +19,6 @@ module "azshell-storage" {
   rg_name         = data.azurerm_resource_group.base.name
   blob_containers = []
   loc             = var.loc
-  sg_name_suffix  = "uks"
+  sg_name_suffix  = var.loc.short
   tags            = local.tags
 }

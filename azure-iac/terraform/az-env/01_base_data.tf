@@ -3,6 +3,16 @@ data "azurerm_resource_group" "rg" {
   name = local.res_prefix
 }
 
+data "azurerm_resource_group" "base_rg" {
+  name = local.base_rg
+}
+
+
+data "azurerm_virtual_network" "vnet" {
+  name                = local.base_prefix
+  resource_group_name = local.base_rg
+}
+
 
 data "azurerm_subnet" "default" {
   name                 = "default"
@@ -65,3 +75,7 @@ data "azurerm_user_assigned_identity" "aks_kubelet_ua_mi" {
   resource_group_name = local.base_rg
 }
 
+data "azurerm_user_assigned_identity" "aks_oms_agent_ua_mi" {
+  name                = "${local.base_prefix}-aks-oms-agent-ua-mi"
+  resource_group_name = local.base_rg
+}
