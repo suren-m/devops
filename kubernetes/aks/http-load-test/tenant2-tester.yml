@@ -1,0 +1,68 @@
+# Stateful set
+# Spread constraints to evenly distribute pods across AZs based on node's zone label
+# Affinity to 'not' deploy to default nodepool
+# DownwardApi to get node info
+# VolumeClaimTemplates to dynamically provision a disk volume per pod
+# Finally exposing statefulset as a loadbalancer service (not headless)
+
+# Stateful set
+# Spread constraints to evenly distribute pods across AZs based on node's zone label
+# Affinity to 'not' deploy to default nodepool
+# DownwardApi to get node info
+# VolumeClaimTemplates to dynamically provision a disk volume per pod
+# Finally exposing statefulset as a loadbalancer service (not headless)
+
+# Access by
+# curl http://stateful-web-svc.live-demo:80  (or eq. namespace)
+# By pod ordinal,
+# curl stateful-web-0.stateful-web-svc.live-demo.svc.cluster.local
+
+# Busybox
+# nslookup stateful-web-svc.live-demo.svc.cluster.local
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tenant2-tester
+spec:
+  serviceName: tenant2-tester
+  selector:
+    matchLabels:
+      app: tenant2-tester
+  replicas: 50
+  template:
+    metadata:
+      labels:
+        app: tenant2-tester
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: tenant2-tester
+          image: ghcr.io/suren-m/hey:bullseye-slim
+          imagePullPolicy: Always
+          command: ["/bin/bash", "-c", "--"]
+          args: ["while true; do hey http://stateful-web-svc.tenant2; done;"]
+          env: # Downward API to collect deployed Nodename. Access by $NODE_NAME
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workloads
+                    operator: In
+                    values:
+                      - common
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: tenant2-tester
