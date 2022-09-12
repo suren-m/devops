@@ -19,20 +19,27 @@
 
 # Busybox
 # nslookup stateful-web-svc.live-demo.svc.cluster.local
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: tenant1-tester
+  namespace: loadtest
+  labels:
+    app: tenant1-tester
+    purpose: loadtest
 spec:
   serviceName: tenant1-tester
   selector:
     matchLabels:
       app: tenant1-tester
+      purpose: loadtest
   replicas: 50
   template:
     metadata:
       labels:
         app: tenant1-tester
+        purpose: loadtest
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -49,6 +56,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "50m"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -58,10 +72,10 @@ spec:
                     operator: In
                     values:
                       - common
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: tenant1-tester
+      # topologySpreadConstraints:
+      #   - maxSkew: 1
+      #     topologyKey: topology.kubernetes.io/zone
+      #     whenUnsatisfiable: DoNotSchedule
+      #     labelSelector:
+      #       matchLabels:
+      #         app: tenant1-tester

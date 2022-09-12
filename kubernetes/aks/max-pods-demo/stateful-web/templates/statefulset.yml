@@ -49,10 +49,10 @@ spec:
           resources:
             requests:
               memory: "32Mi"
-              cpu: "50m"          
+              cpu: "25m"          
             limits:
               memory: "64Mi"
-              cpu: "100m"
+              cpu: "50m"
         - name: stateful-web-setter
           image: busybox:latest
           volumeMounts:
@@ -76,10 +76,10 @@ spec:
           resources:
             requests:
               memory: "32Mi"
-              cpu: "50m"          
+              cpu: "25m"          
             limits:
               memory: "64Mi"
-              cpu: "100m"
+              cpu: "50m"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
