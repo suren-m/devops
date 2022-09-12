@@ -18,6 +18,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count           = 2
     max_count            = 3
     min_count            = 2
+    max_pods              = 100
     orchestrator_version = var.kubernetes_version
     vnet_subnet_id       = data.azurerm_subnet.aks.id
 
@@ -75,10 +76,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "common" {
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   enable_auto_scaling   = false
   vm_size               = "Standard_D2as_v4"
-  node_count            = 5
+  node_count            = 6
   # max_count             = 5
   # min_count             = 2
-  max_pods              = 30
+  max_pods              = 250
   orchestrator_version  = var.kubernetes_version
   zones    = [1, 2, 3]
   mode                  = "User"
@@ -90,9 +91,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "tenant1" {
   name                  = "tenant1"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   enable_auto_scaling   = true
-  vm_size               = "Standard_F8s_v2"
+  vm_size               = "Standard_F16s_v2"
   node_count            = 1
-  max_count             = 3
+  max_count             = 2
   min_count             = 2
   max_pods              = 250
   orchestrator_version  = var.kubernetes_version
@@ -107,9 +108,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "tenant2" {
   name                  = "tenant2"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   enable_auto_scaling   = true
-  vm_size               = "Standard_F8s_v2"
+  vm_size               = "Standard_F16s_v2"
   node_count            = 1
-  max_count             = 3
+  max_count             = 2
   min_count             = 2
   max_pods              = 250
   orchestrator_version  = var.kubernetes_version
