@@ -90,11 +90,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "cpu-optimized" {
   name                  = "cpuoptimized"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   enable_auto_scaling   = true
-  vm_size               = "Standard_F2s_v2"
+  vm_size               = "Standard_F16s_v2"
   node_count            = 1
   max_count             = 3
   min_count             = 2
-  max_pods              = 30
+  max_pods              = 250
   orchestrator_version  = var.kubernetes_version
   zones    = [1, 2, 3]
   mode                  = "User"
