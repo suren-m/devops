@@ -1,0 +1,115 @@
+# Stateful set
+# Spread constraints to evenly distribute pods across AZs based on node's zone label
+# Affinity to 'not' deploy to default nodepool
+# DownwardApi to get node info
+# VolumeClaimTemplates to dynamically provision a disk volume per pod
+# Finally exposing statefulset as a loadbalancer service (not headless)
+
+# Stateful set
+# Spread constraints to evenly distribute pods across AZs based on node's zone label
+# Affinity to 'not' deploy to default nodepool
+# DownwardApi to get node info
+# VolumeClaimTemplates to dynamically provision a disk volume per pod
+# Finally exposing statefulset as a loadbalancer service (not headless)
+
+# Access by
+# curl http://stateful-web-svc.live-demo:80  (or eq. namespace)
+# By pod ordinal,
+# curl stateful-web-0.stateful-web-svc.live-demo.svc.cluster.local
+
+# Busybox
+# nslookup stateful-web-svc.live-demo.svc.cluster.local
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stateful-web
+spec:
+  selector:
+    matchLabels:
+      app: stateful-web
+  serviceName: "stateful-web-svc" # make sure to match service name to get dns by ordinality working
+  replicas: 240
+  template:
+    metadata:
+      labels:
+        app: stateful-web
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: stateful-web
+          image: nginx:1.23.1
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
+        - name: stateful-web-setter
+          image: busybox:latest
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
+          command:
+            [
+              "sh",
+              "-c",
+              "while sleep 2; do echo $(date) - Pod: $HOSTNAME - Node: $NODE_NAME > /usr/share/nginx/html/index.html; done",
+            ]
+          env: # Downward API to collect deployed Nodename. Access by $NODE_NAME
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workloads
+                    operator: In
+                    values:
+                      - cpu-optimized
+      tolerations:
+        - key: "workloads"
+          operator: "Equal"
+          value: "cpu-optimized"
+          effect: "NoSchedule"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: stateful-web
+      volumes:
+        - name: www
+          emptyDir: {}
+  # volumeClaimTemplates: # dynamic provisioning of volumes
+  #   - metadata:
+  #       name: www
+  #     spec:
+  #       accessModes: ["ReadWriteOnce"]
+  #       resources:
+  #         requests:
+  #           storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateful-web-svc
+  labels:
+    app: stateful-web
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  ports:
+    - port: 80
+      name: web
+  type: LoadBalancer
+  selector:
+    app: stateful-web
