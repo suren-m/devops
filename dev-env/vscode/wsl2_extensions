@@ -1,7 +1,10 @@
-ms-azuretools.vscode-dapr
 ms-azuretools.vscode-docker
-ms-dotnettools.csharp
 ms-kubernetes-tools.vscode-kubernetes-tools
+ms-dotnettools.csharp
+ms-azuretools.vscode-dapr
 redhat.vscode-yaml
 ritwickdey.live-sass
 ritwickdey.LiveServer
+rust-lang.rust-analyzer
+vadimcn.vscode-lldb
+humao.rest-client

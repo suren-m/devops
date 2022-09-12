@@ -11,8 +11,8 @@
         "when": "!terminalFocus"
     },
     {
-        "key": "ctrl+alt+oem_3",
-        "command": "workbench.action.togglePanelPosition"
+        "key": "ctrl+oem_3",
+        "command": "-workbench.action.terminal.toggleTerminal"
     },
     {
         "key": "ctrl+alt+m",
@@ -23,7 +23,11 @@
         "command": "workbench.action.terminal.toggleTerminal"
     },
     {
-        "key": "ctrl+oem_3",
-        "command": "-workbench.action.terminal.toggleTerminal"
+        "key": "ctrl+alt+l",
+        "command": "workbench.action.positionPanelRight"
+    },
+    {
+        "key": "ctrl+alt+j",
+        "command": "workbench.action.positionPanelBottom"
     }
 ]
