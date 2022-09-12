@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateful-web-svc
+  labels:
+    app: stateful-web
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  ports:
+    - port: 80
+      name: web
+  type: LoadBalancer
+  selector:
+    app: stateful-web

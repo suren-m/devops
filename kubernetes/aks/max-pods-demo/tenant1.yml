@@ -1,0 +1,6 @@
+workloads: tenant1
+
+path: /tenant1
+gateway: tenant1-gw
+virtualService: tenant1-vs
+host: stateful-web-svc.tenant1.svc.cluster.local
