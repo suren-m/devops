@@ -30,7 +30,6 @@ $env:PATH += ";c:\cuda\bin"
 Set-Alias -Name g -Value git
 Set-Alias -Name v -Value vi
 Set-Alias -Name k -Value kubectl
-Set-Alias -Name h -Value helix
 
 #------------#
 
