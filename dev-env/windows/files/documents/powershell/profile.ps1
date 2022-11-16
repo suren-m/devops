@@ -13,6 +13,29 @@ Function wslhome {Set-Location -Path \\wsl$\Debian\home\suren}
 Function devops {Set-Location -Path $env:userprofile\repos\devops}
 Function winops {Set-Location -Path $env:userprofile\repos\devops\dev-env\windows}
 
+#-----------#
+# Git
+function ga {
+  param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [String[]] $file
+  )
+  git add $file
+}
+function gp {
+  param(
+	[String] $target,
+	[String] $branch
+  )
+  git push $target $branch
+}
+ 
+
+function gst {
+  git status
+}
+
+
 #------------#
 # Env vars (similar to `export foo=bar`)
 
