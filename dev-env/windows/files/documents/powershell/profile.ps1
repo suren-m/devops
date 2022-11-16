@@ -22,14 +22,6 @@ function ga {
   )
   git add $file
 }
-function gp {
-  param(
-	[String] $target="",
-	[String] $branch=""
-  )
-  git push $target $branch
-}
- 
 
 function gst {
   git status
