@@ -24,8 +24,8 @@ function ga {
 }
 function gp {
   param(
-	[String] $target,
-	[String] $branch
+	[String] $target="",
+	[String] $branch=""
   )
   git push $target $branch
 }
