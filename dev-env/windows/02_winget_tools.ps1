@@ -7,15 +7,21 @@ $flag = "--silent"
 # ---------- #
 # Dev Tools
 # ---------- #
+# $devtools = @( 
+#  "dotnet", 
+#  "git",   
+#  "PowerToys (Preview)", 
+#  "Python 3",
+#  "pwsh", # new powershell
+#  "vscode",
+#  "Windows Terminal",
+#  "Windows Terminal Preview" # to use quake mode in 1.9  
+# )
+
 $devtools = @( 
- "dotnet", 
- "git",   
- "PowerToys (Preview)", 
- "Python 3",
- "pwsh", # new powershell
- "vscode",
- "Windows Terminal",
- "Windows Terminal Preview" # to use quake mode in 1.9  
+  "Microsoft.PowerToys", 
+  "Starship.Starship",
+  "7zip.7zip"
 )
 
 foreach($tool in $devtools) {
@@ -28,8 +34,7 @@ foreach($tool in $devtools) {
 # Cloud Tools
 # ---------- #
 $cloudtools = @(
- "Azure CLI",
- "Bicep CLI" 
+ "Microsoft.Bicep"
 )
 
 foreach($tool in $cloudtools) {
@@ -41,16 +46,16 @@ foreach($tool in $cloudtools) {
 # ---------- #
 # Common Software
 # ---------- #
-$common = @(
- "Google Chrome",
- "Microsoft Edge",
- "Microsoft Teams" 
-)
+# $common = @(
+#  "Google Chrome",
+#  "Microsoft Edge",
+#  "Microsoft Teams" 
+# )
 
-foreach($tool in $common) {
-    $command = "$($pkg_mgr) $($operation) ""$($tool)"" $($flag)"
-    echo "executing...$command"
-    Invoke-Expression $command	
-}
+# foreach($tool in $common) {
+#     $command = "$($pkg_mgr) $($operation) ""$($tool)"" $($flag)"
+#     echo "executing...$command"
+#     Invoke-Expression $command	
+# }
 
 # If applicable: 'Nvidia GeForce Experience'

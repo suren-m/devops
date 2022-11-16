@@ -5,7 +5,6 @@ $operation = "install"
 # Dev Tools
 # ---------- #
 $cli_tools = @(
-"7zip",
 "bat",
 "busybox", # comes with sed, awk, vim, etc.
 "gh",
@@ -16,7 +15,8 @@ $cli_tools = @(
 "tokei",
 "watchexec",
 "terraform",
-"starship"
+"helix",
+"helm"
 )
 
 foreach($tool in $cli_tools) {
