@@ -21,7 +21,7 @@ common:
       - htop
       - httpie
       - jq
-      - lsb-release
+      - lsb-release      
       - neovim
       - openssh-client
       - procps
@@ -43,6 +43,7 @@ common:
       - libssl-dev
       - pkg-config
       - bat
+      - moreutils
   net:
     state: present
     tools:    

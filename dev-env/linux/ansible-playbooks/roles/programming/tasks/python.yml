@@ -8,6 +8,8 @@
   loop:
     - virtualenv
     - pipenv
-#     - python3-dev
-#     - python3-pip
-#     - python3-setuptools
+    - python3-dev
+    - python3-pip
+    - python3-setuptools
+    - python3-pexpect # needed for expect: (see homebrew install)
+    - python3-apt
