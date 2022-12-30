@@ -4,6 +4,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = data.azurerm_resource_group.rg.location
   sku_tier            = "Paid"
   kubernetes_version  = var.kubernetes_version
+  oidc_issuer_enabled = true
+  open_service_mesh_enabled = true
+  workload_identity_enabled = true
 
   dns_prefix = "${var.aks_cluster_name}-aks"  
   # private_cluster_enabled = true
@@ -13,13 +16,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     name                 = "default"
     type                 = "VirtualMachineScaleSets"
     vm_size              = "Standard_D2as_v4"
-    zones   = ["1", "2", "3"]
+    zones                = ["1", "2", "3"]
     enable_auto_scaling  = true
-    node_count           = 2
     max_count            = 3
     min_count            = 2
-    max_pods              = 100
-    orchestrator_version = var.kubernetes_version
+    max_pods             = 75
+    orchestrator_version = var.kubernetes_version    
     vnet_subnet_id       = data.azurerm_subnet.aks.id
 
     only_critical_addons_enabled = true
@@ -71,53 +73,68 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "common" {
-  name                  = "common"
+resource "azurerm_kubernetes_cluster_node_pool" "web" {
+  name                  = "web"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  enable_auto_scaling   = false
+  enable_auto_scaling   = true
   vm_size               = "Standard_D2as_v4"
-  node_count            = 6
-  # max_count             = 5
-  # min_count             = 2
-  max_pods              = 250
-  orchestrator_version  = var.kubernetes_version
-  zones    = [1, 2, 3]
-  mode                  = "User"
-  node_labels           = { workloads = "common" }
-  vnet_subnet_id        = data.azurerm_subnet.aks.id
-}
-
-resource "azurerm_kubernetes_cluster_node_pool" "tenant1" {
-  name                  = "tenant1"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  enable_auto_scaling   = true
-  vm_size               = "Standard_F16s_v2"
-  node_count            = 1
-  max_count             = 2
-  min_count             = 2
-  max_pods              = 250
+  max_count             = 6
+  min_count             = 3
+  max_pods              = 75
   orchestrator_version  = var.kubernetes_version
   zones                 = [1, 2, 3]
   mode                  = "User"
-  node_labels           = { workloads = "tenant1" }
-  node_taints           = ["workloads=tenant1:NoSchedule"]
+  node_labels           = { workloads = "web" }
   vnet_subnet_id        = data.azurerm_subnet.aks.id
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "tenant2" {
-  name                  = "tenant2"
+resource "azurerm_kubernetes_cluster_node_pool" "db" {
+  name                  = "db"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   enable_auto_scaling   = true
-  vm_size               = "Standard_F16s_v2"
-  node_count            = 1
-  max_count             = 2
-  min_count             = 2
-  max_pods              = 250
+  vm_size               = "Standard_D2as_v4"
+  max_count             = 6
+  min_count             = 3
+  max_pods              = 75
   orchestrator_version  = var.kubernetes_version
   zones                 = [1, 2, 3]
   mode                  = "User"
-  node_labels           = { workloads = "tenant2" }
-  node_taints           = ["workloads=tenant2:NoSchedule"]
+  node_labels           = { workloads = "db" }
+  node_taints           = ["workloads=db:NoSchedule"]
   vnet_subnet_id        = data.azurerm_subnet.aks.id
 }
+
+
+resource "azurerm_kubernetes_cluster_node_pool" "intensive" {
+  name                  = "intensive"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  enable_auto_scaling   = true
+  vm_size               = "Standard_F8s_v2"
+  max_count             = 2
+  min_count             = 1
+  max_pods              = 150
+  orchestrator_version  = var.kubernetes_version
+  zones                 = [1, 2, 3]
+  mode                  = "User"
+  node_labels           = { workloads = "intensive" }
+  node_taints           = ["workloads=intensive:NoSchedule"]
+  vnet_subnet_id        = data.azurerm_subnet.aks.id
+}
+
+# resource "azurerm_kubernetes_cluster_node_pool" "tenant2" {
+#   name                  = "tenant2"
+#   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+#   enable_auto_scaling   = true
+#   vm_size               = "Standard_F16s_v2"
+#   node_count            = 1
+#   max_count             = 2
+#   min_count             = 2
+#   max_pods              = 250
+#   orchestrator_version  = var.kubernetes_version
+#   zones                 = [1, 2, 3]
+#   mode                  = "User"
+#   node_labels           = { workloads = "tenant2" }
+#   node_taints           = ["workloads=tenant2:NoSchedule"]
+#   vnet_subnet_id        = data.azurerm_subnet.aks.id
+# }
 
