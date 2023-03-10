@@ -9,7 +9,7 @@ loc = {
 
 // aks
 aks_cluster_name   = "azenv"
-kubernetes_version = "1.24.6"
+kubernetes_version = "1.25.5"
 aks_vm_size        = "Standard_B2s" # old
 default_pool = {
   init_count = 2
@@ -27,3 +27,5 @@ cluster_prefix = "k8s"
 master_count   = 1
 worker_count   = 3
 vm_size        = "Standard_D2as_v4"
+
+firewall_ip = "10.0.4.4"

@@ -54,3 +54,10 @@ variable "vm_size" {
 #   type      = string
 #   sensitive = true  
 # }
+
+
+# networking
+
+variable "firewall_ip" {
+
+}
