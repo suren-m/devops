@@ -22,7 +22,7 @@ common:
       - httpie
       - jq
       - lsb-release      
-      - neovim
+      # - neovim # use newer ver
       - openssh-client
       - procps
       - ripgrep

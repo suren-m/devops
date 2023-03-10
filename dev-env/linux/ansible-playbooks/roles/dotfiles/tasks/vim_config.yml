@@ -27,13 +27,13 @@
     dest: "{{ lookup('env', 'HOME') }}/.vim/vimrc"
 
 # nvim
-- name: nvim config directory
-  file:
-    path: "{{ lookup('env', 'HOME') }}/.config/nvim"
-    state: directory
+# - name: nvim config directory
+#   file:
+#     path: "{{ lookup('env', 'HOME') }}/.config/nvim"
+#     state: directory
 
-- name: 
-  copy:
-    src: .config/nvim/init.vim    
-    dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"
+# - name: 
+#   copy:
+#     src: .config/nvim/init.vim    
+#     dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"
 
